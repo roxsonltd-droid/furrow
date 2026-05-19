@@ -196,6 +196,71 @@ body {
   font-size: 11px;
 }
 
+.sponsor-strip {
+  background: var(--paper-white);
+  border-bottom: 1px solid var(--line);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 12px;
+}
+.sponsor-strip-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.sponsor-strip-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mid);
+  font-weight: 600;
+  font-size: 10px;
+}
+.sponsor-strip-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.sponsor-strip-logo {
+  padding: 4px 12px;
+  background: var(--gold-pale);
+  border-radius: 4px;
+  color: var(--ink-mid);
+  font-size: 11px;
+}
+.sponsor-strip-btn {
+  background: none;
+  border: 1px solid var(--ink);
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--ink);
+}
+.sponsor-strip-btn:hover { background: var(--ink); color: var(--paper); }
+.sponsors-block {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 24px;
+  margin: 48px 0 0;
+  text-align: center;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+.sponsors-block h2 { font-family: "Source Serif 4", serif; font-size: 28px; margin-bottom: 12px; }
+.sponsors-block .contact-sponsor {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 28px;
+  background: var(--gold);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
 /* === Ticker === */
 
 .ticker {
@@ -929,6 +994,17 @@ body {
   </div>
 </header>
 
+<!-- Sponsor strip -->
+<div class="sponsor-strip">
+  <div class="sponsor-strip-inner">
+    <span class="sponsor-strip-label" data-i18n="sponsor.label">✨ Sponsor opportunity</span>
+    <div class="sponsor-strip-actions">
+      <span class="sponsor-strip-logo" data-i18n="sponsor.placeholder">Your logo here</span>
+      <button type="button" class="sponsor-strip-btn" id="sponsorBtn" data-i18n="sponsor.cta">Become a sponsor →</button>
+    </div>
+  </div>
+</div>
+
 <!-- Main navigation -->
 <nav class="nav">
   <div class="nav-inner">
@@ -1175,6 +1251,12 @@ body {
     </div>
   </div>
 
+  <section class="sponsors-block" id="sponsors">
+    <h2 data-i18n="sponsors.title">For sponsors</h2>
+    <p data-i18n="sponsors.lead">Reach agricultural professionals daily — launch 2026</p>
+    <a href="mailto:sponsors@furrowmarkets.com?subject=Sponsorship" class="contact-sponsor" data-i18n="sponsors.contact">Contact sales →</a>
+  </section>
+
   <!-- Subscribe block — restrained, no popup -->
   <section class="subscribe" id="subscribe">
     <div class="subscribe-label" data-i18n="sub.label">The Daily Brief</div>
@@ -1279,6 +1361,8 @@ body {
 <script src="scripts/i18n-home-strings.js"></script>
 <script src="scripts/i18n.js"></script>
 <script src="scripts/waitlist.js"></script>
+<script src="scripts/sponsor-ui.js"></script>
+<script src="scripts/nav-stubs.js"></script>
 <script src="scripts/ticker-live.js"></script>
 <script src="scripts/i18n-chat-strings.js"></script>
 <script src="scripts/furrow-chat.js"></script>
