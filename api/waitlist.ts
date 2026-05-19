@@ -20,7 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	const interest = typeof body.interest === 'string' ? body.interest : 'all';
 
 	const result = await submitFurrowWaitlist({ fullName, email, interest });
-	if (!result.ok) {
+	if (result.ok === false) {
 		res.status(400).json({ error: result.error });
 		return;
 	}

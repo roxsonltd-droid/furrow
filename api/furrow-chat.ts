@@ -30,7 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 			: null) || null;
 
 	const result = await handleFurrowChatPost(req.body, { clientIp });
-	if (!result.ok) {
+	if (result.ok === false) {
 		res.status(result.status).json({ error: result.error, hint: result.hint });
 		return;
 	}
