@@ -105,4 +105,4 @@ plt.tight_layout()
 fig3.savefig(OUT / "iran_replacement_table.png", dpi=150)
 plt.close(fig3)
 
-print(f"Saved charts to {OUT}")
+print("Saved charts to:", OUT.as_posix())
