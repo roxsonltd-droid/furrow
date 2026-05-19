@@ -279,6 +279,10 @@ body {
 	padding: 16px;
 }
 
+.article-chart-wrap--trend {
+	height: 280px;
+}
+
 .article-figure figcaption {
 	font-size: 12px;
 	color: #64748b;

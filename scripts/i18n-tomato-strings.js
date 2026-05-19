@@ -19,8 +19,10 @@
 			'The 2026 processing tomato season is shaping up as a correction year. According to the World Processing Tomato Council (WPTC), global output is expected to fall below 40 million tonnes — currently estimated at 39.8 million — a modest decline from 40.3 million tonnes in 2025 and far below the record harvests of 44.4 million (2023) and 45.9 million (2024). The industry is digesting excess inventories built during two consecutive years of overproduction.',
 		'tm.p.global2':
 			'Three forces are reshaping the global landscape: Italy is reclaiming market share from China, Iran has banned all agri-food exports, and Egypt is emerging as a serious challenger to Mediterranean producers. Chile, operating counter-seasonally in the Southern Hemisphere, is becoming an increasingly important balancing player.',
+		'tm.chart.trend.caption':
+			'Figure 1. Global processing tomato production (million tonnes). Source: WPTC.',
 		'tm.chart.caption':
-			'Figure 1. Processing tomato production forecast 2026 by country (million tonnes). Source: WPTC crop updates, AMITOM, industry reports.',
+			'Figure 2. Processing tomato production forecast 2026 by country (million tonnes). Source: WPTC crop updates, AMITOM, industry reports.',
 		'tm.chart.legend.eu': 'Europe',
 		'tm.chart.legend.asia': 'Asia & Middle East',
 		'tm.chart.legend.sh': 'Southern Hemisphere',
@@ -119,8 +121,10 @@
 			'Сезон 2026 года для томатов на переработку складывается как корректирующий год. По данным WPTC, мировое производство составит менее 40 миллионов тонн — текущая оценка 39,8 миллиона тонн, что немного ниже 40,3 миллиона в 2025 году и существенно ниже рекордных 44,4 миллиона (2023) и 45,9 миллиона (2024). Отрасль переваривает избыточные запасы за два года перепроизводства.',
 		'tm.p.global2':
 			'Три силы меняют ландшафт: Италия отвоёвывает долю у Китая, Иран запретил экспорт всей сельхозпродукции, Египет становится серьёзным конкурентом средиземноморских производителей. Чили в противосезоне — всё более важный балансирующий игрок.',
+		'tm.chart.trend.caption':
+			'Рис. 1. Мировое производство томатов для переработки (млн т). Источник: WPTC.',
 		'tm.chart.caption':
-			'Рис. 1. Прогноз производства томатов для переработки в 2026 году (млн т). Источник: WPTC, AMITOM, отраслевые отчёты.',
+			'Рис. 2. Прогноз производства по странам в 2026 году (млн т). Источник: WPTC, AMITOM, отраслевые отчёты.',
 		'tm.chart.legend.eu': 'Европа',
 		'tm.chart.legend.asia': 'Азия и Ближний Восток',
 		'tm.chart.legend.sh': 'Южное полушарие',
