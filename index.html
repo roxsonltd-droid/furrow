@@ -736,6 +736,24 @@ body {
   gap: 0;
   max-width: 480px;
   width: 100%;
+  flex-wrap: wrap;
+}
+
+.subscribe-form--stacked {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 420px;
+}
+
+.subscribe-form--stacked input,
+.subscribe-form--stacked select {
+  width: 100%;
+  border-right: 1px solid var(--ink);
+  margin-bottom: 8px;
+}
+
+.subscribe-form--stacked button {
+  width: 100%;
 }
 
 .subscribe-form input {
@@ -1165,11 +1183,20 @@ body {
       What moved global agricultural markets, why it matters, and what to watch tomorrow.
       Read by analysts, traders, and farm operators in 40+ countries.
     </p>
-    <form class="subscribe-form" id="signup-form">
-      <input type="email" id="email" required data-i18n-placeholder="wait.email" placeholder="your@email.com" />
-      <input type="hidden" id="fname" value="" />
+    <form class="subscribe-form subscribe-form--stacked" id="signup-form">
+      <input type="text" id="fname" data-i18n-placeholder="reg.fname" placeholder="First name" autocomplete="given-name" />
+      <input type="email" id="email" required data-i18n-placeholder="wait.email" placeholder="your@email.com" autocomplete="email" />
+      <select id="interest" aria-label="Interest">
+        <option value="grains" data-i18n="reg.interest.grains">Grains &amp; oilseeds</option>
+        <option value="livestock" data-i18n="reg.interest.livestock">Livestock</option>
+        <option value="dairy" data-i18n="reg.interest.dairy">Dairy</option>
+        <option value="softs" data-i18n="reg.interest.softs">Softs</option>
+        <option value="fertilizer" data-i18n="reg.interest.fertilizer">Fertilizer</option>
+        <option value="all" data-i18n="reg.interest.all" selected>All markets</option>
+      </select>
       <button type="submit" data-i18n="sub.cta">Subscribe Free</button>
     </form>
+    <p class="subscribe-note" style="margin-top:12px"><a href="/register.html" data-i18n="reg.fullPage">Full registration form →</a></p>
     <div id="form-status"></div>
     <div class="subscribe-note" data-i18n="sub.note">No spam. Unsubscribe in one click. We don't sell your data.</div>
   </section>

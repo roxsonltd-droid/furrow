@@ -10,15 +10,12 @@ function inboxTo(): string {
 }
 
 function fromAddress(): string | null {
-	const v =
-		process.env.RESEND_FROM?.trim() ||
-		process.env.MAIL_FROM?.trim() ||
-		'';
+	const v = process.env.RESEND_FROM?.trim() || process.env.MAIL_FROM?.trim() || '';
 	return v || null;
 }
 
 async function sendViaResend(opts: {
-	to: string;
+	to: string | string[];
 	from: string;
 	subject: string;
 	html: string;
@@ -28,6 +25,8 @@ async function sendViaResend(opts: {
 	const key = process.env.RESEND_API_KEY?.trim();
 	if (!key) return 'skipped';
 
+	const toList = Array.isArray(opts.to) ? opts.to : [opts.to];
+
 	const res = await fetch('https://api.resend.com/emails', {
 		method: 'POST',
 		headers: {
@@ -36,7 +35,7 @@ async function sendViaResend(opts: {
 		},
 		body: JSON.stringify({
 			from: opts.from,
-			to: [opts.to],
+			to: toList,
 			subject: opts.subject,
 			html: opts.html,
 			text: opts.text,
@@ -51,14 +50,36 @@ async function sendViaResend(opts: {
 	return 'sent';
 }
 
+function welcomeCopy(lang: 'en' | 'ru', fullName: string): { subject: string; html: string; text: string } {
+	if (lang === 'ru') {
+		return {
+			subject: 'Furrow Markets — вы в листе ожидания',
+			text: `Здравствуйте, ${fullName}!\n\nСпасибо за регистрацию в Furrow Markets. Мы напишем перед запуском (лето 2026).\n\n— Furrow Markets`,
+			html: `<p>Здравствуйте, <strong>${fullName}</strong>!</p><p>Спасибо за регистрацию в <strong>Furrow Markets</strong>. Мы напишем перед запуском (лето 2026).</p><p style="color:#64748b;font-size:14px;">Это письмо не является инвестиционной рекомендацией.</p>`,
+		};
+	}
+	return {
+		subject: 'Furrow Markets — you are on the waitlist',
+		text: `Hi ${fullName},\n\nThanks for registering with Furrow Markets. We will be in touch before launch (summer 2026).\n\n— Furrow Markets`,
+		html: `<p>Hi <strong>${fullName}</strong>,</p><p>Thanks for registering with <strong>Furrow Markets</strong>. We will be in touch before launch (summer 2026).</p><p style="color:#64748b;font-size:14px;">This is not investment advice.</p>`,
+	};
+}
+
 export async function submitFurrowWaitlist(input: {
 	fullName: string;
 	email: string;
 	interest?: string;
-}): Promise<{ ok: true; mailDelivery: 'sent' | 'skipped' } | { ok: false; error: string }> {
-	const email = input.email.trim();
+	lang?: 'en' | 'ru';
+	source?: string;
+}): Promise<
+	| { ok: true; mailDelivery: 'sent' | 'skipped'; welcomeSent: boolean }
+	| { ok: false; error: string }
+> {
+	const email = input.email.trim().toLowerCase();
 	const fullName = (input.fullName.trim() || email.split('@')[0] || 'Subscriber').slice(0, 120);
 	const interest = (input.interest?.trim() || 'all').slice(0, 64);
+	const lang = input.lang === 'ru' ? 'ru' : 'en';
+	const source = (input.source?.trim() || 'website').slice(0, 64);
 
 	if (!EMAIL_RE.test(email)) {
 		return { ok: false, error: 'Invalid email' };
@@ -67,16 +88,39 @@ export async function submitFurrowWaitlist(input: {
 	const to = inboxTo();
 	const from = fromAddress();
 	if (!to || !from) {
-		return { ok: true, mailDelivery: 'skipped' };
+		return { ok: true, mailDelivery: 'skipped', welcomeSent: false };
 	}
 
-	const subject = `[Furrow] Waitlist · ${fullName}`;
-	const text = [`Furrow waitlist (AI agent)`, `Name: ${fullName}`, `Email: ${email}`, `Interest: ${interest}`].join('\n');
-	const html = `<p><strong>Furrow waitlist</strong> (via AI agent)</p><p>Name: ${fullName}</p><p>Email: ${email}</p><p>Interest: ${interest}</p>`;
+	const subject = `[Furrow] Registration · ${fullName}`;
+	const text = [
+		`Furrow waitlist registration (${source})`,
+		`Name: ${fullName}`,
+		`Email: ${email}`,
+		`Interest: ${interest}`,
+		`Lang: ${lang}`,
+	].join('\n');
+	const html = `<p><strong>Furrow registration</strong> (${source})</p><p>Name: ${fullName}</p><p>Email: ${email}</p><p>Interest: ${interest}</p><p>Lang: ${lang}</p>`;
 
 	try {
 		const sent = await sendViaResend({ to, from, subject, html, text, replyTo: email });
-		return { ok: true, mailDelivery: sent };
+		let welcomeSent = false;
+		if (sent === 'sent' && process.env.FURROW_WELCOME_EMAIL !== '0') {
+			const w = welcomeCopy(lang, fullName);
+			try {
+				await sendViaResend({
+					to: email,
+					from,
+					subject: w.subject,
+					html: w.html,
+					text: w.text,
+					replyTo: to,
+				});
+				welcomeSent = true;
+			} catch {
+				/* admin notified; welcome optional */
+			}
+		}
+		return { ok: true, mailDelivery: sent, welcomeSent };
 	} catch (e) {
 		const msg = e instanceof Error ? e.message : 'Email failed';
 		return { ok: false, error: msg };

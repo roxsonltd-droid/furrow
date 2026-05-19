@@ -1,5 +1,5 @@
 /**
- * Waitlist: POST /api/waitlist (Resend) or Mailchimp embed (env via /api/public-config).
+ * Furrow registration / waitlist — POST /api/waitlist (Resend) or Mailchimp fallback.
  */
 (function initFurrowWaitlist() {
 	const form = document.getElementById('signup-form');
@@ -30,18 +30,28 @@
 				mailchimpHidden = cfg.mailchimpHidden;
 			}
 		} catch {
-			/* static hosting without API */
+			/* no API */
 		}
 	}
 
-	async function submitViaApi(email) {
+	function readForm() {
+		return {
+			email: document.getElementById('email')?.value?.trim() || '',
+			fullName: document.getElementById('fname')?.value?.trim() || '',
+			interest: document.getElementById('interest')?.value?.trim() || 'all',
+		};
+	}
+
+	async function submitViaApi(payload) {
 		const res = await fetch('/api/waitlist', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				email,
-				full_name: email.split('@')[0] || 'Subscriber',
-				interest: 'all',
+				email: payload.email,
+				full_name: payload.fullName || payload.email.split('@')[0] || 'Subscriber',
+				interest: payload.interest,
+				lang: lang(),
+				source: document.body.dataset.waitlistSource || 'website',
 			}),
 		});
 		const data = await res.json().catch(() => ({}));
@@ -49,46 +59,48 @@
 		return data;
 	}
 
-	async function submitViaMailchimp(email) {
+	async function submitViaMailchimp(payload) {
 		const formData = new FormData();
-		formData.append('EMAIL', email);
-		formData.append('FNAME', document.getElementById('fname')?.value?.trim() || 'Subscriber');
-		formData.append('MMERGE2', document.getElementById('interest')?.value || 'all');
+		formData.append('EMAIL', payload.email);
+		formData.append('FNAME', payload.fullName || 'Subscriber');
+		formData.append('MMERGE2', payload.interest);
 		if (mailchimpHidden) formData.append(mailchimpHidden, '');
 		await fetch(mailchimpUrl, { method: 'POST', mode: 'no-cors', body: formData });
 	}
 
 	form.addEventListener('submit', async (e) => {
 		e.preventDefault();
-		const email = document.getElementById('email')?.value?.trim();
-		if (!email) return;
+		const payload = readForm();
+		if (!payload.email) return;
 
 		const submitBtn = form.querySelector('button[type="submit"]');
-		const originalText = submitBtn.textContent;
-		submitBtn.textContent = msg('form.submitting');
-		submitBtn.disabled = true;
+		const originalText = submitBtn?.textContent || '';
+		if (submitBtn) {
+			submitBtn.textContent = msg('form.submitting');
+			submitBtn.disabled = true;
+		}
 
 		try {
-			let usedApi = false;
 			try {
-				await submitViaApi(email);
-				usedApi = true;
-				showStatus('success-message', msg('form.successApi'));
+				const data = await submitViaApi(payload);
+				showStatus('success-message', data.message || msg('form.successApi'));
+				form.reset();
 			} catch {
 				if (mailchimpUrl) {
-					await submitViaMailchimp(email);
+					await submitViaMailchimp(payload);
 					showStatus('success-message', msg('form.success'));
+					form.reset();
 				} else {
 					throw new Error('no channel');
 				}
 			}
-			if (usedApi) form.reset();
-			else if (mailchimpUrl) form.reset();
 		} catch {
 			showStatus('error-message', msg('form.notConfigured'));
 		} finally {
-			submitBtn.textContent = originalText;
-			submitBtn.disabled = false;
+			if (submitBtn) {
+				submitBtn.textContent = originalText;
+				submitBtn.disabled = false;
+			}
 		}
 	});
 

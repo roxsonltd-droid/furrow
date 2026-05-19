@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register — Furrow Markets</title>
+	<link rel="stylesheet" href="styles/register.css">
+</head>
+<body data-waitlist-source="register-page">
+
+<header class="reg-header">
+	<a href="/index.html" class="reg-logo">FURROW MARKETS</a>
+	<a href="/index.html" class="reg-back">← Home</a>
+</header>
+
+<main class="reg-main">
+	<h1>Join early access</h1>
+	<p class="reg-lead">Founding subscribers get locked-in pricing before launch (summer 2026).</p>
+
+	<form id="signup-form" class="reg-form">
+		<label>
+			<span>First name</span>
+			<input type="text" id="fname" name="fname" required autocomplete="given-name">
+		</label>
+		<label>
+			<span>Email</span>
+			<input type="email" id="email" name="email" required autocomplete="email">
+		</label>
+		<label>
+			<span>Primary interest</span>
+			<select id="interest" name="interest">
+				<option value="grains">Grains &amp; oilseeds</option>
+				<option value="livestock">Livestock</option>
+				<option value="dairy">Dairy</option>
+				<option value="softs">Softs</option>
+				<option value="fertilizer">Fertilizer</option>
+				<option value="all">All markets</option>
+			</select>
+		</label>
+		<button type="submit">Register →</button>
+	</form>
+	<div id="form-status"></div>
+
+	<p class="reg-note">No spam. Unsubscribe anytime. Not investment advice.</p>
+</main>
+
+<script src="scripts/i18n-strings.js"></script>
+<script src="scripts/waitlist.js"></script>
+</body>
+</html>

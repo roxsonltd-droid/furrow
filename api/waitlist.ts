@@ -15,22 +15,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 	}
 
 	const body = typeof req.body === 'object' && req.body !== null ? req.body : {};
-	const fullName = typeof body.full_name === 'string' ? body.full_name : typeof body.name === 'string' ? body.name : '';
+	const fullName =
+		typeof body.full_name === 'string'
+			? body.full_name
+			: typeof body.name === 'string'
+				? body.name
+				: '';
 	const email = typeof body.email === 'string' ? body.email : '';
 	const interest = typeof body.interest === 'string' ? body.interest : 'all';
+	const lang = body.lang === 'ru' ? 'ru' : 'en';
+	const source = typeof body.source === 'string' ? body.source : 'website';
 
-	const result = await submitFurrowWaitlist({ fullName, email, interest });
+	const result = await submitFurrowWaitlist({ fullName, email, interest, lang, source });
 	if (result.ok === false) {
 		res.status(400).json({ error: result.error });
 		return;
 	}
 
+	const en = lang === 'en';
 	res.status(200).json({
 		ok: true,
 		mailDelivery: result.mailDelivery,
+		welcomeSent: result.welcomeSent,
 		message:
-			result.mailDelivery === 'sent'
-				? 'Thank you — we received your request.'
-				: 'Recorded — email delivery not configured on server.',
+			result.welcomeSent
+				? en
+					? 'Registered! Check your inbox for confirmation.'
+					: 'Готово! Проверьте почту для подтверждения.'
+				: result.mailDelivery === 'sent'
+					? en
+						? 'You are on the list. We will contact you before launch.'
+						: 'Вы в списке. Напишем перед запуском.'
+					: en
+						? 'Registered (email delivery pending server config).'
+						: 'Зарегистрировано (имейл ожидает настройки сервера).',
 	});
 }
