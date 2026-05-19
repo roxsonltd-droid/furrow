@@ -1,6 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { handleFurrowChatPost, isAnyLlmConfigured } from '../server/furrow-chat-handler.js';
 
+export const config = {
+	maxDuration: 60,
+};
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 	res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -15,6 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 			path: '/api/furrow-chat',
 			llmConfigured: isAnyLlmConfigured(),
 			agentEnabled: process.env.FURROW_AGENT_DISABLED !== '1',
+			agentTools: process.env.FURROW_AGENT_TOOLS === '1',
 		});
 		return;
 	}

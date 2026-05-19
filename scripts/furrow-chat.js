@@ -56,13 +56,14 @@
 			input.disabled = false;
 			sendBtn.disabled = false;
 			input.placeholder = t('chat.placeholder', 'Ask…');
-			statusEl.textContent = data?.agentEnabled
-				? lang() === 'ru'
-					? 'Агент · действия'
-					: 'Agent · actions'
-				: lang() === 'ru'
-					? 'онлайн'
-					: 'online';
+			statusEl.textContent =
+				data?.agentEnabled && data?.agentTools
+					? lang() === 'ru'
+						? 'Агент · действия'
+						: 'Agent · tools'
+					: lang() === 'ru'
+						? 'онлайн'
+						: 'online';
 		}
 
 		function formatActions(actions) {

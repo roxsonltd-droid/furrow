@@ -18,7 +18,9 @@ type ChatMessage = {
 };
 
 const MAX_MESSAGES = 12;
-const MAX_AGENT_STEPS = 5;
+/** Hobby Vercel ~10s — keep agent loops low unless FURROW_AGENT_TOOLS=1 on Pro */
+const MAX_AGENT_STEPS = 2;
+const LLM_FETCH_TIMEOUT_MS = 9_000;
 
 const SYSTEM_EN = `You are "Furrow Analyst" — AI agent for Furrow Markets (global agricultural market intelligence, Nexus Group).
 
@@ -59,22 +61,35 @@ async function callChat(
 	messages: ChatMessage[],
 	opts: { tools?: boolean },
 ): Promise<ChatMessage> {
-	const res = await fetch(upstream.completionUrl, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			...(upstream.bearer ? { Authorization: `Bearer ${upstream.bearer}` } : {}),
-		},
-		body: JSON.stringify({
-			model: upstream.model,
-			temperature: 0.45,
-			max_tokens: 900,
-			messages,
-			...(opts.tools && upstream.supportsTools
-				? { tools: FURROW_AGENT_TOOLS, tool_choice: 'auto' }
-				: {}),
-		}),
-	});
+	const controller = new AbortController();
+	const timer = setTimeout(() => controller.abort(), LLM_FETCH_TIMEOUT_MS);
+	let res: Response;
+	try {
+		res = await fetch(upstream.completionUrl, {
+			method: 'POST',
+			signal: controller.signal,
+			headers: {
+				'Content-Type': 'application/json',
+				...(upstream.bearer ? { Authorization: `Bearer ${upstream.bearer}` } : {}),
+			},
+			body: JSON.stringify({
+				model: upstream.model,
+				temperature: 0.45,
+				max_tokens: 600,
+				messages,
+				...(opts.tools && upstream.supportsTools
+					? { tools: FURROW_AGENT_TOOLS, tool_choice: 'auto' }
+					: {}),
+			}),
+		});
+	} catch (e) {
+		if (e instanceof Error && e.name === 'AbortError') {
+			throw new Error('LLM request timed out');
+		}
+		throw e;
+	} finally {
+		clearTimeout(timer);
+	}
 
 	const data = (await res.json().catch(() => ({}))) as {
 		error?: { message?: string };
@@ -144,8 +159,10 @@ export async function handleFurrowChatPost(
 
 	const actions: AgentActionRecord[] = [];
 	const agentDisabled = process.env.FURROW_AGENT_DISABLED === '1';
+	/** Full tool loop (slow). Default off — knowledge is already in the system prompt. */
+	const agentToolsEnabled = process.env.FURROW_AGENT_TOOLS === '1';
 
-	if (agentDisabled || !upstream.supportsTools) {
+	if (agentDisabled || !upstream.supportsTools || !agentToolsEnabled) {
 		try {
 			const message = await callChat(upstream, chatMessages, { tools: false });
 			const reply = openAIMessageContentToString(message.content)?.trim();
