@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Furrow — Global Agricultural Market Intelligence</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Serif (body): Source Serif 4. Sans (UI): IBM Plex Sans. -->
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Color palette — FT/WSJ inspired */
+  --ink: #1a1a1a;          /* primary text */
+  --ink-mid: #6b6760;      /* meta, secondary */
+  --ink-light: #a8a39a;    /* tertiary, dates */
+  --gold: #b97f15;         /* accent, links */
+  --gold-deep: #8a5e10;    /* link hover */
+  --gold-pale: #f0e6cd;    /* subtle background */
+  --paper: #faf7f0;        /* warm cream */
+  --paper-white: #ffffff;  /* pure white */
+  --line: #d8d2c4;         /* hairline borders */
+  --line-strong: #1a1a1a;  /* emphasized rule */
+  --red: #b8412c;          /* "down" indicator */
+  --green: #4a7c3a;        /* "up" indicator (only used for prices) */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+body {
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  font-feature-settings: "kern", "liga", "calt";
+}
+
+/* === Top utility bar === */
+
+.utility-bar {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 8px 0;
+}
+
+.utility-bar .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.utility-bar .left {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.utility-date {
+  text-transform: uppercase;
+  color: var(--ink-light);
+}
+
+.utility-bar .right {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.utility-bar a {
+  color: var(--paper);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.utility-bar a:hover { color: var(--gold); }
+
+.lang-switch {
+  display: inline-flex;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.lang-switch a {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.lang-switch a.active {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* === Masthead === */
+
+.masthead {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0 24px;
+}
+
+.masthead-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.brand-name {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1;
+  display: inline-block;
+  position: relative;
+}
+
+.brand-name::before,
+.brand-name::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 1px;
+  background: var(--ink);
+}
+
+.brand-name::before { left: -84px; }
+.brand-name::after { right: -84px; }
+
+.tagline {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  margin-top: 12px;
+}
+
+/* === Main navigation === */
+
+.nav {
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+}
+
+.nav a {
+  display: block;
+  padding: 14px 0;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.15s;
+}
+
+.nav a:hover { color: var(--gold-deep); }
+
+.nav a.has-sub::after {
+  content: "›";
+  margin-left: 6px;
+  color: var(--ink-light);
+  font-weight: 400;
+  display: inline-block;
+  transform: rotate(90deg);
+  font-size: 11px;
+}
+
+/* === Ticker === */
+
+.ticker {
+  background: var(--paper-white);
+  border-bottom: 1px solid var(--line);
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 12px;
+  padding: 10px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.ticker-label {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  white-space: nowrap;
+}
+
+.ticker-stream {
+  display: flex;
+  gap: 32px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.ticker-symbol {
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.ticker-price {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.ticker-change.up { color: var(--green); }
+.ticker-change.down { color: var(--red); }
+.ticker-change.flat { color: var(--ink-light); }
+
+/* === Main grid === */
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+.lead-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 900px) {
+  .lead-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* === Lead story === */
+
+.lead {
+  border-right: 1px solid var(--line);
+  padding-right: 48px;
+}
+
+@media (max-width: 900px) {
+  .lead { border-right: none; padding-right: 0; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+}
+
+.lead-eyebrow {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 12px;
+}
+
+.lead h1 {
+  font-family: "Source Serif 4", serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.lead h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lead h1 a:hover { color: var(--gold-deep); }
+
+.lead-deck {
+  font-family: "Source Serif 4", serif;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--ink-mid);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.lead-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 12px;
+  color: var(--ink-light);
+  margin-bottom: 24px;
+}
+
+.lead-meta .author {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.lead-meta .dot { color: var(--line); }
+
+.lead-body {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink);
+  column-count: 1;
+  max-width: 640px;
+}
+
+.lead-body p {
+  margin-bottom: 16px;
+}
+
+.lead-body p:first-child::first-letter {
+  font-family: "Source Serif 4", serif;
+  font-size: 60px;
+  font-weight: 700;
+  float: left;
+  line-height: 0.85;
+  margin: 6px 8px 0 0;
+  color: var(--gold);
+}
+
+.lead-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: var(--gold-deep);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 2px;
+  transition: all 0.15s;
+}
+
+.lead-cta:hover { color: var(--ink); border-color: var(--ink); }
+
+/* === Sidebar — TLDR and key data === */
+
+.sidebar {
+  font-family: "Source Serif 4", serif;
+}
+
+.sidebar-block {
+  margin-bottom: 32px;
+}
+
+.sidebar-block:last-child { margin-bottom: 0; }
+
+.sidebar-label {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 14px;
+}
+
+.tldr-list {
+  list-style: none;
+}
+
+.tldr-list li {
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 10px 0 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  position: relative;
+  padding-left: 22px;
+}
+
+.tldr-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  color: var(--gold);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+}
+
+.tldr-list li:last-child { border-bottom: none; }
+
+.tldr-list li strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.key-data {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.key-data-cell {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.key-data-cell:nth-child(odd) {
+  border-right: 1px solid var(--line);
+  padding-right: 14px;
+}
+
+.key-data-cell:nth-child(even) {
+  padding-left: 14px;
+}
+
+.key-data-label {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  margin-bottom: 4px;
+}
+
+.key-data-value {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.key-data-change {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.key-data-change.up { color: var(--green); }
+.key-data-change.down { color: var(--red); }
+
+/* === Section header === */
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 24px 0 16px;
+  border-bottom: 2px solid var(--ink);
+  margin: 24px 0 28px;
+}
+
+.section-head h2 {
+  font-family: "Source Serif 4", serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.section-head .more {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  text-decoration: none;
+}
+
+.section-head .more:hover { color: var(--ink); }
+
+/* === Article list (3-column row of stories) === */
+
+.story-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 900px) {
+  .story-row { grid-template-columns: 1fr; }
+}
+
+.story {
+  padding-right: 32px;
+  border-right: 1px solid var(--line);
+}
+
+.story:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+@media (max-width: 900px) {
+  .story { border-right: none; padding-right: 0; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .story:last-child { border-bottom: none; padding-bottom: 0; }
+}
+
+.story-cat {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 10px;
+}
+
+.story h3 {
+  font-family: "Source Serif 4", serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.story h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.story h3 a:hover { color: var(--gold-deep); }
+
+.story-summary {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-mid);
+  margin-bottom: 12px;
+}
+
+.story-meta {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  color: var(--ink-light);
+  display: flex;
+  gap: 8px;
+}
+
+.story-meta .dot { color: var(--line); }
+
+/* === Latest analyses list === */
+
+.latest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 48px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 900px) {
+  .latest-grid { grid-template-columns: 1fr; gap: 0; }
+}
+
+.latest-item {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.latest-time {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-light);
+  padding-top: 3px;
+}
+
+.latest-content h4 {
+  font-family: "Source Serif 4", serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.latest-content h4 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.latest-content h4 a:hover { color: var(--gold-deep); }
+
+.latest-content .cat {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+/* === Two-column block — Regions / Categories === */
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 900px) {
+  .two-col { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.col-block .col-title {
+  font-family: "Source Serif 4", serif;
+  font-size: 22px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.col-block ul {
+  list-style: none;
+}
+
+.col-block li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: "Source Serif 4", serif;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.col-block li:last-child { border-bottom: none; }
+
+.col-block li a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.col-block li a:hover { color: var(--gold-deep); }
+
+.col-block li .count {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-light);
+}
+
+/* === Subscribe block (single, restrained, no popup) === */
+
+.subscribe {
+  background: var(--paper-white);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--ink);
+  padding: 40px 48px;
+  text-align: center;
+  margin: 60px 0 40px;
+}
+
+.subscribe-label {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 12px;
+}
+
+.subscribe h3 {
+  font-family: "Source Serif 4", serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.subscribe p {
+  font-size: 16px;
+  color: var(--ink-mid);
+  margin-bottom: 20px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subscribe-form {
+  display: inline-flex;
+  gap: 0;
+  max-width: 480px;
+  width: 100%;
+}
+
+.subscribe-form input {
+  flex: 1;
+  padding: 12px 16px;
+  font-family: "Source Serif 4", serif;
+  font-size: 15px;
+  border: 1px solid var(--ink);
+  background: var(--paper-white);
+  color: var(--ink);
+  border-right: none;
+}
+
+.subscribe-form input:focus {
+  outline: none;
+  background: var(--paper);
+}
+
+.subscribe-form button {
+  padding: 12px 24px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.subscribe-form button:hover { background: var(--gold-deep); border-color: var(--gold-deep); }
+
+.subscribe-note {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  color: var(--ink-light);
+  margin-top: 14px;
+}
+
+/* === Footer === */
+
+.footer {
+  background: var(--paper-white);
+  border-top: 1px solid var(--ink);
+  padding: 40px 0 32px;
+  margin-top: 40px;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 24px;
+}
+
+@media (max-width: 700px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+
+.footer-brand .brand-name-sm {
+  font-family: "Source Serif 4", serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.footer-brand p {
+  font-family: "Source Serif 4", serif;
+  font-size: 14px;
+  color: var(--ink-mid);
+  margin-top: 8px;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.footer-col h5 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.footer-col ul { list-style: none; }
+
+.footer-col li {
+  margin-bottom: 6px;
+}
+
+.footer-col a {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 13px;
+  color: var(--ink-mid);
+  text-decoration: none;
+}
+
+.footer-col a:hover { color: var(--gold-deep); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  color: var(--ink-light);
+}
+
+.footer-bottom a {
+  color: var(--ink-light);
+  text-decoration: none;
+}
+
+.footer-bottom a:hover { color: var(--ink); }
+
+#form-status { margin-top: 12px; font-family: "IBM Plex Sans", sans-serif; font-size: 12px; }
+#form-status .success-message { color: var(--green); }
+#form-status .error-message { color: var(--red); }
+
+/* === Subtle responsive cleanup === */
+
+@media (max-width: 700px) {
+  .brand-name::before, .brand-name::after { display: none; }
+  .brand-name { font-size: 42px; }
+  .lead h1 { font-size: 32px; }
+  .nav-inner { gap: 18px; }
+  .nav a { font-size: 11px; padding: 12px 0; }
+}
+
+/* Print-friendly fallback */
+@media print {
+  body { background: white; color: black; }
+  .nav, .utility-bar, .ticker, .subscribe { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top utility bar -->
+<div class="utility-bar">
+  <div class="container">
+    <div class="left">
+      <span class="utility-date">Sunday, May 18, 2026</span>
+      <span class="utility-date" style="opacity:0.6">London 14:32 GMT</span>
+    </div>
+    <div class="right">
+      <div class="lang-switch">
+        <a href="#" data-lang="en" class="active">EN</a>
+        <a href="#" data-lang="ru">RU</a>
+      </div>
+      <a href="#subscribe" data-i18n="nav.signin">Sign in</a>
+      <a href="#subscribe" style="color:var(--gold);" data-i18n="nav.subscribe">Subscribe</a>
+    </div>
+  </div>
+</div>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand-name">FURROW</div>
+    <div class="tagline" data-i18n="hero.tagline">Global Agricultural Market Intelligence</div>
+  </div>
+</header>
+
+<!-- Main navigation -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="has-sub" data-i18n="nav.markets">Markets</a>
+    <a href="#" class="has-sub" data-i18n="nav.regions">Regions</a>
+    <a href="#" data-i18n="nav.analysis">Analysis</a>
+    <a href="#" data-i18n="nav.data">Data</a>
+    <a href="#" data-i18n="nav.reports">Reports</a>
+    <a href="#" data-i18n="nav.about">About</a>
+  </div>
+</nav>
+
+<!-- Live ticker -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-label" data-i18n="ticker.live">Live</span>
+    <div class="ticker-stream">
+      <span class="ticker-item">
+        <span class="ticker-symbol">WHEAT</span>
+        <span class="ticker-price">$245.50</span>
+        <span class="ticker-change up">+1.20%</span>
+      </span>
+      <span class="ticker-item">
+        <span class="ticker-symbol">CORN</span>
+        <span class="ticker-price">$182.75</span>
+        <span class="ticker-change down">−0.45%</span>
+      </span>
+      <span class="ticker-item">
+        <span class="ticker-symbol">SOYBEANS</span>
+        <span class="ticker-price">$435.20</span>
+        <span class="ticker-change up">+0.85%</span>
+      </span>
+      <span class="ticker-item">
+        <span class="ticker-symbol">SUNFLOWER</span>
+        <span class="ticker-price">$528.00</span>
+        <span class="ticker-change up">+2.10%</span>
+      </span>
+      <span class="ticker-item">
+        <span class="ticker-symbol">RAPESEED</span>
+        <span class="ticker-price">$487.50</span>
+        <span class="ticker-change flat">+0.00%</span>
+      </span>
+      <span class="ticker-item">
+        <span class="ticker-symbol">PALM OIL</span>
+        <span class="ticker-price">$945.80</span>
+        <span class="ticker-change down">−1.05%</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Main content -->
+<main class="main">
+
+  <!-- Lead grid: featured story + sidebar -->
+  <section class="lead-grid">
+    <article class="lead">
+      <div class="lead-eyebrow" data-i18n="home.lead.eyebrow">Daily Brief · Grains</div>
+      <h1>
+        <a href="article/sample.html" data-i18n="home.lead.title">Wheat Surges to Six-Month High as Russian Export Tax Bites Black Sea Trade</a>
+      </h1>
+      <p class="lead-deck" data-i18n="home.lead.deck">Moscow's revised export levy lifts CBOT wheat futures 4.2% in a week; Argentine drought and weak Russian harvest reinforce a bullish short-term outlook for European mills.</p>
+      <div class="lead-meta">
+        <span class="author" data-i18n="home.lead.author">By Furrow Markets Desk</span>
+        <span class="dot">·</span>
+        <span data-i18n="home.lead.readtime">6 min read</span>
+        <span class="dot">·</span>
+        <span data-i18n="home.lead.date">May 18, 2026 · 12:45 GMT</span>
+      </div>
+      <div class="lead-body">
+        <p data-i18n="home.lead.p1">Wheat prices broke through a six-month resistance level on Friday...</p>
+        <p data-i18n="home.lead.p2">European mills, already operating with thin inventory cover...</p>
+      </div>
+      <a href="article/sample.html" class="lead-cta" data-i18n="home.lead.cta">Continue reading →</a>
+    </article>
+
+    <aside class="sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-label" data-i18n="home.brief.label">In Brief</div>
+        <ul class="tldr-list">
+          <li data-i18n-html="home.brief.1"><strong>Wheat</strong> closes at six-month high amid Russian export friction</li>
+          <li data-i18n-html="home.brief.2"><strong>Argentine drought</strong> threatens 2026 corn yields; CONAB cuts forecast 3%</li>
+          <li data-i18n-html="home.brief.3"><strong>EU rapeseed</strong> imports fall 12% YoY on weaker Ukrainian flows</li>
+          <li data-i18n-html="home.brief.4"><strong>Brazil</strong> begins early soybean export season; logistics tight</li>
+          <li data-i18n-html="home.brief.5"><strong>Palm oil</strong> retreats from monthly high on Malaysian inventory data</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-label" data-i18n="home.numbers.label">Key Numbers Today</div>
+        <div class="key-data">
+          <div class="key-data-cell">
+            <div class="key-data-label" data-i18n="home.numbers.wheat">CBOT Wheat</div>
+            <div class="key-data-value">245.50</div>
+            <div class="key-data-change up">+1.20%</div>
+          </div>
+          <div class="key-data-cell">
+            <div class="key-data-label" data-i18n="home.numbers.corn">CBOT Corn</div>
+            <div class="key-data-value">182.75</div>
+            <div class="key-data-change down">−0.45%</div>
+          </div>
+          <div class="key-data-cell">
+            <div class="key-data-label" data-i18n="home.numbers.soy">Soybeans</div>
+            <div class="key-data-value">435.20</div>
+            <div class="key-data-change up">+0.85%</div>
+          </div>
+          <div class="key-data-cell">
+            <div class="key-data-label" data-i18n="home.numbers.baltic">Baltic Dry</div>
+            <div class="key-data-value">1,847</div>
+            <div class="key-data-change up">+2.34%</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Three-column story row -->
+  <div class="section-head">
+    <h2 data-i18n="home.today.title">Today's Analysis</h2>
+    <a href="#" class="more" data-i18n="home.today.more">All analyses →</a>
+  </div>
+
+  <section class="story-row">
+    <article class="story">
+      <div class="story-cat" data-i18n="home.s1.cat">Oilseeds · South America</div>
+      <h3><a href="article/sample.html" data-i18n="home.s1.title">Argentina's Soy Harvest Defies Drought Fears, But Logistics Will Test Exports</a></h3>
+      <p class="story-summary" data-i18n="home.s1.sum">
+        Despite a difficult planting season, BCR projections show 2025/26 soybean output near 49.5 million tons.
+      </p>
+      <div class="story-meta" data-i18n="home.s1.meta">Markets Desk · 4 min · 11:20 GMT</div>
+    </article>
+
+    <article class="story">
+      <div class="story-cat" data-i18n="home.s2.cat">Black Sea · Politics</div>
+      <h3><a href="article/sample.html" data-i18n="home.s2.title">Russian Export Quota Mechanics: How a $14/Ton Tax Reshapes Global Wheat Trade</a></h3>
+      <p class="story-summary" data-i18n="home.s2.sum">
+        The revised levy, effective May 15, recalibrates Russia's competitive position in tenders from Egypt to Algeria.
+      </p>
+      <div class="story-meta" data-i18n="home.s2.meta">Black Sea Desk · 9 min · 09:45 GMT</div>
+    </article>
+
+    <article class="story">
+      <div class="story-cat" data-i18n="home.s3.cat">Weather · North America</div>
+      <h3><a href="article/sample.html" data-i18n="home.s3.title">US Plains Drought Monitor: Why the Next Three Weeks Decide the 2026 Wheat Crop</a></h3>
+      <p class="story-summary" data-i18n="home.s3.sum">
+        NOAA's outlook shows persistent below-normal precipitation across Kansas and Oklahoma.
+      </p>
+      <div class="story-meta" data-i18n="home.s3.meta">Weather Desk · 5 min · 08:10 GMT</div>
+    </article>
+  </section>
+
+  <!-- Latest analyses (chronological list) -->
+  <div class="section-head">
+    <h2 data-i18n="home.latest.title">Latest</h2>
+    <a href="#" class="more" data-i18n="home.latest.more">Full archive →</a>
+  </div>
+
+  <section class="latest-grid">
+    <div>
+      <div class="latest-item">
+        <div class="latest-time">14:25</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l1.cat">Dairy · EU</div>
+          <h4><a href="article/sample.html" data-i18n="home.l1.title">EU butter prices ease as Polish output expands; cheese remains tight</a></h4>
+        </div>
+      </div>
+      <div class="latest-item">
+        <div class="latest-time">13:50</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l2.cat">Softs · Brazil</div>
+          <h4><a href="article/sample.html" data-i18n="home.l2.title">Arabica futures retreat on Brazilian harvest progress, hedge unwinding</a></h4>
+        </div>
+      </div>
+      <div class="latest-item">
+        <div class="latest-time">12:15</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l3.cat">Fertilizer · Global</div>
+          <h4><a href="article/sample.html" data-i18n="home.l3.title">Urea prices stabilize after a volatile week; Indian tender awaited</a></h4>
+        </div>
+      </div>
+      <div class="latest-item">
+        <div class="latest-time">11:40</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l4.cat">Grains · Kazakhstan</div>
+          <h4><a href="article/sample.html" data-i18n="home.l4.title">Kazakh wheat exports to China rise 28% YoY in April</a></h4>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="latest-item">
+        <div class="latest-time">10:50</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l5.cat">Livestock · US</div>
+          <h4><a href="article/sample.html" data-i18n="home.l5.title">US cattle inventory at 73-year low; ranchers cautious on rebuilding</a></h4>
+        </div>
+      </div>
+      <div class="latest-item">
+        <div class="latest-time">09:30</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l6.cat">Shipping · Black Sea</div>
+          <h4><a href="article/sample.html" data-i18n="home.l6.title">Bosphorus transit times normalize; insurance premiums hold elevated</a></h4>
+        </div>
+      </div>
+      <div class="latest-item">
+        <div class="latest-time">08:00</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l7.cat">Special Report · Premium</div>
+          <h4><a href="article/sample.html" data-i18n="home.l7.title">Monthly Outlook: Grains and oilseeds positioning for Northern Hemisphere harvest</a></h4>
+        </div>
+      </div>
+      <div class="latest-item">
+        <div class="latest-time">07:15</div>
+        <div class="latest-content">
+          <div class="cat" data-i18n="home.l8.cat">Policy · EU</div>
+          <h4><a href="article/sample.html" data-i18n="home.l8.title">CAP 2027 reform proposal: implications for grain producers in EU East</a></h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Markets and Regions -->
+  <div class="two-col">
+    <div class="col-block">
+      <div class="col-title" data-i18n="home.col.market">By Market</div>
+      <ul>
+        <li><a href="#" data-i18n="home.m1">Grains — Wheat, Corn, Barley, Oats</a><span class="count">142 <span data-i18n="home.count.articles">articles</span></span></li>
+        <li><a href="#" data-i18n="home.m2">Oilseeds — Soy, Rapeseed, Sunflower</a><span class="count">98</span></li>
+        <li><a href="#" data-i18n="home.m3">Livestock — Cattle, Hogs, Poultry</a><span class="count">76</span></li>
+        <li><a href="#" data-i18n="home.m4">Dairy — Milk, Butter, Cheese, Powder</a><span class="count">54</span></li>
+        <li><a href="#" data-i18n="home.m5">Softs — Coffee, Sugar, Cocoa, Cotton</a><span class="count">88</span></li>
+        <li><a href="#" data-i18n="home.m6">Fertilizer & Inputs</a><span class="count">62</span></li>
+      </ul>
+    </div>
+    <div class="col-block">
+      <div class="col-title" data-i18n="home.col.region">By Region</div>
+      <ul>
+        <li><a href="#" data-i18n="home.r1">Black Sea — Russia, Ukraine, Kazakhstan</a><span class="count">183</span></li>
+        <li><a href="#" data-i18n="home.r2">European Union</a><span class="count">156</span></li>
+        <li><a href="#" data-i18n="home.r3">North America — US & Canada</a><span class="count">204</span></li>
+        <li><a href="#" data-i18n="home.r4">South America — Brazil & Argentina</a><span class="count">147</span></li>
+        <li><a href="#" data-i18n="home.r5">Asia — China, India, Southeast Asia</a><span class="count">112</span></li>
+        <li><a href="#" data-i18n="home.r6">Middle East & North Africa</a><span class="count">68</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Subscribe block — restrained, no popup -->
+  <section class="subscribe" id="subscribe">
+    <div class="subscribe-label" data-i18n="sub.label">The Daily Brief</div>
+    <h3 data-i18n="sub.title">One email. Every weekday. Six minutes.</h3>
+    <p data-i18n="sub.body">
+      What moved global agricultural markets, why it matters, and what to watch tomorrow.
+      Read by analysts, traders, and farm operators in 40+ countries.
+    </p>
+    <form class="subscribe-form" id="signup-form">
+      <input type="email" id="email" required data-i18n-placeholder="wait.email" placeholder="your@email.com" />
+      <input type="hidden" id="fname" value="" />
+      <button type="submit" data-i18n="sub.cta">Subscribe Free</button>
+    </form>
+    <div id="form-status"></div>
+    <div class="subscribe-note" data-i18n="sub.note">No spam. Unsubscribe in one click. We don't sell your data.</div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand-name-sm">FURROW</div>
+        <p>Independent agricultural market intelligence for traders, producers, and institutions worldwide.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Sections</h5>
+        <ul>
+          <li><a href="#">Markets</a></li>
+          <li><a href="#">Regions</a></li>
+          <li><a href="#">Analysis</a></li>
+          <li><a href="#">Data</a></li>
+          <li><a href="#">Reports</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Methodology</a></li>
+          <li><a href="#">Editorial Standards</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Subscribe</h5>
+        <ul>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Free Brief</a></li>
+          <li><a href="#">RSS</a></li>
+          <li><a href="#">API</a></li>
+          <li><a href="#">Enterprise</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Furrow Markets. A Nexus Group company.</div>
+      <div>
+        <a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="#">Disclosures</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<link rel="stylesheet" href="styles/furrow-chat.css">
+<button type="button" class="furrow-chat-fab" id="furrow-chat-fab" aria-expanded="false" aria-controls="furrow-chat-panel" data-i18n="chat.fab">AI Analyst</button>
+<div class="furrow-chat-panel" id="furrow-chat-panel" role="dialog" aria-label="Furrow Analyst">
+	<div class="furrow-chat-head">
+		<div>
+			<strong data-i18n="chat.title">Furrow Analyst</strong>
+			<span class="furrow-chat-status" id="furrow-chat-status">…</span>
+		</div>
+		<button type="button" class="furrow-chat-close" id="furrow-chat-close" aria-label="Close">×</button>
+	</div>
+	<div class="furrow-chat-msgs" id="furrow-chat-msgs" aria-live="polite"></div>
+	<p class="furrow-chat-hint" data-i18n="chat.hint">Market intelligence · launch 2026</p>
+	<div class="furrow-chat-quick" id="furrow-chat-quick">
+		<button type="button" data-i18n="chat.quickPricing" data-prompt="What are Furrow pricing plans?">Pricing</button>
+		<button type="button" data-i18n="chat.quickWaitlist" data-prompt="I want to join the early access waitlist. My name is Alex, email alex@example.com">Waitlist</button>
+		<button type="button" data-i18n="chat.quickBlackSea" data-prompt="Explain Black Sea wheat export trends">Black Sea</button>
+		<button type="button" data-i18n="chat.quickMarkets" data-prompt="What are current delayed CBOT wheat, corn and soy prices?">Markets</button>
+	</div>
+	<div class="furrow-chat-foot">
+		<textarea id="furrow-chat-input" rows="2" maxlength="2000" data-i18n-placeholder="chat.placeholder" placeholder="Ask…"></textarea>
+		<button type="button" class="furrow-chat-send" id="furrow-chat-send" aria-label="Send">→</button>
+	</div>
+</div>
+
+<script src="scripts/i18n-strings.js"></script>
+<script src="scripts/i18n-home-strings.js"></script>
+<script src="scripts/i18n.js"></script>
+<script src="scripts/waitlist.js"></script>
+<script src="scripts/ticker-live.js"></script>
+<script src="scripts/i18n-chat-strings.js"></script>
+<script src="scripts/furrow-chat.js"></script>
+</body>
+</html>

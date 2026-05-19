@@ -1,0 +1,16 @@
+{
+	"name": "furrow-marketing",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "node --import tsx scripts/dev-server.mjs",
+		"serve": "npx --yes serve . -p 3456"
+	},
+	"dependencies": {
+		"@vercel/node": "^5.5.28"
+	},
+	"devDependencies": {
+		"tsx": "^4.19.3",
+		"typescript": "^5.7.3"
+	}
+}
