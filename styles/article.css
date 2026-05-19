@@ -284,6 +284,49 @@ body {
 	color: #1a2a3a;
 }
 
+.article-details {
+	margin: 24px 0 32px;
+	font-family: system-ui, -apple-system, sans-serif;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	background: #f8fafc;
+	overflow: hidden;
+}
+
+.article-details summary {
+	cursor: pointer;
+	padding: 14px 18px;
+	font-weight: 600;
+	font-size: 14px;
+	color: #2c5f2d;
+	list-style: none;
+}
+
+.article-details summary::-webkit-details-marker {
+	display: none;
+}
+
+.article-details summary::after {
+	content: ' ▾';
+	font-size: 12px;
+	color: #64748b;
+}
+
+.article-details[open] summary::after {
+	content: ' ▴';
+}
+
+.article-details .article-table-wrap {
+	margin: 0;
+	padding: 0 12px 16px;
+}
+
+.article-table--wide td:last-child {
+	font-size: 13px;
+	color: #475569;
+	min-width: 12rem;
+}
+
 @media (max-width: 768px) {
 	.article-chart-wrap {
 		height: 380px;
