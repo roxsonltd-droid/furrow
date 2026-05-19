@@ -45,6 +45,34 @@ body {
 	color: #2c5f2d;
 }
 
+.article-nav-right {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.article-lang-switch {
+	display: inline-flex;
+	border: 1px solid #cbd5e1;
+	border-radius: 4px;
+	overflow: hidden;
+	font-family: system-ui, sans-serif;
+}
+
+.article-lang-switch a {
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 600;
+	color: #475569;
+	text-decoration: none;
+}
+
+.article-lang-switch a.active {
+	background: #2c5f2d;
+	color: #fff;
+}
+
 .article-container {
 	max-width: 720px;
 	margin: 0 auto;
