@@ -10,11 +10,10 @@
 		'nav.reports': 'Reports',
 		'nav.about': 'About',
 		'ticker.live': 'Live',
-		'home.lead.eyebrow': 'Daily Brief · Grains',
-		'home.lead.title':
-			'Wheat Surges to Six-Month High as Russian Export Tax Bites Black Sea Trade',
+		'home.lead.eyebrow': 'Black Sea Grains · Analysis',
+		'home.lead.title': 'Ukraine: The Harvest of War — Upcoming Wheat Campaign',
 		'home.lead.deck':
-			"Moscow's revised export levy lifts CBOT wheat futures 4.2% in a week; Argentine drought and weak Russian harvest reinforce a bullish short-term outlook for European mills.",
+			'Mines, labor shortages, and logistics reshape the 2026 wheat harvest — what global markets should expect from Odesa to Zaporizhzhia.',
 		'home.lead.author': 'By Furrow Markets Desk',
 		'home.lead.readtime': '6 min read',
 		'home.lead.date': 'May 18, 2026 · 12:45 GMT',
