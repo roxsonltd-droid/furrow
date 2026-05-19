@@ -4,19 +4,19 @@
 	const interestSelect = document.getElementById('interest-package');
 	const contactSection = document.getElementById('contact');
 
+	function t(key) {
+		const lang = window.FurrowI18n?.getLang?.() || 'en';
+		return window.FURROW_I18N?.[lang]?.[key] || window.FURROW_I18N?.en?.[key] || '';
+	}
+
+	function successHtml() {
+		return `<div class="form-success">${t('sp.form.success')}</div>`;
+	}
+
 	window.selectPackage = function selectPackage(packageName) {
 		if (interestSelect) {
-			const opt = Array.from(interestSelect.options).find(
-				(o) => o.value === packageName || o.textContent.includes(packageName.split(' ')[0])
-			);
+			const opt = Array.from(interestSelect.options).find((o) => o.value === packageName);
 			if (opt) interestSelect.value = opt.value;
-			else {
-				const custom = document.createElement('option');
-				custom.value = packageName;
-				custom.textContent = packageName;
-				custom.selected = true;
-				interestSelect.appendChild(custom);
-			}
 		}
 		if (contactSection) {
 			contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -24,8 +24,9 @@
 	};
 
 	window.downloadMediaKit = function downloadMediaKit() {
-		window.location.href =
-			'mailto:sponsors@furrowmarkets.com?subject=Media%20Kit%20Request&body=Please%20send%20the%20Furrow%20Markets%20media%20kit.';
+		const subject = encodeURIComponent('Media Kit Request');
+		const body = encodeURIComponent('Please send the Furrow Markets media kit.');
+		window.location.href = `mailto:sponsors@furrowmarkets.com?subject=${subject}&body=${body}`;
 	};
 
 	if (!form) return;
@@ -42,9 +43,9 @@
 		const message = document.getElementById('message')?.value?.trim() || '';
 
 		const submitBtn = form.querySelector('.submit-btn');
-		const originalText = submitBtn?.textContent || 'Send Inquiry →';
+		const submitKey = 'sp.form.submit';
 		if (submitBtn) {
-			submitBtn.textContent = 'Sending...';
+			submitBtn.textContent = t('sp.form.sending');
 			submitBtn.disabled = true;
 		}
 
@@ -67,18 +68,23 @@ Submitted from Furrow Markets sponsor page`;
 		window.location.href = mailtoLink;
 
 		if (statusDiv) {
-			statusDiv.innerHTML =
-				'<div class="form-success">Thanks! We\'ll get back to you within 24 hours. Your email client should open — please send the generated message.</div>';
+			statusDiv.innerHTML = successHtml();
 		}
 		form.reset();
 
 		if (submitBtn) {
-			submitBtn.textContent = originalText;
+			submitBtn.textContent = t(submitKey);
 			submitBtn.disabled = false;
 		}
 	});
 
-	// Pre-select package from URL ?package=banner|issue|leads
+	document.addEventListener('furrow-lang-change', () => {
+		const submitBtn = form.querySelector('.submit-btn');
+		if (submitBtn && !submitBtn.disabled) {
+			submitBtn.textContent = t('sp.form.submit');
+		}
+	});
+
 	const params = new URLSearchParams(window.location.search);
 	const pkg = params.get('package');
 	if (pkg && interestSelect) {
