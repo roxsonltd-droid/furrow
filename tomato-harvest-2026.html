@@ -3,311 +3,137 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Tomato Harvest 2026 — Charts &amp; Tables | Furrow Markets</title>
-	<meta name="description" content="Processing tomato production forecast 2026 and Iran market replacement — interactive charts and tables.">
+	<title>Tomato Harvest 2026 — Iran’s Exit Reshapes Global Paste Trade | Furrow Markets</title>
+	<meta name="description" content="Processing tomato forecast 2026, Iran export ban, and who captures displaced paste volumes.">
 	<link rel="stylesheet" href="styles/article.css">
-	<link rel="stylesheet" href="styles/tomato-harvest.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
-	<script src="scripts/tomato-harvest-charts.js" defer></script>
 </head>
-<body>
+<body data-i18n-title="tm.page.title">
 
 <nav class="article-nav">
 	<a href="/" class="article-logo">FURROW MARKETS</a>
-	<div class="article-nav-links">
-		<a href="/">Home</a>
-		<a href="/ukraine-harvest-war">Ukraine Harvest</a>
-		<a href="/tomato-harvest-2026" class="active">Tomato 2026</a>
-		<a href="/sponsor">Sponsor</a>
-		<a href="/register.html">Register</a>
+	<div class="article-nav-right">
+		<div class="article-nav-links">
+			<a href="/" data-i18n="tm.nav.home">Home</a>
+			<a href="/ukraine-harvest-war" data-i18n="tm.nav.ukraine">Ukraine Harvest 2026</a>
+			<a href="/tomato-harvest-2026" class="active" data-i18n="tm.nav.tomato">Tomato 2026</a>
+			<a href="/sponsor" data-i18n="tm.nav.sponsor">Sponsor</a>
+			<a href="/register.html" data-i18n="tm.nav.register">Register</a>
+		</div>
+		<div class="article-lang-switch lang-switch">
+			<a href="#" data-lang="en" class="active">EN</a>
+			<a href="#" data-lang="ru">RU</a>
+		</div>
 	</div>
 </nav>
 
-<main class="tomato-page">
-	<div class="lang-switch">
-		<button type="button" class="lang-btn active" data-lang="en" onclick="setTomatoLang('en')">English</button>
-		<button type="button" class="lang-btn" data-lang="ru" onclick="setTomatoLang('ru')">Русский</button>
+<article class="article-container">
+	<div class="article-kicker" data-i18n="tm.kicker">SOFTS &amp; PROCESSING · ANALYSIS</div>
+	<h1 data-i18n="tm.h1">Tomato Harvest 2026: When Iran Leaves the Table</h1>
+	<div class="article-meta">
+		<span data-i18n="tm.meta.date">May 2026</span>
+		<span data-i18n="tm.meta.read">7 min read</span>
+		<span data-i18n="tm.meta.author">Furrow Markets Desk</span>
 	</div>
 
-	<div id="content-en">
-		<h1>Tomato Harvest 2026 — Charts &amp; Tables</h1>
-		<p class="subtitle">Processing tomato production forecast and Iran market replacement</p>
-
-		<div class="stats-row">
-			<div class="stat-card">
-				<div class="stat-label">Global forecast 2026</div>
-				<div class="stat-value">39.8 M tonnes</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-label">vs 2024 (peak)</div>
-				<div class="stat-value danger">−13%</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-label">Italy ex-field price</div>
-				<div class="stat-value">€137 /t</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-label">Iran exports lost</div>
-				<div class="stat-value danger">~240 K t</div>
-			</div>
-		</div>
-
-		<h2>Production forecast by country</h2>
-		<div class="chart-container">
-			<div class="chart-legend">
-				<span class="legend-item"><span class="legend-swatch" style="background:#D85A30;"></span>Europe</span>
-				<span class="legend-item"><span class="legend-swatch" style="background:#7F77DD;"></span>Asia &amp; Middle East</span>
-				<span class="legend-item"><span class="legend-swatch" style="background:#1D9E75;"></span>Southern Hemisphere</span>
-			</div>
-			<div class="chart-wrapper">
-				<canvas id="chartEn" role="img" aria-label="Bar chart: tomato processing production forecast 2026 by country"></canvas>
-			</div>
-			<div class="caption">Source: WPTC crop updates (Feb–May 2026), AMITOM, industry reports.</div>
-		</div>
-
-		<div class="iran-banner">
-			<strong>Iran:</strong> Indefinite agri-food export ban effective 3 March 2026. Approximately 240,000 tonnes of paste exports per year removed from the global market.
-		</div>
-
-		<h2>Who replaces Iran's market share?</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Former Iran market</th>
-					<th>Annual volume</th>
-					<th>Likely replacement</th>
-					<th>Strategic reasoning</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="market-name">Iraq</td>
-					<td class="volume">~80,000 t</td>
-					<td class="replacement">China, Türkiye, UAE re-export</td>
-					<td>China was already taking share before the ban; Türkiye benefits from geographic proximity</td>
-				</tr>
-				<tr>
-					<td class="market-name">Afghanistan</td>
-					<td class="volume">~34,000 t</td>
-					<td class="replacement">China, Pakistan re-export</td>
-					<td>Logistics through Central Asia, lower price points</td>
-				</tr>
-				<tr>
-					<td class="market-name">UAE</td>
-					<td class="volume">~6,000 t</td>
-					<td class="replacement">China, Egypt</td>
-					<td>UAE itself re-exports paste to Iraq; tolerant of multiple origins</td>
-				</tr>
-				<tr>
-					<td class="market-name">Russia</td>
-					<td class="volume">~4,500 t</td>
-					<td class="replacement">China, Türkiye, Uzbekistan</td>
-					<td>Russia heavily reliant on Iran for produce (40% Dec–Jun); short-term gap</td>
-				</tr>
-				<tr>
-					<td class="market-name">Türkiye (domestic)</td>
-					<td class="volume">Variable</td>
-					<td class="replacement">Domestic production, China</td>
-					<td>~7 kg per-capita paste consumption; high import dependence</td>
-				</tr>
-				<tr>
-					<td class="market-name">Kazakhstan / Central Asia</td>
-					<td class="volume">&lt;1,000 t</td>
-					<td class="replacement">Uzbekistan, China</td>
-					<td>Local processing capacity is growing</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<h2>Beneficiary ranking</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Rank</th>
-					<th>Country</th>
-					<th>Strength</th>
-					<th>Key markets captured</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><strong>1</strong></td>
-					<td class="market-name">China</td>
-					<td>Excess inventory, lowest price</td>
-					<td>Iraq, Russia, Central Asia, UAE</td>
-				</tr>
-				<tr>
-					<td><strong>2</strong></td>
-					<td class="market-name">Türkiye</td>
-					<td>Geographic proximity, logistics</td>
-					<td>Iraq, re-export to Russia via Azerbaijan</td>
-				</tr>
-				<tr>
-					<td><strong>3</strong></td>
-					<td class="market-name">Egypt</td>
-					<td>Year-round supply, growth track record</td>
-					<td>UAE, Saudi Arabia, Russia</td>
-				</tr>
-				<tr>
-					<td><strong>4</strong></td>
-					<td class="market-name">Uzbekistan</td>
-					<td>Regional position</td>
-					<td>Kazakhstan, Central Asia, partial Russia</td>
-				</tr>
-				<tr>
-					<td><strong>5</strong></td>
-					<td class="market-name">Italy / Spain</td>
-					<td>Premium quality, EU compliance</td>
-					<td>European industrial buyers diversifying from China</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<div id="content-ru" class="hidden">
-		<h1>Урожай томатов 2026 — графики и таблицы</h1>
-		<p class="subtitle">Прогноз производства томатов для переработки и замещение иранской доли</p>
-
-		<div class="stats-row">
-			<div class="stat-card">
-				<div class="stat-label">Мировой прогноз 2026</div>
-				<div class="stat-value">39,8 млн т</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-label">К 2024 (пик)</div>
-				<div class="stat-value danger">−13%</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-label">Цена Италия с поля</div>
-				<div class="stat-value">€137 /т</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-label">Потери экспорта Ирана</div>
-				<div class="stat-value danger">~240 тыс. т</div>
-			</div>
-		</div>
-
-		<h2>Прогноз производства по странам</h2>
-		<div class="chart-container">
-			<div class="chart-legend">
-				<span class="legend-item"><span class="legend-swatch" style="background:#D85A30;"></span>Европа</span>
-				<span class="legend-item"><span class="legend-swatch" style="background:#7F77DD;"></span>Азия и Ближний Восток</span>
-				<span class="legend-item"><span class="legend-swatch" style="background:#1D9E75;"></span>Южное полушарие</span>
-			</div>
-			<div class="chart-wrapper">
-				<canvas id="chartRu" role="img" aria-label="Столбчатая диаграмма прогноза производства томатов 2026"></canvas>
-			</div>
-			<div class="caption">Источник: WPTC (обновления февраль–май 2026), AMITOM, отраслевые отчёты.</div>
-		</div>
-
-		<div class="iran-banner">
-			<strong>Иран:</strong> Бессрочный запрет на экспорт сельхозпродукции с 3 марта 2026. С мирового рынка ушло около 240 000 тонн пасты в год.
-		</div>
-
-		<h2>Кто заберёт долю Ирана?</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Бывший рынок Ирана</th>
-					<th>Годовой объём</th>
-					<th>Вероятная замена</th>
-					<th>Стратегическое обоснование</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="market-name">Ирак</td>
-					<td class="volume">~80 000 т</td>
-					<td class="replacement">Китай, Турция, реэкспорт ОАЭ</td>
-					<td>Китай уже отвоёвывал долю до запрета; Турция выигрывает от близости</td>
-				</tr>
-				<tr>
-					<td class="market-name">Афганистан</td>
-					<td class="volume">~34 000 т</td>
-					<td class="replacement">Китай, реэкспорт Пакистана</td>
-					<td>Логистика через Центральную Азию, низкие цены</td>
-				</tr>
-				<tr>
-					<td class="market-name">ОАЭ</td>
-					<td class="volume">~6 000 т</td>
-					<td class="replacement">Китай, Египет</td>
-					<td>ОАЭ сами реэкспортируют в Ирак; принимают любое происхождение</td>
-				</tr>
-				<tr>
-					<td class="market-name">Россия</td>
-					<td class="volume">~4 500 т</td>
-					<td class="replacement">Китай, Турция, Узбекистан</td>
-					<td>Россия зависит от Ирана по овощам (40% дек–июнь); краткосрочный пробел</td>
-				</tr>
-				<tr>
-					<td class="market-name">Турция (внутр. рынок)</td>
-					<td class="volume">Переменно</td>
-					<td class="replacement">Внутреннее произв., Китай</td>
-					<td>~7 кг пасты на душу в год; высокая зависимость от импорта</td>
-				</tr>
-				<tr>
-					<td class="market-name">Казахстан / ЦА</td>
-					<td class="volume">&lt;1 000 т</td>
-					<td class="replacement">Узбекистан, Китай</td>
-					<td>Местные перерабатывающие мощности растут</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<h2>Рейтинг бенефициаров</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Место</th>
-					<th>Страна</th>
-					<th>Сильная сторона</th>
-					<th>Захваченные рынки</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><strong>1</strong></td>
-					<td class="market-name">Китай</td>
-					<td>Избыточные запасы, самая низкая цена</td>
-					<td>Ирак, Россия, Центральная Азия, ОАЭ</td>
-				</tr>
-				<tr>
-					<td><strong>2</strong></td>
-					<td class="market-name">Турция</td>
-					<td>Географическая близость, логистика</td>
-					<td>Ирак, реэкспорт в Россию через Азербайджан</td>
-				</tr>
-				<tr>
-					<td><strong>3</strong></td>
-					<td class="market-name">Египет</td>
-					<td>Круглогодичное предложение, послужной список</td>
-					<td>ОАЭ, Саудовская Аравия, Россия</td>
-				</tr>
-				<tr>
-					<td><strong>4</strong></td>
-					<td class="market-name">Узбекистан</td>
-					<td>Региональное положение</td>
-					<td>Казахстан, Центральная Азия, частично Россия</td>
-				</tr>
-				<tr>
-					<td><strong>5</strong></td>
-					<td class="market-name">Италия / Испания</td>
-					<td>Премиум-качество, соответствие ЕС</td>
-					<td>Европейские промышленные покупатели, уходящие от Китая</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<p class="tomato-footer">
-		WPTC, AMITOM, Morningstar Tomato Co., Tomato News, EastFruit, IndexBox — 2025–2026
+	<p class="article-lead" data-i18n-html="tm.lead">
+		Processing tomato output is set to fall to <strong>39.8 million tonnes</strong> in 2026 — about <strong>13% below</strong> the 2024 peak — while an indefinite Iranian export ban removes roughly <strong>240,000 tonnes</strong> of paste from world trade.
 	</p>
-</main>
+
+	<aside class="data-box">
+		<h4 data-i18n="tm.db.title">At a glance (2026)</h4>
+		<ul>
+			<li data-i18n-html="tm.db.l1"><strong>39.8 M t</strong> — WPTC global processing forecast</li>
+			<li data-i18n-html="tm.db.l2"><strong>−13%</strong> vs 2024 peak crop</li>
+			<li data-i18n-html="tm.db.l3"><strong>€137/t</strong> — indicative Italy ex-field reference</li>
+			<li data-i18n-html="tm.db.l4"><strong>~240 K t</strong> — Iranian paste exports off the market</li>
+		</ul>
+	</aside>
+
+	<h2 data-i18n="tm.h2.chart">Production forecast by country</h2>
+	<p data-i18n="tm.p.chart">Italy remains the largest single processor, but China’s projected volume is nearly as large.</p>
+
+	<figure class="article-figure">
+		<div class="article-chart-legend">
+			<span class="leg-eu" data-i18n="tm.chart.legend.eu">Europe</span>
+			<span class="leg-asia" data-i18n="tm.chart.legend.asia">Asia &amp; Middle East</span>
+			<span class="leg-sh" data-i18n="tm.chart.legend.sh">Southern Hemisphere</span>
+		</div>
+		<div class="article-chart-wrap">
+			<canvas id="tomatoChart" role="img" aria-label="Processing tomato production forecast 2026 by country"></canvas>
+		</div>
+		<figcaption data-i18n="tm.chart.caption">Source: WPTC crop updates (Feb–May 2026), AMITOM, industry reports.</figcaption>
+	</figure>
+
+	<h2 data-i18n="tm.h2.iran">Iran’s export ban</h2>
+	<p data-i18n-html="tm.p.iran">Tehran’s indefinite agri-food export halt from <strong>3 March 2026</strong> removes a low-cost paste supplier from regional trade.</p>
+
+	<h2 data-i18n="tm.h2.replace">Who picks up the volume?</h2>
+	<p data-i18n="tm.p.replace">Four corridors capture most of the tonnage. Geographic logic points to China and Türkiye in the short run.</p>
+
+	<aside class="data-box">
+		<h4 data-i18n="tm.db2.title">Main replacement corridors</h4>
+		<ul>
+			<li data-i18n-html="tm.db2.l1"><strong>Iraq (~80 K t)</strong> — China, Türkiye, UAE re-export</li>
+			<li data-i18n-html="tm.db2.l2"><strong>Afghanistan (~34 K t)</strong> — China, Pakistan re-export</li>
+			<li data-i18n-html="tm.db2.l3"><strong>Russia (~4.5 K t)</strong> — China, Türkiye, Uzbekistan</li>
+			<li data-i18n-html="tm.db2.l4"><strong>UAE hub (~6 K t)</strong> — China, Egypt</li>
+		</ul>
+	</aside>
+
+	<h2 data-i18n="tm.h2.rank">Beneficiary ranking</h2>
+	<p data-i18n="tm.p.rank">Ranked by ability to absorb displaced Iranian volume at scale:</p>
+
+	<div class="article-table-wrap">
+		<table class="article-table">
+			<thead>
+				<tr>
+					<th data-i18n="tm.th.rank">Rank</th>
+					<th data-i18n="tm.th.country">Country</th>
+					<th data-i18n="tm.th.edge">Edge</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td class="col-country" data-i18n="tm.r1.c">China</td>
+					<td data-i18n="tm.r1.e">Excess stocks, lowest offer</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td class="col-country" data-i18n="tm.r2.c">Türkiye</td>
+					<td data-i18n="tm.r2.e">Proximity, Gulf logistics</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td class="col-country" data-i18n="tm.r3.c">Egypt</td>
+					<td data-i18n="tm.r3.e">Year-round supply</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td class="col-country" data-i18n="tm.r4.c">Uzbekistan</td>
+					<td data-i18n="tm.r4.e">Central Asia routes</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td class="col-country" data-i18n="tm.r5.c">Italy / Spain</td>
+					<td data-i18n="tm.r5.e">EU quality, premium buyers</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<p class="article-byline"><em data-i18n="tm.byline">— Furrow Markets Desk</em></p>
+</article>
 
 <footer class="article-footer">
-	<p>© 2026 Furrow Markets — Agricultural market intelligence</p>
-	<p><a href="mailto:hello@furrowmarkets.com">hello@furrowmarkets.com</a></p>
+	<p data-i18n="tm.footer.line1">© 2026 Furrow Markets — Agricultural market intelligence</p>
+	<p><a href="mailto:hello@furrowmarkets.com">hello@furrowmarkets.com</a> · <span data-i18n="tm.footer.langs">English · Русский</span></p>
 </footer>
 
+<script src="scripts/i18n-strings.js"></script>
+<script src="scripts/i18n-tomato-strings.js"></script>
+<script src="scripts/i18n.js"></script>
+<script src="scripts/tomato-harvest-charts.js"></script>
 </body>
 </html>
