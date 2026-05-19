@@ -5,7 +5,8 @@
 	"rewrites": [
 		{ "source": "/api/(.*)", "destination": "/api/$1" },
 		{ "source": "/ukraine-harvest-war", "destination": "/ukraine-harvest-war.html" },
-		{ "source": "/sponsor", "destination": "/sponsor.html" }
+		{ "source": "/sponsor", "destination": "/sponsor.html" },
+		{ "source": "/tomato-harvest-2026", "destination": "/tomato-harvest-2026.html" }
 	],
 	"functions": {
 		"api/**/*.ts": {

@@ -1,0 +1,234 @@
+.tomato-page {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 32px 24px 48px;
+	background: #fafaf7;
+	color: #2c2c2a;
+	line-height: 1.6;
+}
+
+.tomato-page .lang-switch {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+	margin-bottom: 24px;
+}
+
+.tomato-page .lang-btn {
+	padding: 8px 16px;
+	border: 1px solid #ccc;
+	background: white;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: all 0.15s;
+}
+
+.tomato-page .lang-btn:hover {
+	background: #f0ede5;
+}
+
+.tomato-page .lang-btn.active {
+	background: #2e5496;
+	color: white;
+	border-color: #2e5496;
+}
+
+.tomato-page h1 {
+	font-size: 28px;
+	font-weight: 600;
+	color: #1f3864;
+	margin: 0 0 8px;
+	border-bottom: 2px solid #2e5496;
+	padding-bottom: 12px;
+}
+
+.tomato-page h2 {
+	font-size: 20px;
+	font-weight: 600;
+	color: #2e5496;
+	margin: 36px 0 12px;
+}
+
+.tomato-page .subtitle {
+	color: #666;
+	font-size: 15px;
+	font-style: italic;
+	margin-bottom: 32px;
+}
+
+.tomato-page .stats-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 16px;
+	margin: 24px 0;
+}
+
+.tomato-page .stat-card {
+	background: white;
+	border: 1px solid #e5e2d5;
+	border-radius: 10px;
+	padding: 18px 20px;
+}
+
+.tomato-page .stat-label {
+	font-size: 13px;
+	color: #666;
+	margin-bottom: 6px;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+}
+
+.tomato-page .stat-value {
+	font-size: 26px;
+	font-weight: 600;
+	color: #1f3864;
+}
+
+.tomato-page .stat-value.danger {
+	color: #a32d2d;
+}
+
+.tomato-page .stat-value.success {
+	color: #1d9e75;
+}
+
+.tomato-page .chart-container {
+	background: white;
+	border: 1px solid #e5e2d5;
+	border-radius: 10px;
+	padding: 24px;
+	margin: 20px 0;
+}
+
+.tomato-page .chart-wrapper {
+	position: relative;
+	width: 100%;
+	height: 460px;
+}
+
+.tomato-page .chart-legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 18px;
+	margin-bottom: 16px;
+	font-size: 13px;
+	color: #555;
+}
+
+.tomato-page .legend-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.tomato-page .legend-swatch {
+	width: 12px;
+	height: 12px;
+	border-radius: 2px;
+}
+
+.tomato-page .caption {
+	font-size: 12px;
+	color: #888;
+	font-style: italic;
+	text-align: center;
+	margin-top: 12px;
+}
+
+.tomato-page table {
+	width: 100%;
+	border-collapse: collapse;
+	background: white;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 0 0 1px #e5e2d5;
+	margin: 16px 0 28px;
+	font-size: 14px;
+}
+
+.tomato-page th {
+	background: #e8e2d5;
+	color: #2c2c2a;
+	text-align: left;
+	padding: 12px 14px;
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.tomato-page td {
+	padding: 12px 14px;
+	border-top: 1px solid #f0ede5;
+	vertical-align: top;
+}
+
+.tomato-page tr:hover td {
+	background: #fcfbf7;
+}
+
+.tomato-page .market-name {
+	font-weight: 600;
+	color: #1f3864;
+}
+
+.tomato-page .volume {
+	color: #666;
+	font-variant-numeric: tabular-nums;
+}
+
+.tomato-page .replacement {
+	color: #2e5496;
+	font-weight: 500;
+}
+
+.tomato-page .iran-banner {
+	background: linear-gradient(to right, #fcebeb, #faf3e0);
+	border-left: 4px solid #a32d2d;
+	border-radius: 6px;
+	padding: 12px 16px;
+	margin: 16px 0;
+	font-size: 14px;
+	color: #501313;
+}
+
+.tomato-page .iran-banner strong {
+	color: #a32d2d;
+}
+
+.tomato-page .hidden {
+	display: none;
+}
+
+.tomato-page .tomato-footer {
+	margin-top: 40px;
+	padding-top: 20px;
+	border-top: 1px solid #e5e2d5;
+	font-size: 12px;
+	color: #888;
+	text-align: center;
+	font-style: italic;
+}
+
+@media (max-width: 640px) {
+	.tomato-page {
+		padding: 16px 12px 32px;
+	}
+	.tomato-page h1 {
+		font-size: 22px;
+	}
+	.tomato-page .stat-value {
+		font-size: 22px;
+	}
+	.tomato-page .chart-wrapper {
+		height: 520px;
+	}
+	.tomato-page table {
+		font-size: 12px;
+	}
+	.tomato-page th,
+	.tomato-page td {
+		padding: 8px 10px;
+	}
+}
