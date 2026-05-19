@@ -4,7 +4,8 @@
 	"framework": null,
 	"rewrites": [
 		{ "source": "/api/(.*)", "destination": "/api/$1" },
-		{ "source": "/ukraine-harvest-war", "destination": "/ukraine-harvest-war.html" }
+		{ "source": "/ukraine-harvest-war", "destination": "/ukraine-harvest-war.html" },
+		{ "source": "/sponsor", "destination": "/sponsor.html" }
 	],
 	"functions": {
 		"api/**/*.ts": {
