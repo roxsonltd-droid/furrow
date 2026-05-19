@@ -120,9 +120,10 @@ export async function executeFurrowAgentTool(
 		const interest = typeof args.interest === 'string' ? args.interest : 'all';
 		const out = await submitFurrowWaitlist({ fullName, email, interest });
 		if (!out.ok) {
+			const errMsg = out.error;
 			return {
 				result: JSON.stringify(out),
-				action: { tool: name, ok: false, summary: out.error },
+				action: { tool: name, ok: false, summary: errMsg },
 			};
 		}
 		const en = ctx.lang === 'en';

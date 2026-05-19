@@ -30,15 +30,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 			: null) || null;
 
 	const result = await handleFurrowChatPost(req.body, { clientIp });
-	if (result.ok) {
-		res.status(200).json({
-			reply: result.reply,
-			agentMode: result.agentMode,
-			actions: result.actions,
-			knowledgeIds: result.knowledgeIds,
-		});
+	if (!result.ok) {
+		res.status(result.status).json({ error: result.error, hint: result.hint });
 		return;
 	}
 
-	res.status(result.status).json({ error: result.error, hint: result.hint });
+	res.status(200).json({
+		reply: result.reply,
+		agentMode: result.agentMode,
+		actions: result.actions,
+		knowledgeIds: result.knowledgeIds,
+	});
 }
