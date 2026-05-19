@@ -114,6 +114,48 @@ body {
 	margin-bottom: 24px;
 }
 
+.article-deck {
+	font-size: 18px;
+	color: #64748b;
+	font-style: italic;
+	margin: -8px 0 20px;
+	line-height: 1.45;
+}
+
+.article-prose-list {
+	margin: 12px 0 20px;
+	font-family: system-ui, -apple-system, sans-serif;
+}
+
+.article-prose-list ul {
+	padding-left: 22px;
+}
+
+.article-prose-list li {
+	margin-bottom: 10px;
+}
+
+.article-sources {
+	font-size: 13px;
+	color: #64748b;
+	font-style: italic;
+	margin-top: 28px;
+	font-family: system-ui, sans-serif;
+}
+
+.article-table--compact {
+	font-size: 12px;
+}
+
+.article-table--compact th,
+.article-table--compact td {
+	padding: 6px 10px;
+}
+
+.article-table--compact .col-country {
+	white-space: nowrap;
+}
+
 .article-container h2 {
 	font-size: 26px;
 	margin: 36px 0 16px;
