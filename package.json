@@ -1,10 +1,14 @@
 {
-	"name": "furrow-marketing",
+	"name": "furrow-markets-site",
 	"private": true,
 	"type": "module",
 	"scripts": {
 		"dev": "node --import tsx scripts/dev-server.mjs",
-		"serve": "npx --yes serve . -p 3456"
+		"serve": "npx --yes serve . -p 3456",
+		"sync:agridirect": "node scripts/sync-agridirect-articles.mjs",
+		"build:egypt": "node scripts/build-egypt-article.mjs",
+		"build:egypt:ru": "node scripts/build-egypt-article-ru.mjs",
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@vercel/node": "^5.5.28"

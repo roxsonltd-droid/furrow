@@ -91,9 +91,6 @@ export async function getFurrowMarketSignals(opts?: { force?: boolean }): Promis
 	if (!opts?.force && memoryCache && Date.now() - memoryCache.at < TTL_MS) {
 		return memoryCache.payload;
 	}
-	if (!opts?.force && memoryCache?.payload.futures.length) {
-		return memoryCache.payload;
-	}
 	return refreshFurrowMarketSignals();
 }
 
@@ -103,7 +100,7 @@ export function formatSignalsForAgent(signals: FurrowMarketSignals, lang: 'en' |
 	if (!signals.futures.length) {
 		return en
 			? 'Market signals unavailable right now (delayed CBOT/Baltic via Yahoo).'
-			: 'Пазарни сигнали сейчас недоступны (отложенные CBOT/Baltic через Yahoo).';
+			: 'Рыночные сигналы сейчас недоступны (отложенные CBOT/Baltic через Yahoo).';
 	}
 	const lines = signals.futures.map((f) => {
 		const price =

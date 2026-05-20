@@ -72,7 +72,7 @@ export async function submitFurrowWaitlist(input: {
 	lang?: 'en' | 'ru';
 	source?: string;
 }): Promise<
-	| { ok: true; mailDelivery: 'sent' | 'skipped'; welcomeSent: boolean }
+	| { ok: true; mailDelivery: 'sent'; welcomeSent: boolean }
 	| { ok: false; error: string }
 > {
 	const email = input.email.trim().toLowerCase();
@@ -85,10 +85,23 @@ export async function submitFurrowWaitlist(input: {
 		return { ok: false, error: 'Invalid email' };
 	}
 
+	const key = process.env.RESEND_API_KEY?.trim();
+	if (!key) {
+		return {
+			ok: false,
+			error:
+				'RESEND_API_KEY is not set — registrations cannot be delivered. Configure Resend or use another signup channel.',
+		};
+	}
+
 	const to = inboxTo();
 	const from = fromAddress();
 	if (!to || !from) {
-		return { ok: true, mailDelivery: 'skipped', welcomeSent: false };
+		return {
+			ok: false,
+			error:
+				'Waitlist email is misconfigured: set FURROW_INBOX_EMAIL (or MAIL_TO) and RESEND_FROM together with RESEND_API_KEY.',
+		};
 	}
 
 	const subject = `[Furrow] Registration · ${fullName}`;
@@ -103,8 +116,14 @@ export async function submitFurrowWaitlist(input: {
 
 	try {
 		const sent = await sendViaResend({ to, from, subject, html, text, replyTo: email });
+		if (sent !== 'sent') {
+			return {
+				ok: false,
+				error: 'Email was not sent (check RESEND_API_KEY and sender/domain verification).',
+			};
+		}
 		let welcomeSent = false;
-		if (sent === 'sent' && process.env.FURROW_WELCOME_EMAIL !== '0') {
+		if (process.env.FURROW_WELCOME_EMAIL !== '0') {
 			const w = welcomeCopy(lang, fullName);
 			try {
 				await sendViaResend({
@@ -120,7 +139,7 @@ export async function submitFurrowWaitlist(input: {
 				/* admin notified; welcome optional */
 			}
 		}
-		return { ok: true, mailDelivery: sent, welcomeSent };
+		return { ok: true, mailDelivery: 'sent', welcomeSent };
 	} catch (e) {
 		const msg = e instanceof Error ? e.message : 'Email failed';
 		return { ok: false, error: msg };

@@ -55,7 +55,11 @@
 			}),
 		});
 		const data = await res.json().catch(() => ({}));
-		if (!res.ok) throw new Error(data.error || res.statusText);
+		if (!res.ok) {
+			const err = new Error(typeof data.error === 'string' ? data.error : res.statusText);
+			err.status = res.status;
+			throw err;
+		}
 		return data;
 	}
 
@@ -85,13 +89,20 @@
 				const data = await submitViaApi(payload);
 				showStatus('success-message', data.message || msg('form.successApi'));
 				form.reset();
-			} catch {
-				if (mailchimpUrl) {
+			} catch (e) {
+				const status = typeof e?.status === 'number' ? e.status : 0;
+				/* 4xx = client/config error — do not fall back to Mailchimp (avoids false “success” + duplicates). */
+				if (status >= 400 && status < 500) {
+					showStatus('error-message', e instanceof Error ? e.message : msg('form.notConfigured'));
+				} else if (mailchimpUrl) {
 					await submitViaMailchimp(payload);
 					showStatus('success-message', msg('form.success'));
 					form.reset();
 				} else {
-					throw new Error('no channel');
+					showStatus(
+						'error-message',
+						e instanceof Error ? e.message : msg('form.notConfigured'),
+					);
 				}
 			}
 		} catch {

@@ -35,11 +35,11 @@
 		'home.numbers.baltic': 'Baltic Dry',
 		'home.today.title': "Today's Analysis",
 		'home.today.more': 'All analyses →',
-		'home.s1.cat': 'Oilseeds · South America',
-		'home.s1.title': "Argentina's Soy Harvest Defies Drought Fears, But Logistics Will Test Exports",
+		'home.s1.cat': 'MENA · Nile Basin',
+		'home.s1.title': "Egypt's Fields: The Desert Oasis That Feeds 108 Million People",
 		'home.s1.sum':
-			'Despite a difficult planting season, BCR projections show 2025/26 soybean output near 49.5 million tons — close to the five-year average. The challenge moves downstream.',
-		'home.s1.meta': 'Markets Desk · 4 min · 11:20 GMT',
+			'Nile dependence, wheat imports vs citrus exports, GERD water stress, and the 2026 energy shock — geography and trade in one desk read.',
+		'home.s1.meta': 'Furrow Desk · 12 min · 19 May 2026',
 		'home.s2.cat': 'Black Sea · Politics',
 		'home.s2.title': 'Russian Export Quota Mechanics: How a $14/Ton Tax Reshapes Global Wheat Trade',
 		'home.s2.sum':
@@ -134,11 +134,11 @@
 		'home.numbers.baltic': 'Baltic Dry',
 		'home.today.title': 'Аналитика дня',
 		'home.today.more': 'Вся аналитика →',
-		'home.s1.cat': 'Масличные · Южная Америка',
-		'home.s1.title': 'Урожай сои в Аргентине опровергает страх засухи, но логистика проверит экспорт',
+		'home.s1.cat': 'MENA · бассейн Нила',
+		'home.s1.title': 'Поля Египта: пустынный оазис, который кормит 108 миллионов человек',
 		'home.s1.sum':
-			'Несмотря на сложный сев, BCR оценивает урожай сои 2025/26 около 49,5 млн т — близко к пятилетнему среднему. Вызов смещается к экспорту.',
-		'home.s1.meta': 'Рынки · 4 мин · 11:20 GMT',
+			'Нил, циклы у Асуана, дефицит зерна и экспорт цитрусов, GERD и энергетический шок 2026 — география и торговля в одном материале.',
+		'home.s1.meta': 'Furrow · 12 мин · 19 мая 2026',
 		'home.s2.cat': 'Чёрное море · Политика',
 		'home.s2.title': 'Механика экспортной квоты РФ: как налог $14/т меняет мировую торговлю пшеницей',
 		'home.s2.sum':

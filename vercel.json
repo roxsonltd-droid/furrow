@@ -3,8 +3,13 @@
 	"outputDirectory": ".",
 	"framework": null,
 	"rewrites": [
+		{ "source": "/agridirect", "destination": "/agridirect/index.html" },
+		{ "source": "/register", "destination": "/register.html" },
+		{ "source": "/archive", "destination": "/archive.html" },
 		{ "source": "/api/(.*)", "destination": "/api/$1" },
 		{ "source": "/ukraine-harvest-war", "destination": "/ukraine-harvest-war.html" },
+		{ "source": "/egypt-fields-desert-oasis-2026", "destination": "/egypt-fields-desert-oasis-2026.html" },
+		{ "source": "/egypt-fields-desert-oasis-2026-ru", "destination": "/egypt-fields-desert-oasis-2026-ru.html" },
 		{ "source": "/sponsor", "destination": "/sponsor.html" },
 		{ "source": "/tomato-harvest-2026", "destination": "/tomato-harvest-2026.html" }
 	],

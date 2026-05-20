@@ -118,22 +118,17 @@ export async function executeFurrowAgentTool(
 		const fullName = typeof args.full_name === 'string' ? args.full_name : '';
 		const email = typeof args.email === 'string' ? args.email : '';
 		const interest = typeof args.interest === 'string' ? args.interest : 'all';
-		const out = await submitFurrowWaitlist({ fullName, email, interest });
+		const out = await submitFurrowWaitlist({ fullName, email, interest, lang: ctx.lang });
 		if (out.ok === false) {
 			return {
 				result: JSON.stringify(out),
 				action: { tool: name, ok: false, summary: out.error },
 			};
 		}
-		const en = ctx.lang === 'en';
 		const summary =
-			out.mailDelivery === 'sent'
-				? en
-					? 'Waitlist email sent'
-					: 'Заявка изпратена по имейл'
-				: en
-					? 'Recorded (email not configured on server)'
-					: 'Записано (имейл не е конфигуриран)';
+			ctx.lang === 'en'
+				? 'Waitlist email sent to team'
+				: 'Письмо в команду отправлено';
 		return {
 			result: JSON.stringify(out),
 			action: { tool: name, ok: true, summary },

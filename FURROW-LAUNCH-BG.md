@@ -18,22 +18,24 @@
 
 ## GitHub + Vercel (препоръчано) — repo **roxson**
 
-**Не** публикувай от `agrinexus-final`. Furrow / Roxson е отделен repo.
+**Не** използвай погрешен Git root (напр. цял монорепо) като Vercel **Root Directory** за Furrow. Публикувай от repo **`roxson`**, с файловете в **неговия корен**.
 
 1. Качи съдържанието на тази папка в **https://github.com/…/roxson** (файловете в **корена** на repo-то).
 2. Vercel → New Project → Import **roxson** → Root Directory = **`.`**
 3. Env: `MISTRAL_API_KEY`, `RESEND_*`, `FURROW_INBOX_EMAIL`
 4. Push в **roxson** → автоматичен deploy
 
-AgriNexus остава в свой repo и свой Vercel проект.
-
 ---
 
 ## Файлове в тази папка
 
+Структурата е за **корена на repo-то** (standalone `roxson` / този clone). Ако същите файлове съществуват и като копие под `furrow-marketing/` в друг монорепо, за live deploy копирай **съдържанието** в корена на `roxson`.
+
 ```text
-furrow-marketing/
+repo-root/
   index.html              ← landing + waitlist
+  api/                    ← Vercel serverless (чат, waitlist, сигнали)
+  server/                 ← споделена TypeScript логика
   article/sample.html     ← примерна статия (демо)
   styles/furrow.css
   scripts/i18n.js         ← EN / RU
@@ -46,7 +48,7 @@ furrow-marketing/
 ## Стъпка 0 — Локален преглед (безплатно)
 
 ```bash
-cd furrow-marketing
+# от корена на repo-то (където е package.json). В monorepo: cd furrow-marketing
 cp .env.example .env    # MISTRAL_API_KEY + RESEND_* (по избор)
 npm install
 npm run dev
@@ -62,7 +64,7 @@ npm run dev
 
 1. [cloudflare.com](https://cloudflare.com) → безплатен акаунт  
 2. **Workers & Pages** → **Create** → **Pages** → **Upload assets**  
-3. Качи цялата папка `furrow-marketing/`  
+3. Качи **съдържанието на корена** на сайта (архив без `node_modules`). В monorepo това е съдържанието на `furrow-marketing/`, не целият monorepo.  
 4. Сайтът е live на `https://furrow-site.pages.dev` (или подобно) — **без домейн, без плащане**
 
 По-късно: **Custom domain** → `furrowmarkets.com` (ако го купиш).
@@ -123,7 +125,7 @@ const MAILCHIMP_HIDDEN_NAME = 'b_...';
 
 ## Бърз checklist
 
-- [ ] `furrow-marketing/` качен на Cloudflare Pages  
+- [ ] Статичният сайт от **корена на Furrow repo-то** качен на Cloudflare Pages (или Vercel за API + ticker)  
 - [ ] EN / RU работят  
 - [ ] Mailchimp URL в `waitlist.js`  
 - [ ] Тестова заявка в Mailchimp Audience  

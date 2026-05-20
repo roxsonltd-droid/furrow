@@ -78,7 +78,7 @@ rep('<motion class="story-cat">Oilseeds · South America</motion>', '<div class=
 rep('<div class="story-cat">Oilseeds · South America</div>', '<div class="story-cat" data-i18n="home.s1.cat">Oilseeds · South America</div>');
 rep(
 	"<h3><a href=\"#\">Argentina's Soy Harvest Defies Drought Fears, But Logistics Will Test Exports</a></h3>",
-	"<h3><a href=\"article/sample.html\" data-i18n=\"home.s1.title\">Argentina's Soy Harvest Defies Drought Fears, But Logistics Will Test Exports</a></h3>",
+	"<h3><a href=\"/egypt-fields-desert-oasis-2026\" data-i18n=\"home.s1.title\">Egypt's Fields: The Desert Oasis That Feeds 108 Million People</a></h3>",
 );
 rep('<div class="story-cat">Black Sea · Politics</div>', '<div class="story-cat" data-i18n="home.s2.cat">Black Sea · Politics</div>');
 rep(

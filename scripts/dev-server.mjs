@@ -1,15 +1,28 @@
 /**
  * Static site + APIs for local dev.
- * Usage: npm run dev  (from furrow-marketing/)
+ * Usage: npm run dev  (from repo root — same folder as package.json)
  */
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
-import { join, extname } from 'node:path';
+import { join, extname, resolve, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(fileURLToPath(new URL('.', import.meta.url)), '..');
+const rootResolved = resolve(root);
 const port = Number(process.env.PORT || 3456);
+
+/** Resolve URL pathname to a file under `root` only (no path traversal). */
+function resolveSafeStaticPath(pathname) {
+	if (pathname.includes('\0')) return null;
+	let rel = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+	if (!rel) rel = 'index.html';
+	let filePath = resolve(rootResolved, rel);
+	if (pathname.endsWith('/')) filePath = resolve(filePath, 'index.html');
+	const relOut = relative(rootResolved, filePath);
+	if (relOut === '..' || relOut.startsWith(`..${sep}`) || relOut.startsWith('..')) return null;
+	return filePath;
+}
 
 function loadDotEnv() {
 	for (const name of ['.env', '.env.local']) {
@@ -64,6 +77,7 @@ async function readBody(req) {
 }
 
 function json(res, status, body) {
+	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' });
 	res.end(JSON.stringify(body));
 }
@@ -71,6 +85,17 @@ function json(res, status, body) {
 const server = createServer(async (req, res) => {
 	const url = new URL(req.url || '/', `http://127.0.0.1:${port}`);
 	const pathname = url.pathname;
+
+	if (req.method === 'OPTIONS' && pathname.startsWith('/api/')) {
+		res.writeHead(204, {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+			'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			'Access-Control-Max-Age': '86400',
+		});
+		res.end();
+		return;
+	}
 
 	if (pathname === '/api/furrow-chat') {
 		const { handleFurrowChatPost, isAnyLlmConfigured } = await import('../server/furrow-chat-handler.ts');
@@ -80,6 +105,7 @@ const server = createServer(async (req, res) => {
 				ok: true,
 				llmConfigured: isAnyLlmConfigured(),
 				agentEnabled: process.env.FURROW_AGENT_DISABLED !== '1',
+				agentTools: process.env.FURROW_AGENT_TOOLS === '1',
 			});
 			return;
 		}
@@ -128,10 +154,16 @@ const server = createServer(async (req, res) => {
 	if (pathname === '/api/public-config' && req.method === 'GET') {
 		const mailchimpUrl = (process.env.FURROW_MAILCHIMP_URL || '').trim();
 		const mailchimpHidden = (process.env.FURROW_MAILCHIMP_HIDDEN || '').trim();
+		const resendConfigured = Boolean(
+			process.env.RESEND_API_KEY?.trim() &&
+				process.env.RESEND_FROM?.trim() &&
+				(process.env.FURROW_INBOX_EMAIL?.trim() || process.env.MAIL_TO?.trim()),
+		);
 		json(res, 200, {
 			mailchimpConfigured: Boolean(mailchimpUrl && mailchimpHidden),
 			mailchimpUrl: mailchimpUrl || null,
 			mailchimpHidden: mailchimpHidden || null,
+			waitlistResendConfigured: resendConfigured,
 			waitlistApi: true,
 			signalsApi: true,
 		});
@@ -149,24 +181,42 @@ const server = createServer(async (req, res) => {
 					: '';
 		const email = typeof body.email === 'string' ? body.email : '';
 		const interest = typeof body.interest === 'string' ? body.interest : 'all';
-		const result = await submitFurrowWaitlist({ fullName, email, interest });
+		const lang = body.lang === 'ru' ? 'ru' : 'en';
+		const source = typeof body.source === 'string' ? body.source : 'website';
+		const result = await submitFurrowWaitlist({ fullName, email, interest, lang, source });
 		if (!result.ok) {
 			json(res, 400, { error: result.error });
 			return;
 		}
+		const en = lang === 'en';
 		json(res, 200, {
 			ok: true,
 			mailDelivery: result.mailDelivery,
-			message:
-				result.mailDelivery === 'sent'
-					? 'Thank you — we received your request.'
-					: 'Recorded — configure RESEND_* for email delivery.',
+			welcomeSent: result.welcomeSent,
+			message: result.welcomeSent
+				? en
+					? 'Registered! Check your inbox for confirmation.'
+					: 'Готово! Проверьте почту для подтверждения.'
+				: en
+					? 'You are on the list. We will contact you before launch.'
+					: 'Вы в списке. Напишем перед запуском.',
 		});
 		return;
 	}
 
-	let filePath = join(root, pathname === '/' ? 'index.html' : pathname.replace(/^\//, ''));
-	if (pathname.endsWith('/')) filePath = join(filePath, 'index.html');
+	let staticPath = pathname;
+	if (staticPath === '/agridirect') staticPath = '/agridirect/index.html';
+	if (staticPath === '/register') staticPath = '/register.html';
+	if (staticPath === '/archive') staticPath = '/archive.html';
+	if (staticPath === '/egypt-fields-desert-oasis-2026') staticPath = '/egypt-fields-desert-oasis-2026.html';
+	if (staticPath === '/egypt-fields-desert-oasis-2026-ru') staticPath = '/egypt-fields-desert-oasis-2026-ru.html';
+
+	const filePath = resolveSafeStaticPath(staticPath);
+	if (!filePath) {
+		res.writeHead(403);
+		res.end('Forbidden');
+		return;
+	}
 
 	try {
 		const data = await readFile(filePath);

@@ -1,14 +1,16 @@
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 type Chunk = { id: string; text: string };
+
+const knowledgePath = join(dirname(fileURLToPath(import.meta.url)), '..', 'data', 'furrow-agent-knowledge.json');
 
 let cached: Chunk[] | null = null;
 
 function loadChunks(): Chunk[] {
 	if (cached) return cached;
-	const p = join(process.cwd(), 'data', 'furrow-agent-knowledge.json');
-	const raw = JSON.parse(readFileSync(p, 'utf8')) as { chunks?: Chunk[] };
+	const raw = JSON.parse(readFileSync(knowledgePath, 'utf8')) as { chunks?: Chunk[] };
 	cached = Array.isArray(raw.chunks) ? raw.chunks : [];
 	return cached;
 }

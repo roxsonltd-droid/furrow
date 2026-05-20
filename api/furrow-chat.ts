@@ -7,8 +7,12 @@ export const config = {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 	res.setHeader('Content-Type', 'application/json; charset=utf-8');
+	res.setHeader('Access-Control-Allow-Origin', '*');
 
 	if (req.method === 'OPTIONS') {
+		res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+		res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+		res.setHeader('Access-Control-Max-Age', '86400');
 		res.status(204).end();
 		return;
 	}
@@ -34,7 +38,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 			? req.headers['x-forwarded-for'].split(',')[0]?.trim()
 			: null) || null;
 
-	const result = await handleFurrowChatPost(req.body, { clientIp });
+	let rawBody: unknown = req.body;
+	if (typeof req.body === 'string' && req.body.trim()) {
+		try {
+			rawBody = JSON.parse(req.body) as unknown;
+		} catch {
+			rawBody = null;
+		}
+	}
+
+	const result = await handleFurrowChatPost(rawBody, { clientIp });
 	if (result.ok === false) {
 		res.status(result.status).json({ error: result.error, hint: result.hint });
 		return;

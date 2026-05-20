@@ -3,8 +3,12 @@ import { submitFurrowWaitlist } from '../server/waitlist.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 	res.setHeader('Content-Type', 'application/json; charset=utf-8');
+	res.setHeader('Access-Control-Allow-Origin', '*');
 
 	if (req.method === 'OPTIONS') {
+		res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+		res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+		res.setHeader('Access-Control-Max-Age', '86400');
 		res.status(204).end();
 		return;
 	}
@@ -14,7 +18,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 		return;
 	}
 
-	const body = typeof req.body === 'object' && req.body !== null ? req.body : {};
+	let body: Record<string, unknown> =
+		typeof req.body === 'object' && req.body !== null ? (req.body as Record<string, unknown>) : {};
+	if (typeof req.body === 'string' && req.body.trim()) {
+		try {
+			body = JSON.parse(req.body) as Record<string, unknown>;
+		} catch {
+			body = {};
+		}
+	}
 	const fullName =
 		typeof body.full_name === 'string'
 			? body.full_name
@@ -37,17 +49,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 		ok: true,
 		mailDelivery: result.mailDelivery,
 		welcomeSent: result.welcomeSent,
-		message:
-			result.welcomeSent
-				? en
-					? 'Registered! Check your inbox for confirmation.'
-					: 'Готово! Проверьте почту для подтверждения.'
-				: result.mailDelivery === 'sent'
-					? en
-						? 'You are on the list. We will contact you before launch.'
-						: 'Вы в списке. Напишем перед запуском.'
-					: en
-						? 'Registered (email delivery pending server config).'
-						: 'Зарегистрировано (имейл ожидает настройки сервера).',
+		message: result.welcomeSent
+			? en
+				? 'Registered! Check your inbox for confirmation.'
+				: 'Готово! Проверьте почту для подтверждения.'
+			: en
+				? 'You are on the list. We will contact you before launch.'
+				: 'Вы в списке. Напишем перед запуском.',
 	});
 }

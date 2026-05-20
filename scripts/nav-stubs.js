@@ -8,8 +8,8 @@
 	const scrollTargets = {
 		markets: '#markets-sidebar',
 		regions: '#regions-sidebar',
-		analysis: '/ukraine-harvest-war',
-		data: '/ukraine-harvest-war',
+		analysis: '/archive',
+		data: '/archive',
 		reports: sample,
 		about: '#subscribe',
 	};
@@ -28,7 +28,7 @@
 					return;
 				}
 			}
-			if (sel && (sel.endsWith('.html') || sel.startsWith('/ukraine'))) {
+			if (sel && (sel.endsWith('.html') || sel.startsWith('/'))) {
 				window.location.href = sel;
 				return;
 			}
