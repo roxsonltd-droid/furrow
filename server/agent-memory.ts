@@ -1,75 +1,115 @@
 import { buildFurrowKnowledgeContext, getKnowledgeChunkIds } from './furrow-knowledge.js';
 import type { ChatMessage, FurrowChatTurn } from './agent-types.js';
+import { Redis } from '@upstash/redis';
 
-const SYSTEM_EN = `You are "Furrow Analyst" — AI agent for Furrow Markets (global agricultural market intelligence, Nexus Group).
+const SYSTEM_EN = `You are "Furrow Analyst" — a highly professional, strict AI financial and agricultural market analyst for Furrow Markets (Nexus Group).
 
 Tools:
 • search_knowledge — platform facts (pricing tiers, regions, launch 2026, disclaimer)
 • get_market_signals — delayed CBOT/Baltic snapshot (Yahoo, unofficial); cite as delayed
+• get_weather_forecast — fetch latest weather for major agricultural regions
+• search_web_news — fetch latest market news for a specific commodity or region
 • submit_waitlist — early access ONLY when user gave full name + email and wants to join
 
 Rules:
 - Reply in English unless the user writes in Russian — then reply in Russian.
-- Bloomberg/Reuters tone: concise, factual, numbers when relevant.
+- You are a strict analyst. Maintain a Bloomberg/Reuters tone: concise, factual, analytical, and data-driven. Do NOT use overly enthusiastic language.
+- CRITICAL: If the user asks for market analysis (e.g., about wheat, corn, weather), ALWAYS use \`get_weather_forecast\` and \`search_web_news\` FIRST to gather data before responding.
 - For prices use get_market_signals; always note data is delayed/unofficial, not investment advice.
 - Before submit_waitlist, confirm name and email with the user.
-- After using a tool, summarize what you did.
+- After using a tool, concisely summarize the findings.
 - No markdown code fences.`;
 
-const SYSTEM_RU = `Вы — «Furrow Analyst», AI-агент Furrow Markets (глобальная агрорыночная аналитика, Nexus Group).
+const SYSTEM_RU = `Вы — «Furrow Analyst», строгий и высокопрофессиональный финансовый и агрорыночный аналитик AI для Furrow Markets (Nexus Group).
 
 Инструменты:
 • search_knowledge — факты о платформе (тарифы, регионы, запуск 2026, дисклеймер)
 • get_market_signals — отложенный снимок CBOT/Baltic (Yahoo); указывайте задержку
+• get_weather_forecast — получение погоды для ключевых агрорегионов
+• search_web_news — получение свежих новостей рынка по товару или региону
 • submit_waitlist — ранний доступ ТОЛЬКО если пользователь дал имя + email и хочет подписаться
 
 Правила:
 - Отвечайте на русском, если пользователь пишет по-русски; иначе на английском.
-- Стиль Bloomberg/Reuters: кратко, по делу.
+- Вы строгий аналитик. Стиль Bloomberg/Reuters: кратко, фактологично, опираясь на данные. Никаких лишних эмоций.
+- КРИТИЧЕСКИ ВАЖНО: Если пользователь просит анализ рынка (например, пшеницы, кукурузы, погоды), ВСЕГДА сначала используйте \`get_weather_forecast\` и \`search_web_news\`, чтобы собрать данные.
 - Для цен используйте get_market_signals; данные отложенные, не инвестсовет.
 - Перед submit_waitlist подтвердите имя и email.
-- После инструмента кратко резюмируйте действие.
+- После использования инструмента кратко резюмируйте найденное.
 - Без markdown code fences.`;
+
+const getRedisClient = () => {
+	if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+		return new Redis({
+			url: process.env.KV_REST_API_URL,
+			token: process.env.KV_REST_API_TOKEN,
+		});
+	}
+	return null;
+};
 
 export class MemoryAgent {
 	private maxMessages: number;
+	private redis: Redis | null;
 
 	constructor(maxMessages: number = 12) {
 		this.maxMessages = maxMessages;
+		this.redis = getRedisClient();
 	}
 
 	private truncate(s: string, max: number): string {
-		return s.length <= max ? s : `${s.slice(0, max)}…`;
+		return s.length <= max ? s : \`\${s.slice(0, max)}…\`;
 	}
 
-	public prepareMemory(rawMessages: unknown[], lang: 'en' | 'ru'): { 
-		chatMessages: ChatMessage[], 
-		knowledgeIds: string[] 
-	} | { error: string } {
-		const cleaned: FurrowChatTurn[] = [];
-		for (const m of rawMessages.slice(-this.maxMessages)) {
-			if (!m || typeof m !== 'object') continue;
-			const o = m as Record<string, unknown>;
-			if ((o.role !== 'user' && o.role !== 'assistant') || typeof o.content !== 'string') continue;
-			const content = o.content.trim();
-			if (!content) continue;
-			cleaned.push({ role: o.role, content: this.truncate(content, 2400) });
+	public async loadHistory(sessionId: string): Promise<FurrowChatTurn[]> {
+		if (!this.redis) return [];
+		try {
+			const data = await this.redis.get<FurrowChatTurn[]>(\`furrow:chat:\${sessionId}\`);
+			return Array.isArray(data) ? data : [];
+		} catch (e) {
+			console.error('Redis load error:', e);
+			return [];
+		}
+	}
+
+	public async saveHistory(sessionId: string, messages: FurrowChatTurn[]): Promise<void> {
+		if (!this.redis) return;
+		try {
+			// Keep only the last maxMessages
+			const toSave = messages.slice(-this.maxMessages);
+			// Expiry of 24 hours (86400 seconds)
+			await this.redis.set(\`furrow:chat:\${sessionId}\`, toSave, { ex: 86400 });
+		} catch (e) {
+			console.error('Redis save error:', e);
+		}
+	}
+
+	public async prepareMemory(
+		sessionId: string,
+		userMessageContent: string,
+		lang: 'en' | 'ru'
+	): Promise<{ chatMessages: ChatMessage[]; knowledgeIds: string[]; history: FurrowChatTurn[] }> {
+		if (!userMessageContent.trim()) {
+			throw new Error('User message cannot be empty');
 		}
 
-		const last = cleaned[cleaned.length - 1];
-		if (!last || last.role !== 'user') {
-			return { error: 'Last message must be from user' };
-		}
+		// 1. Load previous history
+		const history = await this.loadHistory(sessionId);
 
-		const knowledgeBlock = buildFurrowKnowledgeContext(last.content);
-		const knowledgeIds = getKnowledgeChunkIds(last.content);
-		const system = `${lang === 'ru' ? SYSTEM_RU : SYSTEM_EN}\n\n=== KNOWLEDGE ===\n${knowledgeBlock}`;
+		// 2. Append new user message
+		history.push({ role: 'user', content: this.truncate(userMessageContent.trim(), 2400) });
 
+		// 3. Prepare Knowledge Context based on the latest message
+		const knowledgeBlock = buildFurrowKnowledgeContext(userMessageContent);
+		const knowledgeIds = getKnowledgeChunkIds(userMessageContent);
+		const system = \`\${lang === 'ru' ? SYSTEM_RU : SYSTEM_EN}\\n\\n=== KNOWLEDGE ===\\n\${knowledgeBlock}\`;
+
+		// 4. Construct the full prompt for the LLM
 		const chatMessages: ChatMessage[] = [
 			{ role: 'system', content: system },
-			...cleaned.map((m) => ({ role: m.role, content: m.content })),
+			...history.map((m) => ({ role: m.role, content: m.content })),
 		];
 
-		return { chatMessages, knowledgeIds };
+		return { chatMessages, knowledgeIds, history };
 	}
 }

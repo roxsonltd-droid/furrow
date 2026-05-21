@@ -24,10 +24,23 @@ export async function handleFurrowChatPost(
 	}
 
 	const body = rawBody as Record<string, unknown>;
-	const messagesRaw = body.messages;
-	if (!Array.isArray(messagesRaw)) {
-		return { ok: false, status: 400, error: 'messages must be an array' };
+	
+	// Support both legacy "messages" array and new "message" string
+	let userMessageContent = '';
+	if (typeof body.message === 'string') {
+		userMessageContent = body.message;
+	} else if (Array.isArray(body.messages) && body.messages.length > 0) {
+		const lastMsg = body.messages[body.messages.length - 1];
+		if (lastMsg && typeof lastMsg.content === 'string') {
+			userMessageContent = lastMsg.content;
+		}
 	}
+
+	if (!userMessageContent) {
+		return { ok: false, status: 400, error: 'User message is required' };
+	}
+
+	const sessionId = typeof body.sessionId === 'string' ? body.sessionId : 'anonymous-session';
 
 	const lang: 'en' | 'ru' =
 		body.context && typeof body.context === 'object' && (body.context as { lang?: string }).lang === 'ru'
@@ -35,7 +48,7 @@ export async function handleFurrowChatPost(
 			: 'en';
 
 	const workflow = new WorkflowAgent();
-	return workflow.run(upstream, messagesRaw, lang, opts);
+	return workflow.run(upstream, userMessageContent, sessionId, lang, opts);
 }
 
 export { isAnyLlmConfigured };

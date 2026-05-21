@@ -64,6 +64,36 @@ export const FURROW_AGENT_TOOLS = [
 			},
 		},
 	},
+	{
+		type: 'function' as const,
+		function: {
+			name: 'search_web_news',
+			description: 'Search the web for the latest agricultural market news and geopolitical events.',
+			parameters: {
+				type: 'object',
+				properties: {
+					query: { type: 'string', description: 'Keywords to search for (e.g. "Russian wheat exports 2026")' },
+				},
+				required: ['query'],
+				additionalProperties: false,
+			},
+		},
+	},
+	{
+		type: 'function' as const,
+		function: {
+			name: 'get_weather_forecast',
+			description: 'Get the latest weather forecast and soil moisture conditions for major agricultural regions.',
+			parameters: {
+				type: 'object',
+				properties: {
+					region: { type: 'string', description: 'Region name (e.g. "Black Sea", "US Plains", "Brazil")' },
+				},
+				required: ['region'],
+				additionalProperties: false,
+			},
+		},
+	},
 ] as const;
 
 export async function executeFurrowAgentTool(
@@ -132,6 +162,29 @@ export async function executeFurrowAgentTool(
 		return {
 			result: JSON.stringify(out),
 			action: { tool: name, ok: true, summary },
+		};
+	}
+
+	if (name === 'search_web_news') {
+		const query = typeof args.query === 'string' ? args.query : '';
+		// Mocked data for now
+		const mockNews = [
+			\`(MOCK) Bloomberg: \${query} causing market ripples as traders adjust positions.\`,
+			\`(MOCK) Reuters: Global supply chains monitor developments regarding \${query}.\`,
+		];
+		return {
+			result: JSON.stringify({ ok: true, news: mockNews }),
+			action: { tool: name, ok: true, summary: \`Web search: \${query}\` },
+		};
+	}
+
+	if (name === 'get_weather_forecast') {
+		const region = typeof args.region === 'string' ? args.region : '';
+		// Mocked data for now
+		const mockWeather = \`(MOCK) \${region}: Persistent dry conditions in the southern areas, expected rainfall of 10-15mm over the next week in the north. Soil moisture remains below optimal.\`;
+		return {
+			result: JSON.stringify({ ok: true, weather: mockWeather }),
+			action: { tool: name, ok: true, summary: \`Weather: \${region}\` },
 		};
 	}
 

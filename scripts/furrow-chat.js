@@ -94,6 +94,15 @@
 			if (apiOnline) checkStatus();
 		});
 
+		function getSessionId() {
+			let sid = localStorage.getItem('furrow_chat_sid');
+			if (!sid) {
+				sid = 'session_' + Math.random().toString(36).substring(2, 15);
+				localStorage.setItem('furrow_chat_sid', sid);
+			}
+			return sid;
+		}
+
 		async function send() {
 			if (!apiOnline) {
 				addMsg('assistant', t('chat.offlineReply', 'Offline'));
@@ -102,7 +111,6 @@
 			const text = input.value.trim();
 			if (!text) return;
 			input.value = '';
-			messages.push({ role: 'user', content: text });
 			addMsg('user', text);
 			sendBtn.disabled = true;
 			addMsg('assistant', t('chat.thinking', '…'));
@@ -112,7 +120,8 @@
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
-						messages,
+						message: text,
+						sessionId: getSessionId(),
 						context: { page: 'homepage', lang: lang() },
 					}),
 				});
@@ -120,7 +129,6 @@
 				if (!res.ok || !data.reply) throw new Error(data.error || t('chat.noReply', 'No reply'));
 				const actionBlock = formatActions(data.actions);
 				const full = actionBlock ? `${data.reply}\n\n${actionBlock}` : data.reply;
-				messages.push({ role: 'assistant', content: full });
 				waiting.textContent = data.reply;
 				if (actionBlock) {
 					const ab = document.createElement('div');
