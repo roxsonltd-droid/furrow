@@ -58,13 +58,13 @@ export class MemoryAgent {
 	}
 
 	private truncate(s: string, max: number): string {
-		return s.length <= max ? s : \`\${s.slice(0, max)}…\`;
+		return s.length <= max ? s : `${s.slice(0, max)}…`;
 	}
 
 	public async loadHistory(sessionId: string): Promise<FurrowChatTurn[]> {
 		if (!this.redis) return [];
 		try {
-			const data = await this.redis.get<FurrowChatTurn[]>(\`furrow:chat:\${sessionId}\`);
+			const data = await this.redis.get<FurrowChatTurn[]>(`furrow:chat:${sessionId}`);
 			return Array.isArray(data) ? data : [];
 		} catch (e) {
 			console.error('Redis load error:', e);
@@ -78,7 +78,7 @@ export class MemoryAgent {
 			// Keep only the last maxMessages
 			const toSave = messages.slice(-this.maxMessages);
 			// Expiry of 24 hours (86400 seconds)
-			await this.redis.set(\`furrow:chat:\${sessionId}\`, toSave, { ex: 86400 });
+			await this.redis.set(`furrow:chat:${sessionId}`, toSave, { ex: 86400 });
 		} catch (e) {
 			console.error('Redis save error:', e);
 		}
@@ -102,7 +102,7 @@ export class MemoryAgent {
 		// 3. Prepare Knowledge Context based on the latest message
 		const knowledgeBlock = buildFurrowKnowledgeContext(userMessageContent);
 		const knowledgeIds = getKnowledgeChunkIds(userMessageContent);
-		const system = \`\${lang === 'ru' ? SYSTEM_RU : SYSTEM_EN}\\n\\n=== KNOWLEDGE ===\\n\${knowledgeBlock}\`;
+		const system = `${lang === 'ru' ? SYSTEM_RU : SYSTEM_EN}\n\n=== KNOWLEDGE ===\n${knowledgeBlock}`;
 
 		// 4. Construct the full prompt for the LLM
 		const chatMessages: ChatMessage[] = [

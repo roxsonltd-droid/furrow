@@ -30,7 +30,7 @@ export class WorkflowAgent {
 				signal: controller.signal,
 				headers: {
 					'Content-Type': 'application/json',
-					...(upstream.bearer ? { Authorization: \`Bearer \${upstream.bearer}\` } : {}),
+					...(upstream.bearer ? { Authorization: `Bearer ${upstream.bearer}` } : {}),
 				},
 				body: JSON.stringify({
 					model: upstream.model,
