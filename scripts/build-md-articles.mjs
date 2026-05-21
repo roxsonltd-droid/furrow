@@ -57,6 +57,7 @@ const buildArticle = (mdFile, outFile, lang, title, deck, kicker) => {
     console.log('Wrote', outPath);
 };
 
+if (fs.existsSync(path.join(root, 'article/Egypt_Agriculture_Analysis_EN.md'))) {
 // For EN
 buildArticle(
     'article/Egypt_Agriculture_Analysis_EN.md',
@@ -66,7 +67,9 @@ buildArticle(
     "Geography, cycles, and trade paradoxes of the world's largest wheat importer",
     "MENA · NILE BASIN · ANALYSIS"
 );
+}
 
+if (fs.existsSync(path.join(root, 'article/Egypt_Agriculture_Analysis_RU.md'))) {
 // For RU
 buildArticle(
     'article/Egypt_Agriculture_Analysis_RU.md',
@@ -76,3 +79,25 @@ buildArticle(
     "География, циклы и торговые парадоксы крупнейшего в мире импортёра зерна",
     "БЛИЖНИЙ ВОСТОК И СЕВЕРНАЯ АФРИКА · АНАЛИТИКА"
 );
+}
+
+// US/Canada EN
+buildArticle(
+    'article/US_Canada_EU_Wheat_Analysis_EN.md',
+    'us-canada-wheat-trade-war-en.html',
+    'en',
+    "The U.S. vs. Canada in May 2026: Trade War and a Wheat Earthquake",
+    "Trade War, Political Realignment, and a Wheat Earthquake — With Europe Caught in the Middle",
+    "NORTH AMERICA · TRADE · ANALYSIS"
+);
+
+// US/Canada RU
+buildArticle(
+    'article/US_Canada_EU_Wheat_Analysis_RU.md',
+    'us-canada-wheat-trade-war-ru.html',
+    'ru',
+    "США против Канады: торговая война и пшеничное землетрясение",
+    "Торговая война, политическая перегруппировка и пшеничное землетрясение",
+    "СЕВЕРНАЯ АМЕРИКА · ТОРГОВЛЯ · АНАЛИТИКА"
+);
+
