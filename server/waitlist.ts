@@ -86,14 +86,22 @@ export async function submitFurrowWaitlist(input: {
 	}
 
 	const key = process.env.RESEND_API_KEY?.trim();
+	if (!key) {
+		return {
+			ok: false,
+			error:
+				'RESEND_API_KEY is not set — registrations cannot be delivered. Configure Resend or use another signup channel.',
+		};
+	}
+
 	const to = inboxTo();
 	const from = fromAddress();
-	
-	// MOCK MODE: If no API key is provided, we just simulate a successful registration
-	// so the user experience is not broken during testing.
-	if (!key || !to || !from) {
-		console.log(`[MOCK WAITLIST] Registered: ${fullName} (${email}) - Interest: ${interest}`);
-		return { ok: true, mailDelivery: 'sent', welcomeSent: false };
+	if (!to || !from) {
+		return {
+			ok: false,
+			error:
+				'Waitlist email is misconfigured: set FURROW_INBOX_EMAIL (or MAIL_TO) and RESEND_FROM together with RESEND_API_KEY.',
+		};
 	}
 
 	const subject = `[Furrow] Registration · ${fullName}`;
