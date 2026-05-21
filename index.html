@@ -955,8 +955,23 @@ body {
   .brand-name::before, .brand-name::after { display: none; }
   .brand-name { font-size: 42px; }
   .lead h1 { font-size: 32px; }
-  .nav-inner { gap: 18px; }
-  .nav a { font-size: 11px; padding: 12px 0; }
+  .nav-inner { gap: 16px; flex-wrap: wrap; justify-content: center; padding: 0 16px; }
+  .nav a { font-size: 11px; padding: 10px 4px; }
+  .subscribe { padding: 32px 24px; margin: 40px 0 32px; }
+  .ticker-stream { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .ticker-stream::-webkit-scrollbar { display: none; }
+  .main { padding: 24px 16px 40px; }
+}
+
+@media (max-width: 480px) {
+  .utility-bar .container { flex-direction: column; gap: 10px; padding: 12px; }
+  .utility-bar .left { text-align: center; justify-content: center; }
+  .utility-bar .right { justify-content: center; flex-wrap: wrap; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .sponsors-block { padding: 32px 16px; margin-top: 32px; }
+  .lead-grid, .two-col { gap: 24px; margin-bottom: 32px; }
+  .story-row { margin-bottom: 32px; gap: 24px; }
+  .section-head { flex-direction: column; gap: 8px; align-items: flex-start; }
 }
 
 /* Print-friendly fallback */

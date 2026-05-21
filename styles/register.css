@@ -85,3 +85,11 @@ body {
 	color: #94a3b8;
 	text-align: center;
 }
+
+@media (max-width: 480px) {
+	.reg-main {
+		margin: 24px 16px;
+		padding: 24px 16px;
+	}
+	.reg-main h1 { font-size: 24px; }
+}
