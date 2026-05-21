@@ -169,22 +169,22 @@ export async function executeFurrowAgentTool(
 		const query = typeof args.query === 'string' ? args.query : '';
 		// Mocked data for now
 		const mockNews = [
-			\`(MOCK) Bloomberg: \${query} causing market ripples as traders adjust positions.\`,
-			\`(MOCK) Reuters: Global supply chains monitor developments regarding \${query}.\`,
+			`(MOCK) Bloomberg: ${query} causing market ripples as traders adjust positions.`,
+			`(MOCK) Reuters: Global supply chains monitor developments regarding ${query}.`,
 		];
 		return {
 			result: JSON.stringify({ ok: true, news: mockNews }),
-			action: { tool: name, ok: true, summary: \`Web search: \${query}\` },
+			action: { tool: name, ok: true, summary: `Web search: ${query}` },
 		};
 	}
 
 	if (name === 'get_weather_forecast') {
 		const region = typeof args.region === 'string' ? args.region : '';
 		// Mocked data for now
-		const mockWeather = \`(MOCK) \${region}: Persistent dry conditions in the southern areas, expected rainfall of 10-15mm over the next week in the north. Soil moisture remains below optimal.\`;
+		const mockWeather = `(MOCK) ${region}: Persistent dry conditions in the southern areas, expected rainfall of 10-15mm over the next week in the north. Soil moisture remains below optimal.`;
 		return {
 			result: JSON.stringify({ ok: true, weather: mockWeather }),
-			action: { tool: name, ok: true, summary: \`Weather: \${region}\` },
+			action: { tool: name, ok: true, summary: `Weather: ${region}` },
 		};
 	}
 

@@ -2,7 +2,7 @@ import { MemoryAgent } from './agent-memory.js';
 import { ToolsAgent } from './agent-tools.js';
 import type { ChatMessage, AgentActionRecord, AgentToolContext } from './agent-types.js';
 import { type TextChatUpstream, openAIMessageContentToString } from './llm-upstream.js';
-import { randomUUID } from 'crypto';
+
 
 const LLM_FETCH_TIMEOUT_MS = 15_000;
 const MAX_AGENT_STEPS = 3;
