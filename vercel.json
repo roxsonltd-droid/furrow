@@ -10,6 +10,8 @@
 		{ "source": "/ukraine-harvest-war", "destination": "/ukraine-harvest-war.html" },
 		{ "source": "/egypt-fields-desert-oasis-2026", "destination": "/egypt-fields-desert-oasis-2026.html" },
 		{ "source": "/egypt-fields-desert-oasis-2026-ru", "destination": "/egypt-fields-desert-oasis-2026-ru.html" },
+		{ "source": "/egypt-agriculture-analysis-en", "destination": "/egypt-agriculture-analysis-en.html" },
+		{ "source": "/egypt-agriculture-analysis-ru", "destination": "/egypt-agriculture-analysis-ru.html" },
 		{ "source": "/sponsor", "destination": "/sponsor.html" },
 		{ "source": "/tomato-harvest-2026", "destination": "/tomato-harvest-2026.html" }
 	],
