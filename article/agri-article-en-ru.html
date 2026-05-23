@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wheat Reckoning | Пшеничный счёт</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --paper: #f5f0e8;
+    --cream: #ede7d5;
+    --gold: #b8860b;
+    --rust: #8b3a1a;
+    --mid: #6b5c3e;
+    --rule: #c8b89a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+  }
+
+  /* NEWSPAPER MASTHEAD */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 18px 20px 14px;
+    border-bottom: 4px double var(--gold);
+  }
+
+  .masthead-label {
+    font-family: 'Source Serif 4', serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .masthead-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 42px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .masthead-sub {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rule);
+    font-weight: 300;
+  }
+
+  /* LANG TOGGLE */
+  .lang-bar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .lang-btn {
+    padding: 10px 32px;
+    border: none;
+    background: transparent;
+    font-family: 'Source Serif 4', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.25s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .lang-btn.active {
+    color: var(--rust);
+    border-bottom-color: var(--rust);
+    background: var(--paper);
+  }
+
+  .lang-btn:hover:not(.active) { color: var(--ink); }
+
+  /* ARTICLE WRAPPER */
+  .article-wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .article-section { display: none; }
+  .article-section.visible { display: block; }
+
+  /* ARTICLE HEADER */
+  .article-header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 36px;
+  }
+
+  .category-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rust);
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .article-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  .article-headline em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .article-deck {
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--mid);
+    font-style: italic;
+    border-left: 3px solid var(--gold);
+    padding-left: 18px;
+    margin-bottom: 24px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .byline {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-weight: 600;
+  }
+
+  .byline span { color: var(--gold); }
+
+  .dateline {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--mid);
+    font-style: italic;
+  }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(135deg, #2d1f0a 0%, #5c3d0e 40%, #8b6914 70%, #c4940f 100%);
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.03) 3px,
+      rgba(255,255,255,0.03) 4px
+    );
+  }
+
+  .hero-wheat {
+    font-size: 80px;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5));
+    position: relative;
+    z-index: 1;
+    animation: sway 4s ease-in-out infinite;
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  .hero-caption {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+  }
+
+  /* BODY TEXT */
+  .article-body { line-height: 1.8; font-size: clamp(15px, 2vw, 17px); }
+
+  .article-body p { margin-bottom: 22px; }
+
+  .article-body p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 10px 0 0;
+    color: var(--rust);
+  }
+
+  /* SECTION DIVIDERS */
+  .section-head {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    margin: 36px 0;
+    padding: 28px 32px;
+    background: var(--cream);
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .pull-quote::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 100px;
+    color: var(--gold);
+    opacity: 0.4;
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    line-height: 1;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 10px !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pull-quote cite {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* DATA BOX */
+  .data-box {
+    margin: 36px 0;
+    border: 1px solid var(--rule);
+    background: var(--cream);
+  }
+
+  .data-box-head {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 10px 20px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .data-box-body {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .data-item { border-left: 3px solid var(--gold); padding-left: 14px; }
+
+  .data-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 900;
+    color: var(--rust);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .data-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* FOOTER */
+  .article-footer {
+    margin-top: 48px;
+    padding: 20px 0 40px;
+    border-top: 3px double var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-source {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-style: italic;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* RULE ORNAMENT */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 20px;
+    margin: 32px 0;
+    letter-spacing: 12px;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 520px) {
+    .data-box-body { grid-template-columns: 1fr; }
+    .pull-quote { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-label">Global Agricultural Intelligence</div>
+  <div class="masthead-title">THE FIELD REPORT</div>
+  <div class="masthead-sub">World Commodity & Trade Analysis — May 2026</div>
+</header>
+
+<nav class="lang-bar">
+  <button class="lang-btn active" onclick="switchLang('en')">🇬🇧 English</button>
+  <button class="lang-btn" onclick="switchLang('ru')">🇷🇺 Русский</button>
+</nav>
+
+<!-- ===================== ENGLISH ===================== -->
+<div class="article-wrapper">
+<section class="article-section visible" id="section-en">
+
+  <div class="article-header">
+    <span class="category-tag">🌾 Commodities · Trade · Geopolitics</span>
+    <h1 class="article-headline">The <em>Wheat Reckoning:</em><br>Beijing's Billions and the Shrinking Harvest</h1>
+    <p class="article-deck">A landmark US–China agricultural deal and the smallest American wheat crop in 54 years are reshaping global grain markets — and the ripples are reaching every corner of the food supply chain.</p>
+    <div class="byline-row">
+      <span class="byline">Analysis by <span>The Field Report</span></span>
+      <span class="dateline">May 23, 2026 · Global Markets Edition</span>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-wheat">🌾</div>
+    <div class="hero-caption">Chicago Board of Trade / CBOT Wheat Futures</div>
+  </div>
+
+  <div class="article-body">
+
+    <p>Two tectonic forces have collided in global agricultural markets this month, sending shockwaves from the Chicago trading pits to the grain silos of the Middle East and the bread factories of Southeast Asia. The first is a sweeping US–China trade deal signed in Beijing on May 14–16, in which China committed to purchasing at least $17 billion in American agricultural goods annually through 2028. The second is a devastating USDA crop forecast: the United States is on course to harvest its smallest wheat crop since 1972.</p>
+
+    <div class="data-box">
+      <div class="data-box-head">📊 Key Figures at a Glance</div>
+      <div class="data-box-body">
+        <div class="data-item">
+          <div class="data-num">$17B</div>
+          <div class="data-label">China's annual US ag purchase commitment through 2028</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">1972</div>
+          <div class="data-label">Last time US wheat production was this low</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">1.56B</div>
+          <div class="data-label">Bushels — projected US wheat harvest 2026–27</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">$27–30B</div>
+          <div class="data-label">Total projected US–China ag trade value per year</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-head">The Beijing Summit and Its Agricultural Stakes</h2>
+
+    <p>When President Donald Trump landed in Beijing for a three-day summit with President Xi Jinping, agricultural trade was front and center. The headline number emerging from the talks was $17 billion per year — the minimum China pledged to spend on American agricultural commodities annually through 2028, on top of a separate commitment to purchase 25 million metric tons of soybeans per year agreed in October 2025. Combined, analysts estimate the total value of US agricultural exports to China could reach $27 to $30 billion annually — a dramatic reversal from the $8 billion low recorded in 2025 during the height of the trade war.</p>
+
+    <p>Two new institutional structures were also announced: a US–China Board of Trade and a Board of Investment, designed to manage and enforce these commitments on a structured, ongoing basis. The White House called them "the cornerstone of this historic agreement." For American farmers who endured years of Chinese buying boycotts and price suppression, the deal represents an extraordinary lifeline.</p>
+
+    <div class="pull-quote">
+      <p>China is buying more U.S. wheat — not because it's the cheapest, but because it needs to show commitment. This is a geopolitical purchase as much as a commercial one.</p>
+      <cite>— Singapore-based grain trader, Reuters, May 2026</cite>
+    </div>
+
+    <h2 class="section-head">A 54-Year Low in the Wheat Fields</h2>
+
+    <p>The deal's significance is amplified by a crisis unfolding in the American breadbasket. The USDA's May 2026 World Agricultural Supply and Demand Estimates report — the industry's most closely watched monthly release — projected US wheat production for 2026–27 at just 1.561 billion bushels. If that figure holds, it will be the weakest harvest in 54 years, reflecting both reduced planting acreage and below-average yields across the Great Plains. Futures markets reacted immediately: Hard Red Winter and Soft Red Winter wheat contracts both hit their daily trading limits following the USDA announcement — so-called "limit-up" sessions that signal genuine market shock.</p>
+
+    <p>In stark contrast, the same USDA report projected record-breaking corn and soybean harvests. Corn production is forecast at 15.995 billion bushels and soybeans at 4.435 billion bushels — both potentially the largest in US history. This divergence creates a peculiar imbalance: grain markets are simultaneously flush with some commodities and strained in wheat, a staple that underpins bread, pasta, pastry and animal feed across the developing world.</p>
+
+    <h2 class="section-head">Global Supply Chains Under Pressure</h2>
+
+    <p>The combination of a Chinese buying surge and US supply constraints is beginning to reshape global trade flows. China has already booked its first US wheat cargoes since October 2025 — approximately 120,000 metric tons of soft white and spring wheat — in what traders describe as a "political signal" ahead of larger expected purchases. Meanwhile, the ongoing closure of the Strait of Hormuz is keeping oil prices elevated, indirectly supporting biofuel demand for corn and soybeans and adding further complexity to the grain price picture.</p>
+
+    <p>For countries in the Middle East, North Africa and South Asia that depend heavily on wheat imports, this convergence is a cause for concern. Higher global wheat prices — driven by US supply shortfalls and Chinese demand — translate directly into higher bread prices, a historically sensitive political flashpoint in many of these regions. Buyers from Egypt, Turkey, Saudi Arabia and Pakistan are already monitoring the Chicago futures boards with unusual attention.</p>
+
+    <div class="ornament">✦ ✦ ✦</div>
+
+    <h2 class="section-head">The Road Ahead</h2>
+
+    <p>Markets remain cautious. The Beijing summit produced commitments but few hard enforcement mechanisms, and traders remember well that prior US–China agricultural agreements have sometimes fallen short of their headline numbers. Soybean shipments — the most liquid and traceable part of the deal — remain the key benchmark that analysts are watching. Chinese state buyers have been modest in their initial purchases, and the market pulled back sharply at the end of May after the summit failed to deliver the flood of soybean orders some had anticipated.</p>
+
+    <p>What is clear is that the agricultural geopolitics of 2026 are being rewritten in real time. After years of trade war, decoupling rhetoric and supply chain fragmentation, the world's two largest economies are once again bound together by the oldest trade of all: food. Whether that bond holds — and whether American wheat fields can recover lost ground — will define global commodity markets for the rest of the decade.</p>
+
+  </div>
+
+  <footer class="article-footer">
+    <span class="footer-source">Sources: USDA WASDE May 2026 · White House Fact Sheet · Reuters · Bloomberg · Agri-Pulse · AGDAILY · CNN · Al Jazeera</span>
+    <span class="footer-logo">The Field Report</span>
+  </footer>
+
+</section>
+
+<!-- ===================== RUSSIAN ===================== -->
+<section class="article-section" id="section-ru">
+
+  <div class="article-header">
+    <span class="category-tag">🌾 Сырьевые рынки · Торговля · Геополитика</span>
+    <h1 class="article-headline"><em>Пшеничный счёт:</em><br>Миллиарды Пекина и рекордно низкий урожай</h1>
+    <p class="article-deck">Эпохальная сельскохозяйственная сделка между США и Китаем и наименьший урожай пшеницы в Америке за 54 года формируют новые контуры мирового зернового рынка — и волны этих перемен достигают каждого звена продовольственной цепочки.</p>
+    <div class="byline-row">
+      <span class="byline">Аналитика: <span>The Field Report</span></span>
+      <span class="dateline">23 мая 2026 · Выпуск мировых рынков</span>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-wheat">🌾</div>
+    <div class="hero-caption">Чикагская товарная биржа / Фьючерсы на пшеницу CBOT</div>
+  </div>
+
+  <div class="article-body">
+
+    <p>В мае 2026 года два тектонических сдвига столкнулись на мировых аграрных рынках, породив волну потрясений — от торговых площадок Чикаго до зернохранилищ Ближнего Востока и хлебозаводов Юго-Восточной Азии. Первый сдвиг — масштабная торговая сделка между США и Китаем, подписанная в Пекине 14–16 мая, по которой Китай обязался ежегодно закупать американские сельскохозяйственные товары на сумму не менее 17 миллиардов долларов вплоть до 2028 года. Второй — катастрофический прогноз USDA: Соединённые Штаты движутся к наименьшему урожаю пшеницы с 1972 года.</p>
+
+    <div class="data-box">
+      <div class="data-box-head">📊 Ключевые цифры</div>
+      <div class="data-box-body">
+        <div class="data-item">
+          <div class="data-num">$17 млрд</div>
+          <div class="data-label">Ежегодный объём закупок американского агроэкспорта Китаем до 2028 г.</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">1972</div>
+          <div class="data-label">Год, когда в последний раз производство пшеницы в США было столь низким</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">1,56 млрд</div>
+          <div class="data-label">Бушелей — прогноз урожая пшеницы США в 2026–27</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">$27–30 млрд</div>
+          <div class="data-label">Суммарная прогнозная стоимость агроторговли США–Китай в год</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-head">Пекинский саммит и его аграрные ставки</h2>
+
+    <p>Когда президент Дональд Трамп прилетел в Пекин на трёхдневные переговоры с Си Цзиньпином, сельскохозяйственная торговля оказалась в центре повестки. Главной цифрой по итогам встречи стали 17 миллиардов долларов в год — минимальный объём, который Китай обязался тратить на американские аграрные товары ежегодно до 2028 года, помимо отдельного соглашения о закупке 25 миллионов метрических тонн соевых бобов в год, заключённого ещё в октябре 2025-го. По совокупным оценкам аналитиков, общая стоимость американского агроэкспорта в Китай может достичь 27–30 миллиардов долларов в год — разительный разворот по сравнению с минимумом в 8 миллиардов долларов, зафиксированным в 2025-м на пике торговой войны.</p>
+
+    <p>Были также анонсированы два новых институциональных инструмента: Американо-китайский торговый совет и Инвестиционный совет, призванные обеспечить системное исполнение взятых обязательств. Белый дом назвал их «краеугольным камнем этого исторического соглашения». Для американских фермеров, годами переживавших китайские бойкоты и ценовое давление, сделка стала настоящим спасательным кругом.</p>
+
+    <div class="pull-quote">
+      <p>Китай покупает американскую пшеницу не потому, что она самая дешёвая, а потому что ему нужно продемонстрировать приверженность договорённостям. Это политическая закупка в той же мере, что и коммерческая.</p>
+      <cite>— Трейдер зернового рынка, Сингапур, Reuters, май 2026</cite>
+    </div>
+
+    <h2 class="section-head">54-летний минимум в пшеничных полях</h2>
+
+    <p>Значимость сделки усиливается кризисом, разворачивающимся на американских сельскохозяйственных угодьях. Майский доклад USDA по мировому предложению и спросу на сельскохозяйственную продукцию (WASDE) — наиболее пристально отслеживаемый ежемесячный отчёт в отрасли — спрогнозировал производство пшеницы в США в 2026–27 годах на уровне лишь 1,561 миллиарда бушелей. Если прогноз подтвердится, это станет наименьшим урожаем за 54 года, что объясняется как сокращением посевных площадей, так и ниже среднего уровня показателями урожайности на Великих равнинах. Рынки фьючерсов отреагировали незамедлительно: контракты на твёрдую красную озимую и мягкую красную озимую пшеницу сразу после публикации USDA достигли дневных лимитов роста — так называемых сессий limit-up, свидетельствующих о подлинном рыночном шоке.</p>
+
+    <p>В разительном контрасте тот же доклад USDA спрогнозировал рекордные урожаи кукурузы и соевых бобов: 15,995 миллиарда бушелей и 4,435 миллиарда бушелей соответственно — потенциально наибольшие за всю историю наблюдений. Это расхождение создаёт необычный дисбаланс: зерновые рынки одновременно переполнены одними культурами и испытывают давление дефицита пшеницы — базового продукта, на котором держится производство хлеба, макарон, кондитерских изделий и кормов для животных по всему развивающемуся миру.</p>
+
+    <h2 class="section-head">Глобальные цепочки поставок под давлением</h2>
+
+    <p>Сочетание волны китайских закупок и ограниченного американского предложения начинает перекраивать глобальные торговые потоки. Китай уже заказал первые партии американской пшеницы с октября 2025-го — около 120 000 метрических тонн мягкой белой и яровой пшеницы — в том, что трейдеры характеризуют как «политический сигнал» перед ожидаемыми более крупными закупками. Тем временем продолжающееся закрытие Ормузского пролива удерживает цены на нефть на высоком уровне, косвенно поддерживая спрос на биотопливо из кукурузы и сои и дополнительно усложняя картину зерновых цен.</p>
+
+    <p>Для стран Ближнего Востока, Северной Африки и Южной Азии, в значительной мере зависящих от импорта пшеницы, это стечение обстоятельств вызывает серьёзную обеспокоенность. Рост мировых цен на пшеницу — обусловленный дефицитом предложения в США и китайским спросом — напрямую транслируется в удорожание хлеба, исторически болезненно воспринимаемое во многих из этих стран. Покупатели из Египта, Турции, Саудовской Аравии и Пакистана уже следят за чикагскими фьючерсными котировками с необычным вниманием.</p>
+
+    <div class="ornament">✦ ✦ ✦</div>
+
+    <h2 class="section-head">Взгляд в будущее</h2>
+
+    <p>Рынки сохраняют осторожность. Пекинский саммит принёс обязательства, но немного механизмов их принудительного исполнения, и трейдеры хорошо помнят, что предыдущие американо-китайские аграрные договорённости нередко не достигали заявленных показателей. Поставки соевых бобов — наиболее ликвидная и поддающаяся учёту часть сделки — остаются ключевым ориентиром, за которым следят аналитики. Китайские государственные покупатели пока сдержаны в начальных закупках, а рынок резко откатился в конце мая после того, как саммит не породил ожидаемого потока заказов на сою.</p>
+
+    <p>Очевидно одно: аграрная геополитика 2026 года переписывается в режиме реального времени. После лет торговой войны, риторики разъединения и фрагментации цепочек поставок две крупнейшие экономики мира вновь связаны друг с другом древнейшей из торговли — продовольственной. Устоит ли эта связь — и смогут ли американские пшеничные угодья наверстать утраченное — определит состояние мировых сырьевых рынков до конца десятилетия.</p>
+
+  </div>
+
+  <footer class="article-footer">
+    <span class="footer-source">Источники: USDA WASDE май 2026 · Белый дом · Reuters · Bloomberg · Agri-Pulse · AGDAILY · CNN · Al Jazeera</span>
+    <span class="footer-logo">The Field Report</span>
+  </footer>
+
+</section>
+</div>
+
+<script>
+  function switchLang(lang) {
+    document.querySelectorAll('.article-section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + lang).classList.add('visible');
+    event.target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

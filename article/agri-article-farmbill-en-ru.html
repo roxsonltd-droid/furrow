@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eight Years in the Making | Восемь лет ожидания</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e1a0f;
+    --surface: #162019;
+    --surface2: #1e2d20;
+    --border: #2e4530;
+    --gold: #d4a843;
+    --gold-dim: #8c6e2a;
+    --green: #4a9c5a;
+    --green-light: #7bc48a;
+    --text: #e8ead6;
+    --text-dim: #9aaa8a;
+    --text-mid: #c4cbb0;
+    --red: #c0392b;
+    --white: #f0f2e4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .masthead {
+    background: linear-gradient(180deg, #0a120b 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 20px 18px;
+    text-align: center;
+    position: relative;
+  }
+
+  .masthead::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .masthead-pub {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+  }
+
+  .masthead-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 5vw, 44px);
+    color: var(--white);
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .masthead-date {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* LANG */
+  .lang-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+
+  .lang-btn {
+    padding: 12px 36px;
+    border: none;
+    background: transparent;
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .lang-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .lang-btn:hover:not(.active) { color: var(--text); }
+
+  /* LAYOUT */
+  .article-section { display: none; }
+  .article-section.visible { display: block; }
+
+  .wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ARTICLE HEAD */
+  .article-head {
+    padding: 52px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .cat-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: #0a0a00;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    margin-bottom: 20px;
+    font-family: 'Lora', serif;
+  }
+
+  .headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 6vw, 54px);
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 22px;
+  }
+
+  .headline strong {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .deck {
+    font-size: clamp(15px, 2.2vw, 18px);
+    line-height: 1.65;
+    color: var(--text-mid);
+    font-style: italic;
+    border-left: 2px solid var(--green);
+    padding-left: 20px;
+    margin-bottom: 26px;
+  }
+
+  .byline-line {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .byline-line span { color: var(--green-light); }
+
+  /* HERO BANNER */
+  .hero {
+    background: linear-gradient(135deg, #0d2211 0%, #1a4a22 45%, #2d6b3a 100%);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 44px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.02) 30px,
+      rgba(255,255,255,0.02) 31px
+    );
+  }
+
+  .hero-icon {
+    font-size: 90px;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 0 30px rgba(74,156,90,0.4));
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(74,156,90,0.3)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 40px rgba(74,156,90,0.6)); }
+  }
+
+  .hero-tag {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* BODY */
+  .body { line-height: 1.85; font-size: clamp(15px, 2vw, 17px); color: var(--text-mid); }
+
+  .body p { margin-bottom: 24px; }
+
+  .body p:first-child::first-letter {
+    font-family: 'DM Serif Display', serif;
+    font-size: 76px;
+    float: left;
+    line-height: 0.72;
+    margin: 10px 10px 0 0;
+    color: var(--gold);
+  }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin: 36px 0;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat-cell {
+    background: var(--surface);
+    padding: 22px 20px;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(26px, 4vw, 38px);
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  /* SECTION HEAD */
+  .sec-head {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--white);
+    margin: 40px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .sec-head::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--green);
+  }
+
+  /* PULL QUOTE */
+  .pull {
+    background: var(--surface2);
+    border-left: 3px solid var(--gold);
+    padding: 28px 28px 22px;
+    margin: 36px 0;
+    position: relative;
+  }
+
+  .pull::before {
+    content: '\201C';
+    font-family: 'DM Serif Display', serif;
+    font-size: 90px;
+    color: var(--gold);
+    opacity: 0.2;
+    position: absolute;
+    top: 0; left: 12px;
+    line-height: 1;
+  }
+
+  .pull p {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(17px, 2.5vw, 22px);
+    color: var(--white);
+    line-height: 1.45;
+    margin-bottom: 12px !important;
+    position: relative;
+  }
+
+  .pull cite {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* CONTROVERSY BOX */
+  .controversy {
+    border: 1px solid var(--border);
+    margin: 36px 0;
+    background: var(--surface);
+  }
+
+  .controversy-head {
+    background: var(--red);
+    color: var(--white);
+    padding: 10px 18px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .controversy-body {
+    padding: 20px 20px;
+  }
+
+  .controversy-item {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .controversy-item:last-child { border-bottom: none; }
+
+  .ci-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+
+  .ci-text { font-size: 14px; color: var(--text-mid); line-height: 1.5; }
+  .ci-text strong { color: var(--white); font-weight: 600; }
+
+  /* ORNAMENT */
+  .orn {
+    text-align: center;
+    color: var(--green);
+    font-size: 18px;
+    letter-spacing: 14px;
+    opacity: 0.5;
+    margin: 34px 0;
+  }
+
+  /* TIMELINE */
+  .timeline { margin: 36px 0; }
+
+  .tl-item {
+    display: flex;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .tl-date {
+    min-width: 80px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 600;
+    padding-top: 2px;
+    font-family: 'Lora', serif;
+  }
+
+  .tl-text { font-size: 14px; color: var(--text-mid); line-height: 1.55; }
+  .tl-text strong { color: var(--white); }
+
+  /* FOOTER */
+  .art-footer {
+    margin-top: 50px;
+    padding: 20px 0 44px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .foot-src { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); font-style: italic; }
+  .foot-logo { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--gold); letter-spacing: 2px; }
+
+  @media (max-width: 500px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .pull { padding: 22px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-pub">Global Agricultural Intelligence</div>
+  <div class="masthead-name">THE FIELD REPORT</div>
+  <div class="masthead-date">Policy & Legislation Edition — May 2026</div>
+</header>
+
+<nav class="lang-bar">
+  <button class="lang-btn active" onclick="switchLang('en')">🇬🇧 English</button>
+  <button class="lang-btn" onclick="switchLang('ru')">🇷🇺 Русский</button>
+</nav>
+
+<!-- ==================== ENGLISH ==================== -->
+<div class="wrapper">
+<section class="article-section visible" id="sec-en">
+
+  <div class="article-head">
+    <div class="cat-tag">🏛️ Farm Policy · Legislation · Food Security</div>
+    <h1 class="headline">Eight Years in the Making:<br><strong>America's Farm Bill</strong> Finally Moves</h1>
+    <p class="deck">After the longest gap in its history, the United States has passed a new Farm Bill through the House of Representatives. The $390 billion legislation — reshaping food aid, crop insurance, biofuels and pesticide law — now faces a treacherous Senate road before it can become law.</p>
+    <div class="byline-line">
+      <span>Analysis by <span>The Field Report</span></span>
+      <span>May 23, 2026 · Washington Policy Desk</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-icon">🏛️</div>
+    <div class="hero-tag">US Capitol / House Agriculture Committee</div>
+  </div>
+
+  <div class="body">
+
+    <p>In the pre-dawn hours of April 30, 2026, the United States House of Representatives did something it had not managed in eight years: it passed a Farm Bill. The Farm, Food and National Security Act of 2026 cleared the chamber on a 224–200 vote after an all-night debate that stretched through heated arguments over food assistance, crop insurance payouts, pesticide liability and the fate of corn-based biofuel blends. The narrow but genuinely bipartisan margin — 14 Democrats voting yes — was the broadest cross-party support for a House Farm Bill since 2008.</p>
+
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-num">$390B</div>
+        <div class="stat-label">Total value of the Farm Bill over five years</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">8 years</div>
+        <div class="stat-label">Since the last Farm Bill was signed — a historic gap</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">224–200</div>
+        <div class="stat-label">House vote — bipartisan passage with 14 Democrat votes</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">Sept 30</div>
+        <div class="stat-label">2026 deadline — when the current farm bill extension expires</div>
+      </div>
+    </div>
+
+    <h2 class="sec-head">Why Eight Years?</h2>
+
+    <p>Farm bills are supposed to be reauthorized every five years. The last one — the Agriculture Improvement Act of 2018 — was signed into law by President Trump during his first term. When it expired in 2023, a deeply divided Congress proved incapable of agreeing on a successor. The central fault lines were not primarily agricultural: they were social. Republicans in the House pushed aggressively to cut the Supplemental Nutrition Assistance Program (SNAP), which provides food assistance to roughly 40 million Americans and accounts for roughly 80% of total Farm Bill spending. Democrats refused. Three short-term extensions followed, each kicking the legislative can further down the road. The current extension expires on September 30, 2026 — making passage before that date an urgent if uncertain goal.</p>
+
+    <div class="pull">
+      <p>It has been eight years since the last Farm Bill. We are truly grateful the House found a bipartisan path forward.</p>
+      <cite>— Brian Glenn, American Farm Bureau Federation, April 2026</cite>
+    </div>
+
+    <h2 class="sec-head">What's Inside the Bill</h2>
+
+    <p>The House version of the bill is a $390 billion package that reshapes federal agriculture policy across dozens of programmes. Among the headline provisions: expanded crop insurance coverage, increased reference prices that trigger farm safety-net payments, a new local food procurement programme, preservation of the Specialty Crop Block Grant, and — most controversially — a broad preemption of state-level pesticide regulations that would override local restrictions on which chemicals can be used near schools, waterways or residential areas. That last provision drew fierce opposition from counties and environmental groups but survived the House vote, though pesticide preemption in the final version was significantly narrowed.</p>
+
+    <p>One of the bill's most politically charged subplots involved E15 — a corn-based gasoline blend containing 15% ethanol, currently banned from sale in summer months due to smog concerns. Farm-state Republicans and the biofuels industry have long sought year-round E15 authorization, seeing it as a critical additional demand driver for corn. After complex procedural maneuvering, E15 was ultimately "decoupled" from the Farm Bill and will proceed as a standalone vote, with the intention of later being attached to the final legislation.</p>
+
+    <div class="controversy">
+      <div class="controversy-head">⚡ Key Battlegrounds Heading into the Senate</div>
+      <div class="controversy-body">
+        <div class="controversy-item">
+          <div class="ci-icon">🍽️</div>
+          <div class="ci-text"><strong>SNAP (Food Stamps):</strong> The bill tightens eligibility and introduces work requirements for food aid recipients. Democrats call this a "hunger cliff" for vulnerable families; Republicans argue it promotes self-sufficiency.</div>
+        </div>
+        <div class="controversy-item">
+          <div class="ci-icon">🧪</div>
+          <div class="ci-text"><strong>Pesticide Preemption:</strong> Federal override of state pesticide regulations remains a sticking point. Counties and public health advocates oppose it; the agrochemical industry strongly supports it.</div>
+        </div>
+        <div class="controversy-item">
+          <div class="ci-icon">⛽</div>
+          <div class="ci-text"><strong>Year-Round E15:</strong> Decoupled from the main bill, the standalone vote keeps biofuel advocates nervous. Corn farmers and ethanol producers need this to expand domestic demand.</div>
+        </div>
+        <div class="controversy-item">
+          <div class="ci-icon">🗳️</div>
+          <div class="ci-text"><strong>Midterm Politics:</strong> With 40% of the farm vote undecided ahead of November 2026 midterms, both parties are using the Farm Bill as a policy and messaging battleground.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sec-head">The Senate Obstacle Course</h2>
+
+    <p>With the House vote behind it, the Farm Bill now enters the far more treacherous Senate. Senate Agriculture Committee Chairman John Boozman (R-AR) has targeted late May or early June for a markup session — but the Senate entered recess on May 23, pushing any real progress to June at the earliest. Unlike the House, where a simple majority sufficed, the Senate requires 60 votes to advance most legislation past a filibuster, forcing genuine bipartisan deal-making in a chamber where partisan temperatures are running high ahead of midterm elections.</p>
+
+    <p>Once the Senate passes its own version — potentially with significant changes to SNAP, pesticides and conservation programmes — a joint conference committee will need to reconcile differences between the two chambers. That final compromise package must then pass both the House and Senate again before reaching President Trump's desk. Analysts tracking the process are cautiously optimistic but warn the September 30 deadline is genuinely tight.</p>
+
+    <div class="orn">✦ ✦ ✦</div>
+
+    <h2 class="sec-head">Why It Matters Beyond America's Borders</h2>
+
+    <p>The US Farm Bill is not just a domestic policy document — it is a structural force in global food markets. The crop insurance provisions and reference price safety nets it contains shape US planting decisions, directly affecting global supply of corn, soybeans, wheat and cotton. The SNAP programme, as the world's largest single food assistance scheme, influences domestic consumption and therefore US import behaviour. And the biofuels provisions — particularly anything touching E15 and the Renewable Fuel Standard — determine how much American corn and soybean oil is redirected from food into fuel, with ripple effects on global grain prices from Cairo to Karachi. After eight years of policy uncertainty, the signal that the US is finally updating its agricultural framework matters to buyers, traders and governments around the world.</p>
+
+  </div>
+
+  <div class="art-footer">
+    <span class="foot-src">Sources: Farm Progress · Agri-Pulse · Pro Farmer · AFBF · NACo · Greenhouse Management · WisFarmer · Center for Crop Diversification · The Hill</span>
+    <span class="foot-logo">The Field Report</span>
+  </div>
+
+</section>
+
+<!-- ==================== RUSSIAN ==================== -->
+<section class="article-section" id="sec-ru">
+
+  <div class="article-head">
+    <div class="cat-tag">🏛️ Агрополитика · Законодательство · Продбезопасность</div>
+    <h1 class="headline">Восемь лет ожидания:<br><strong>Фарм Билл США</strong> наконец сдвинулся</h1>
+    <p class="deck">После самого долгого перерыва за всю историю Конгресс США принял новый Закон о сельском хозяйстве — Фарм Билл. Пакет стоимостью $390 миллиардов, затрагивающий продовольственную помощь, страхование урожая, биотопливо и пестицидное законодательство, теперь предстоит пройти через непростой путь в Сенате.</p>
+    <div class="byline-line">
+      <span>Аналитика: <span>The Field Report</span></span>
+      <span>23 мая 2026 · Политический отдел, Вашингтон</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-icon">🏛️</div>
+    <div class="hero-tag">US Capitol / Комитет по сельскому хозяйству Палаты представителей</div>
+  </div>
+
+  <div class="body">
+
+    <p>На рассвете 30 апреля 2026 года Палата представителей Конгресса США сделала то, что ей не удавалось на протяжении восьми лет: приняла Фарм Билл. «Закон о сельском хозяйстве, продовольствии и национальной безопасности 2026 года» был принят голосованием 224 против 200 после ночных дебатов, разгоревшихся вокруг вопросов продовольственной помощи, страховых выплат при неурожае, ответственности производителей пестицидов и судьбы биотоплива на основе кукурузы. Узкий, но подлинно двухпартийный перевес — 14 голосов демократов «за» — стал наибольшим межпартийным единством при принятии Фарм Билла в Палате представителей с 2008 года.</p>
+
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-num">$390 млрд</div>
+        <div class="stat-label">Общая стоимость Фарм Билла сроком на пять лет</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">8 лет</div>
+        <div class="stat-label">С момента принятия предыдущего Фарм Билла — исторически долгий перерыв</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">224–200</div>
+        <div class="stat-label">Голосование в Палате — двухпартийное принятие с 14 голосами демократов</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">30 сент.</div>
+        <div class="stat-label">2026 — срок истечения действующей временной поправки к закону</div>
+      </div>
+    </div>
+
+    <h2 class="sec-head">Почему понадобилось восемь лет?</h2>
+
+    <p>По плану Фарм Билл обновляется каждые пять лет. Последний из принятых — «Закон об улучшении сельского хозяйства 2018 года» — был подписан Трампом в его первый президентский срок. Когда срок его действия истёк в 2023 году, глубоко расколотый Конгресс оказался неспособен согласовать преемника. Главные разногласия носили не столько аграрный, сколько социальный характер: республиканцы в Палате настаивали на значительном сокращении программы SNAP — продовольственных талонов для примерно 40 миллионов американцев, которые составляют около 80% от общих расходов Фарм Билла. Демократы отказались. Последовали три краткосрочных продления, каждый раз откладывавших решение. Действующее продление истекает 30 сентября 2026 года — что делает принятие закона до этой даты насущной, пусть и неопределённой целью.</p>
+
+    <div class="pull">
+      <p>Восемь лет прошло с момента принятия последнего Фарм Билла. Мы искренне рады, что Палата нашла двухпартийный путь вперёд.</p>
+      <cite>— Брайан Гленн, Американская федерация фермерских бюро, апрель 2026</cite>
+    </div>
+
+    <h2 class="sec-head">Что содержится в законопроекте</h2>
+
+    <p>Версия Палаты представителей — это пакет на $390 миллиардов, затрагивающий десятки федеральных аграрных программ. В числе ключевых положений: расширенное страхование урожая, повышение пороговых цен, запускающих выплаты в рамках сетей поддержки фермеров, новая программа закупок местного продовольствия, сохранение грантовой программы для специализированных культур — и наиболее спорное положение: федеральный приоритет над региональным регулированием пестицидов, который отменил бы местные ограничения на применение агрохимикатов вблизи школ, водоёмов и жилых кварталов.</p>
+
+    <p>Один из самых политически заряженных сюжетов был связан с топливом E15 — бензиновой смесью с содержанием кукурузного этанола 15%, продажа которой в летние месяцы запрещена из-за опасений по поводу смога. В итоге E15 был «отделён» от Фарм Билла и будет вынесен на отдельное голосование — с намерением впоследствии включить его в окончательный текст закона.</p>
+
+    <div class="controversy">
+      <div class="controversy-head">⚡ Главные камни преткновения на пути в Сенат</div>
+      <div class="controversy-body">
+        <div class="controversy-item">
+          <div class="ci-icon">🍽️</div>
+          <div class="ci-text"><strong>SNAP (продовольственные талоны):</strong> Законопроект ужесточает критерии доступа и вводит требования к трудоустройству для получателей помощи. Демократы называют это «обрывом голода» для уязвимых семей; республиканцы настаивают, что это стимулирует самостоятельность.</div>
+        </div>
+        <div class="controversy-item">
+          <div class="ci-icon">🧪</div>
+          <div class="ci-text"><strong>Приоритет федерального пестицидного регулирования:</strong> Отмена региональных ограничений на пестициды остаётся болезненным вопросом для округов и защитников здоровья населения — и горячо поддерживается агрохимической отраслью.</div>
+        </div>
+        <div class="controversy-item">
+          <div class="ci-icon">⛽</div>
+          <div class="ci-text"><strong>Круглогодичные продажи E15:</strong> Выведенный в отдельный законопроект, этот вопрос держит в напряжении сторонников биотоплива. Производители кукурузы и этанола остро нуждаются в расширении внутреннего спроса.</div>
+        </div>
+        <div class="controversy-item">
+          <div class="ci-icon">🗳️</div>
+          <div class="ci-text"><strong>Промежуточные выборы — 2026:</strong> С 40% фермерского электората, не определившегося с выбором, обе партии используют Фарм Билл как арену политической борьбы.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sec-head">Сенат: полоса препятствий</h2>
+
+    <p>После принятия Палатой законопроект переходит в значительно более сложный для навигации Сенат. Председатель Комитета по сельскому хозяйству Сената Джон Бузман (республиканец, Арканзас) рассчитывал провести этапное обсуждение в конце мая или начале июня — однако 23 мая Сенат ушёл на каникулы, отодвигая реальную работу на июнь в лучшем случае. В отличие от Палаты, где достаточно простого большинства, в Сенате для преодоления процедуры затяжных дебатов (фilibuster) необходимо 60 голосов, что требует подлинного двухпартийного компромисса в условиях разгоревшейся перед промежуточными выборами политической борьбы.</p>
+
+    <p>После того как Сенат примет собственную версию — возможно, со значительными изменениями в отношении SNAP, пестицидов и природоохранных программ — совместный согласительный комитет должен будет устранить разногласия между двумя палатами. Итоговый компромиссный текст снова должен быть принят обеими палатами и лишь затем поступит на подпись президенту Трампу. Аналитики осторожно-оптимистичны, однако предупреждают: дедлайн 30 сентября реально жёсткий.</p>
+
+    <div class="orn">✦ ✦ ✦</div>
+
+    <h2 class="sec-head">Почему это важно за пределами США</h2>
+
+    <p>Американский Фарм Билл — это не просто внутриполитический документ; это структурная сила на мировых продовольственных рынках. Положения о страховании урожая и ценовых порогах влияют на американские решения о посевах, напрямую определяя мировое предложение кукурузы, сои, пшеницы и хлопка. Программа SNAP — крупнейшая в мире схема продовольственной помощи — формирует внутренний спрос, а значит, и импортное поведение США. Положения о биотопливе — прежде всего касающиеся E15 и Стандарта возобновляемых видов топлива — определяют, какая доля американской кукурузы и соевого масла уйдёт из еды в горючее, с волновыми последствиями для мировых зерновых цен — от Каира до Карачи. После восьми лет политической неопределённости сигнал о том, что США наконец обновляют свою аграрную политику, имеет значение для покупателей, трейдеров и правительств по всему миру.</p>
+
+  </div>
+
+  <div class="art-footer">
+    <span class="foot-src">Источники: Farm Progress · Agri-Pulse · Pro Farmer · AFBF · NACo · Greenhouse Management · WisFarmer · Center for Crop Diversification · The Hill</span>
+    <span class="foot-logo">The Field Report</span>
+  </div>
+
+</section>
+</div>
+
+<script>
+  function switchLang(lang) {
+    document.querySelectorAll('.article-section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sec-' + lang).classList.add('visible');
+    event.target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
