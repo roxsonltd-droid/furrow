@@ -17,7 +17,7 @@ const subs = [
 const pairs = [
 	[
 		/<a href="#">Wheat Surges to Six-Month High as Russian Export Tax Bites Black Sea Trade<\/a>/,
-		'<a href="article/sample.html" data-i18n="home.lead.title">Wheat Surges to Six-Month High as Russian Export Tax Bites Black Sea Trade</a>',
+		'<a href="/archive" data-i18n="home.lead.title">Wheat Surges to Six-Month High as Russian Export Tax Bites Black Sea Trade</a>',
 	],
 	[
 		/<p class="lead-deck">\s*Moscow's revised export levy[\s\S]*?European mills\.\s*<\/p>/,
@@ -32,7 +32,7 @@ const pairs = [
         <p data-i18n="home.lead.p1">Wheat prices broke through a six-month resistance level on Friday...</p>
         <p data-i18n="home.lead.p2">European mills, already operating with thin inventory cover...</p>
       </motion>
-      <a href="article/sample.html" class="lead-cta" data-i18n="home.lead.cta">Continue reading →</a>`,
+      <a href="/archive" class="lead-cta" data-i18n="home.lead.cta">Continue reading →</a>`,
 	],
 ];
 

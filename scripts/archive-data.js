@@ -121,7 +121,7 @@ const ARCHIVE_ARTICLES = [
   },
   {
     id: 'sample-article',
-    url: 'article/sample.html',
+    url: '/archive',
     category: 'other',
     region: 'global',
     date: '2026-05-01',

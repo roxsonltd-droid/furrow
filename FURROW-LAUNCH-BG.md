@@ -36,7 +36,7 @@ repo-root/
   index.html              ← landing + waitlist
   api/                    ← Vercel serverless (чат, waitlist, сигнали)
   server/                 ← споделена TypeScript логика
-  article/sample.html     ← примерна статия (демо)
+  /archive (desk longreads)   ← вместо липсващия article/sample.html
   styles/furrow.css
   scripts/i18n.js         ← EN / RU
   scripts/i18n-strings.js

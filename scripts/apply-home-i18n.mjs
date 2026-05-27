@@ -44,7 +44,7 @@ rep(
         <p data-i18n="home.lead.p1">Wheat prices broke through a six-month resistance level on Friday...</p>
         <p data-i18n="home.lead.p2">European mills, already operating with thin inventory cover...</p>
       </div>
-      <a href="article/sample.html" class="lead-cta" data-i18n="home.lead.cta">Continue reading →</a>`,
+      <a href="/archive" class="lead-cta" data-i18n="home.lead.cta">Continue reading →</a>`,
 );
 rep('<div class="sidebar-label">In Brief</div>', '<div class="sidebar-label" data-i18n="home.brief.label">In Brief</div>');
 rep('<div class="sidebar-label">Key Numbers Today</div>', '<div class="sidebar-label" data-i18n="home.numbers.label">Key Numbers Today</div>');
@@ -83,7 +83,7 @@ rep(
 rep('<div class="story-cat">Black Sea · Politics</div>', '<div class="story-cat" data-i18n="home.s2.cat">Black Sea · Politics</div>');
 rep(
 	'<h3><a href="#">Russian Export Quota Mechanics: How a $14/Ton Tax Reshapes Global Wheat Trade</a></h3>',
-	'<h3><a href="article/sample.html" data-i18n="home.s2.title">Russian Export Quota Mechanics: How a $14/Ton Tax Reshapes Global Wheat Trade</a></h3>',
+	'<h3><a href="/archive" data-i18n="home.s2.title">Russian Export Quota Mechanics: How a $14/Ton Tax Reshapes Global Wheat Trade</a></h3>',
 );
 rep('<div class="story-cat">Weather · North America</div>', '<div class="story-cat" data-i18n="home.s3.cat">Weather · North America</div>');
 
@@ -102,7 +102,7 @@ const latest = [
 ];
 for (const [cat, title, key] of latest) {
 	h = h.replace(`<div class="cat">${cat}</div>`, `<div class="cat" data-i18n="${key}.cat">${cat}</div>`);
-	h = h.replace(`<h4><a href="#">${title}</a></h4>`, `<h4><a href="article/sample.html" data-i18n="${key}.title">${title}</a></h4>`);
+	h = h.replace(`<h4><a href="#">${title}</a></h4>`, `<h4><a href="/archive" data-i18n="${key}.title">${title}</a></h4>`);
 }
 
 if (!h.includes('i18n-home-strings')) {

@@ -3,14 +3,13 @@
  */
 (function initFurrowNavStubs() {
 	const subscribe = document.getElementById('subscribe');
-	const sample = 'article/sample.html';
-
 	const scrollTargets = {
 		markets: '#markets-sidebar',
 		regions: '#regions-sidebar',
 		analysis: '/archive',
 		data: '/archive',
-		reports: sample,
+		/** Desk reports live in the archive; avoid dead `article/sample.html` (not deployed). */
+		reports: '/archive',
 		about: '#subscribe',
 	};
 
