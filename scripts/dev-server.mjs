@@ -213,6 +213,9 @@ const server = createServer(async (req, res) => {
 	if (staticPath === '/coffee-under-pressure-global-industry') {
 		staticPath = '/coffee-under-pressure-global-industry.html';
 	}
+	if (staticPath === '/iran-war-checkout-line-2026') {
+		staticPath = '/iran-war-checkout-line-2026.html';
+	}
 
 	const filePath = resolveSafeStaticPath(staticPath);
 	if (!filePath) {

@@ -1,5 +1,20 @@
 const ARCHIVE_ARTICLES = [
   {
+    id: 'iran-war-checkout',
+    url: '/iran-war-checkout-line-2026',
+    category: 'retail',
+    region: 'north-america',
+    date: '2026-04-15',
+    title: {
+      en: 'When the War Reaches the Checkout Line',
+      ru: 'Когда война доходит до кассы',
+    },
+    meta: {
+      en: 'NORTH AMERICA · Retail · April 2026',
+      ru: 'СЕВЕРНАЯ АМЕРИКА · Розница · апрель 2026',
+    },
+  },
+  {
     id: 'coffee-under-pressure',
     url: '/coffee-under-pressure-global-industry',
     category: 'softs',
