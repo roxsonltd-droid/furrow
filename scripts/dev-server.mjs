@@ -210,6 +210,9 @@ const server = createServer(async (req, res) => {
 	if (staticPath === '/archive') staticPath = '/archive.html';
 	if (staticPath === '/egypt-fields-desert-oasis-2026') staticPath = '/egypt-fields-desert-oasis-2026.html';
 	if (staticPath === '/egypt-fields-desert-oasis-2026-ru') staticPath = '/egypt-fields-desert-oasis-2026-ru.html';
+	if (staticPath === '/coffee-under-pressure-global-industry') {
+		staticPath = '/coffee-under-pressure-global-industry.html';
+	}
 
 	const filePath = resolveSafeStaticPath(staticPath);
 	if (!filePath) {

@@ -10,11 +10,11 @@
 		'nav.reports': 'Reports',
 		'nav.about': 'About',
 		'ticker.live': 'Live',
-		'home.lead.eyebrow': 'Agri-Tech & Innovation',
-		'home.lead.title': 'Farming of the Future: Five Trends Reshaping How We Feed the World',
+		'home.lead.eyebrow': 'Softs & Processing · Analysis',
+		'home.lead.title': 'Tomato Harvest 2026: Europe Recovers, Iran Exits, and the Race to Fill the Gap',
 		'home.lead.deck':
-			'Robots, artificial intelligence and blockchain – these aren’t words from a sci-fi novel, but real-world tools on today’s farms. Agriculture is undergoing its biggest transformation since the Green Revolution.',
-		'home.lead.author': 'By Furrow Innovation Desk',
+			'A market analysis covering Europe, Asia and the Southern Hemisphere.',
+		'home.lead.author': 'By Furrow Markets Desk',
 		'home.lead.readtime': '12 min read',
 		'home.lead.date': 'May 2026',
 		'home.lead.p1':
@@ -109,11 +109,11 @@
 		'nav.reports': 'Отчёты',
 		'nav.about': 'О нас',
 		'ticker.live': 'Онлайн',
-		'home.lead.eyebrow': 'Агротехнологии и инновации',
-		'home.lead.title': 'Фермерство будущего: Пять трендов, меняющих то, как мы кормим мир',
+		'home.lead.eyebrow': 'Мягкие и переработка · Аналитика',
+		'home.lead.title': 'Урожай томатов 2026: Европа восстанавливается, Иран уходит',
 		'home.lead.deck':
-			'Роботы, ИИ и блокчейн — реальные инструменты на современных фермах. Сельское хозяйство переживает величайшую трансформацию.',
-		'home.lead.author': 'Отдел инноваций Furrow',
+			'Анализ рынка Европы, Азии и Южного полушария.',
+		'home.lead.author': 'Отдел рынков Furrow',
 		'home.lead.readtime': '12 мин',
 		'home.lead.date': 'Май 2026',
 		'home.lead.p1':

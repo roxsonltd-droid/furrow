@@ -1,5 +1,20 @@
 const ARCHIVE_ARTICLES = [
   {
+    id: 'coffee-under-pressure',
+    url: '/coffee-under-pressure-global-industry',
+    category: 'softs',
+    region: 'global',
+    date: '2026-05-25',
+    title: {
+      en: 'Under Pressure: Climate, Markets, and Politics Shake the Global Industry',
+      ru: 'Под давлением: климат, рынки и политика потрясают мировую кофейную отрасль',
+    },
+    meta: {
+      en: 'SOFTS · Coffee · May 2026',
+      ru: 'МЯГКИЕ · Кофе · май 2026',
+    },
+  },
+  {
     id: 'us-canada-wheat',
     url: '/us-canada-wheat-trade-war-en',
     category: 'trade',

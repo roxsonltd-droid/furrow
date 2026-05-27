@@ -19,7 +19,11 @@
 		{ "source": "/us-canada-wheat-trade-war-en", "destination": "/us-canada-wheat-trade-war-en.html" },
 		{ "source": "/us-canada-wheat-trade-war-ru", "destination": "/us-canada-wheat-trade-war-ru.html" },
 		{ "source": "/sponsor", "destination": "/sponsor.html" },
-		{ "source": "/tomato-harvest-2026", "destination": "/tomato-harvest-2026.html" }
+		{ "source": "/tomato-harvest-2026", "destination": "/tomato-harvest-2026.html" },
+		{
+			"source": "/coffee-under-pressure-global-industry",
+			"destination": "/coffee-under-pressure-global-industry.html"
+		}
 	],
 	"functions": {
 		"api/**/*.ts": {
