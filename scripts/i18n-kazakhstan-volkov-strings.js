@@ -16,7 +16,7 @@
 		'kz.meta.read': '12 min read',
 		'kz.meta.author': 'Furrow Markets Desk · desk read',
 		'kz.p1':
-			'Sergei Volkov does not own the land he farms. He never has, and under Kazakhstani law, he likely never will. What he owns is something harder to define and, in the end, perhaps more valuable — twenty-three years of memory written into the soil of a steppe farm outside Kostanay, in the northern reaches of a country most of his customers could not place on a map.',
+			"Sergei Volkov does not own the land he farms. He never has, and under Kazakhstani law, he likely never will. What he owns is something harder to define and, in the end, perhaps more valuable — twenty-three years of memory written into the soil of a steppe farm outside Kostanay, in the northern reaches of a country most of his customers couldn't place on a map.",
 		'kz.p2':
 			'Every May, when the last frost lets go and the ground finally softens, Volkov climbs into a tractor cab before sunrise and begins a race he has exactly one hundred days to finish. His farm covers just under ten thousand hectares of flat, semi-arid grassland that was first broken by Soviet plows in the 1950s. The horizon is so wide and so unbroken that on clear days he can watch a weather system building fifty kilometers away, a dark shelf of cloud moving toward him across the steppe like a slow decision. Whether that cloud brings saving rain or crop-flattening hail, he will know in an hour. There is no shelter from what the steppe decides.',
 		'kz.p3':
@@ -47,7 +47,7 @@
 			'He leases his land from the regional administration on a long-term contract. The land is the state’s. The harvest is his, briefly, before it belongs to the elevator and then to the trader and then to the mill and then to someone he will never meet, breaking bread somewhere he will never go. This is farming as it has always been — anonymous, essential, invisible until it stops. On the steppe outside Kostanay, in the hundred days between the last frost and the first combine, Sergei Volkov tends to his share of the world’s bread. The horizon stays wide. The weather keeps its own counsel. And the wheat grows, or it doesn’t, on land that belongs to no one and feeds everyone.',
 		'kz.stat.num': '≤25 Mt',
 		'kz.stat.body':
-			'Kazakhstan produces up to about twenty-five million metric tons of wheat in a strong year, ranking among the world’s top ten exporters. Hard spring wheat on the northern steppe, mostly rain-fed, often averages roughly 13–14% protein — valued by millers for strength and consistency.',
+			'Kazakhstan produces up to 25 million metric tons of wheat annually, making it one of the world\'s top ten exporters. Its hard spring wheat, grown without irrigation across the northern steppe, is valued by millers for protein content averaging 13–14 percent.',
 		'kz.footer.line1': '© 2026 Furrow Markets — Agricultural market intelligence',
 		'kz.footer.langs': 'English · Русский',
 	});

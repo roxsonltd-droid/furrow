@@ -13,15 +13,37 @@
 		'home.lead.eyebrow': 'Central Asia · Grains · Farmer profile',
 		'home.lead.title': 'One Farmer, One Hundred Days, Ten Thousand Hectares',
 		'home.lead.deck':
-			'On Kazakhstan’s northern steppe, a race against frost and drought feeds a share of the world’s bread — rain-fed spring wheat, no-till, and the elevator’s twice-daily price.',
+			'Kazakhstan ranks among the top ten wheat exporters — yet the northern steppe squeezes the whole season into roughly one hundred days between the last frost and the first combine, on rain-fed land many buyers could not place on a map.',
 		'home.lead.author': 'By Furrow Markets Desk',
 		'home.lead.readtime': '12 min read',
 		'home.lead.date': 'May 2026',
 		'home.lead.p1':
-			'Sergei Volkov does not own the land he farms — twenty-three years of memory written into the soil outside Kostanay, where ten thousand hectares meet a horizon wide enough to watch weather build fifty kilometres away.',
+			"Sergei Volkov does not own the land he farms. He never has, and under Kazakhstani law, he likely never will. What he owns is something harder to define and, in the end, perhaps more valuable — twenty-three years of memory written into the soil of a steppe farm outside Kostanay, in the northern reaches of a country most of his customers couldn't place on a map.",
 		'home.lead.p2':
-			'Conservation tillage has changed the steppe as much as any new machine: stubble through winter, direct seeding in spring, less fuel — and moisture held when young wheat is most vulnerable before the run to the elevator and the trader’s price board.',
+			'Every May, when the last frost lets go and the ground finally softens, Volkov climbs into a tractor cab before sunrise and begins a race he has exactly one hundred days to finish. His farm covers just under ten thousand hectares of flat, semi-arid grassland that was first broken by Soviet plows in the 1950s.',
 		'home.lead.cta': 'Continue reading →',
+		'home.mock.label': 'Investigation · parts 1–3',
+		'home.mock.sublabel':
+			'Standalone tech trilogy (1 · Zip2, 2 · Compaq, 3 · Musk) — unrelated to the Kazakhstan profile above.',
+		'home.mock.badge': 'Placeholder',
+		'home.inv1.badge': 'Investigation',
+		'home.inv1.cat': '1 · Zip2',
+		'home.inv1.title': 'Zip2: The Story Nobody Tells',
+		'home.inv1.sum':
+			'Benjamin Rosen, Eckhard Pfeiffer, Mohr Davidow, newspaper chains on both sides of the trade — and the two-month gap that frames who really decided.',
+		'home.inv1.meta': 'Furrow Investigation · 14 min · May 2026 · part 1',
+		'home.mock1.badge': 'Investigation',
+		'home.mock1.cat': '2 · Compaq',
+		'home.mock1.title': 'Compaq: Victim or Instrument?',
+		'home.mock1.sum':
+			'Benjamin Rosen, Eckhard Pfeiffer, the DEC and Zip2 era, CMGI, and the HP merger — three coups in twelve years, following the people and the money.',
+		'home.mock1.meta': 'Furrow Investigation · 14 min · May 2026 · part 2',
+		'home.mock2.badge': 'Investigation',
+		'home.mock2.cat': '3 · Musk',
+		'home.mock2.title': 'Musk: Anointed Genius or Architect of His Own Fate?',
+		'home.mock2.sum':
+			'Zip2, PayPal, Tesla, SpaceX — a pattern of removals and rescues; Peter Thiel\'s network; and what talent means without the right cap table and allies.',
+		'home.mock2.meta': 'Furrow Investigation · 10 min · May 2026 · part 3',
 		'home.brief.label': 'In Brief',
 		'home.brief.1': '<strong>Wheat</strong> closes at six-month high amid Russian export friction',
 		'home.brief.2': '<strong>Argentine drought</strong> threatens 2026 corn yields; CONAB cuts forecast 3%',
@@ -112,15 +134,37 @@
 		'home.lead.eyebrow': 'Центральная Азия · Зерно · Портрет фермера',
 		'home.lead.title': 'Один фермер, сто дней, десять тысяч гектаров',
 		'home.lead.deck':
-			'На северной степи Казахстана гонка с морозом и засухой кормит часть мирового хлеба — яровая пшеница без орошения, без пахоты и цена на табло элеватора дважды в день.',
+			'Казахстан входит в десятку экспортёров пшеницы — но на севере степи весь сезон ужимается примерно в сто дней между последним морозом и первым комбайном, на дождевых землях, которых многие покупатели не найдут на карте.',
 		'home.lead.author': 'Отдел рынков Furrow',
 		'home.lead.readtime': '12 мин',
 		'home.lead.date': 'Май 2026',
 		'home.lead.p1':
-			'Сергей Волков не владеет землёй, которую обрабатывает, — двадцать три года памяти в почве под Костанаем: десять тысяч гектаров и горизонт, на котором за пятьдесят километров видно, как нарастает облако.',
+			'Сергей Волков не владеет землёй, которую обрабатывает. Никогда не владел — и по законам Казахстана, скорее всего, не владел бы и впредь. То, что у него есть, труднее назвать и, в конце концов, это может быть ценнее: двадцать три года памяти, вписанные в почву степного хозяйства под Костанаем, на севере страны, которую большинство его покупателей не найдут на карте.',
 		'home.lead.p2':
-			'Почвозащитная обработка изменила степь не меньше новой техники: стерня зимой, посев весной, меньше топлива — и влага, когда молодая пшеница особенно уязвима, пока не начнётся гонка к элеватору и цене трейдера.',
+			'Каждый май, когда отпускает последний мороз и земля наконец размягчается, Волков до рассвета садится в кабину трактора и начинает гонку, на которую у него ровно сто дней. Хозяйство — чуть меньше десяти тысяч гектаров ровной полуаридной степи, впервые вскопанной советскими плугами в 1950-х.',
 		'home.lead.cta': 'Читать далее →',
+		'home.mock.label': 'Расследование · части 1–3',
+		'home.mock.sublabel':
+			'Отдельная техно-трилогия (1 · Zip2, 2 · Compaq, 3 · Маск) — не связана с материалом о Казахстане выше.',
+		'home.mock.badge': 'Макет',
+		'home.inv1.badge': 'Расследование',
+		'home.inv1.cat': '1 · Zip2',
+		'home.inv1.title': 'Zip2: история, которую не рассказывают',
+		'home.inv1.sum':
+			'Бенджамин Розен, Экхард Пфайффер, Mohr Davidow, газетные цепи с двух сторон сделки — и двухмесячный разрыв, который показывает, кто реально решал.',
+		'home.inv1.meta': 'Furrow · расследование · 14 мин · май 2026 · часть 1',
+		'home.mock1.badge': 'Расследование',
+		'home.mock1.cat': '2 · Compaq',
+		'home.mock1.title': 'Compaq: жертва или инструмент?',
+		'home.mock1.sum':
+			'Бенджамин Розен, Экхард Пфайффер, эпоха DEC и Zip2, CMGI и слияние с HP — три «переворота» за двенадцать лет: люди и деньги.',
+		'home.mock1.meta': 'Furrow · расследование · 14 мин · май 2026 · часть 2',
+		'home.mock2.badge': 'Расследование',
+		'home.mock2.cat': '3 · Маск',
+		'home.mock2.title': 'Маск — помазанный гений или архитектор собственной судьбы?',
+		'home.mock2.sum':
+			'Zip2, PayPal, Tesla, SpaceX — снятия и спасения; сеть Питера Тиля; и что значит талант без нужного капитала и союзников.',
+		'home.mock2.meta': 'Furrow · расследование · 10 мин · май 2026 · часть 3',
 		'home.brief.label': 'Кратко',
 		'home.brief.1': '<strong>Пшеница</strong> — шестимесячный максимум на фоне экспортных ограничений РФ',
 		'home.brief.2': '<strong>Засуха в Аргентине</strong> угрожает урожаю кукурузы 2026; CONAB снизил прогноз на 3%',
