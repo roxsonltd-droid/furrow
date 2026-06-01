@@ -47,6 +47,22 @@
 		{
 			"source": "/musk-anointed-genius-or-architect",
 			"destination": "/musk-anointed-genius-or-architect.html"
+		},
+		{
+			"source": "/bezos-garage-explosion-38-billion",
+			"destination": "/bezos-garage-explosion-38-billion-2026.html"
+		},
+		{
+			"source": "/bezos-garage-myth-amazon",
+			"destination": "/bezos-garage-myth-amazon-2026.html"
+		},
+		{
+			"source": "/bezos-amazon-cia-cloud",
+			"destination": "/bezos-amazon-cia-cloud-2026.html"
+		},
+		{
+			"source": "/bezos-pentagon-defense",
+			"destination": "/bezos-pentagon-defense-2026.html"
 		}
 	],
 	"functions": {

@@ -659,6 +659,10 @@ body {
   padding-top: 8px;
   border-top: 1px solid var(--line);
 }
+.mock-cards-wrap + .mock-cards-wrap {
+  margin-top: 8px;
+  padding-top: 28px;
+}
 .mock-cards-label {
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 11px;
@@ -678,11 +682,24 @@ body {
 }
 .mock-cards-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
-@media (max-width: 1050px) {
+@media (max-width: 1200px) {
+  .mock-cards-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
   .mock-cards-row { grid-template-columns: 1fr; }
+}
+/* First investigation row: exactly three articles (Zip2 / Compaq / Musk) */
+.mock-cards-row--thirds {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 1200px) {
+  .mock-cards-row--thirds { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .mock-cards-row--thirds { grid-template-columns: 1fr; }
 }
 .mock-card {
   border: 1px dashed var(--line);
@@ -1227,28 +1244,63 @@ body {
   <!-- Long reads under lead: live + teaser -->
   <section class="mock-cards-wrap" aria-labelledby="mock-cards-heading">
     <div id="mock-cards-heading" class="mock-cards-label" data-i18n="home.mock.label">Investigation · parts 1–3</div>
-    <p class="mock-cards-sublabel" data-i18n="home.mock.sublabel">Standalone tech trilogy — unrelated to the Kazakhstan lead above.</p>
-    <div class="mock-cards-row">
+    <p class="mock-cards-sublabel" data-i18n="home.mock.sublabel">Three-part tech desk series (Zip2, Compaq, Musk) — unrelated to the Kazakhstan lead above. The Bezos series is a separate four-part row below.</p>
+    <div class="mock-cards-row mock-cards-row--thirds">
       <article class="mock-card mock-card--live">
         <span class="mock-card-badge" data-i18n="home.inv1.badge">Investigation</span>
         <div class="story-cat" data-i18n="home.inv1.cat">1 · Zip2</div>
         <h3><a href="/zip2-the-story-nobody-tells" data-i18n="home.inv1.title">Zip2: The Story Nobody Tells</a></h3>
         <p class="story-summary" data-i18n="home.inv1.sum">Benjamin Rosen, Eckhard Pfeiffer, Mohr Davidow, newspaper chains on both sides of the trade — and the two-month gap that frames who really decided.</p>
-        <div class="story-meta" data-i18n="home.inv1.meta">Furrow Investigation · 14 min · May 2026 · part 1</div>
+        <div class="story-meta" data-i18n="home.inv1.meta">Furrow Investigation · 14 min · May 2026 · part 1 of 3</div>
       </article>
       <article class="mock-card mock-card--live">
         <span class="mock-card-badge" data-i18n="home.mock1.badge">Investigation</span>
         <div class="story-cat" data-i18n="home.mock1.cat">2 · Compaq</div>
         <h3><a href="/compaq-victim-or-instrument" data-i18n="home.mock1.title">Compaq: Victim or Instrument?</a></h3>
         <p class="story-summary" data-i18n="home.mock1.sum">Benjamin Rosen, Eckhard Pfeiffer, the DEC and Zip2 era, CMGI, and the HP merger — three coups in twelve years, following the people and the money.</p>
-        <div class="story-meta" data-i18n="home.mock1.meta">Furrow Investigation · 14 min · May 2026 · part 2</div>
+        <div class="story-meta" data-i18n="home.mock1.meta">Furrow Investigation · 14 min · May 2026 · part 2 of 3</div>
       </article>
       <article class="mock-card mock-card--live">
         <span class="mock-card-badge" data-i18n="home.mock2.badge">Investigation</span>
         <div class="story-cat" data-i18n="home.mock2.cat">3 · Musk</div>
         <h3><a href="/musk-anointed-genius-or-architect" data-i18n="home.mock2.title">Musk: Anointed Genius or Architect of His Own Fate?</a></h3>
         <p class="story-summary" data-i18n="home.mock2.sum">Zip2, PayPal, Tesla, SpaceX — a pattern of removals and rescues; Peter Thiel's network; and what talent means without the right cap table and allies.</p>
-        <div class="story-meta" data-i18n="home.mock2.meta">Furrow Investigation · 10 min · May 2026 · part 3</div>
+        <div class="story-meta" data-i18n="home.mock2.meta">Furrow Investigation · 10 min · May 2026 · part 3 of 3</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="mock-cards-wrap" aria-labelledby="bezos-series-heading">
+    <div id="bezos-series-heading" class="mock-cards-label" data-i18n="home.bezos.label">Series: Bezos · parts 1–4</div>
+    <p class="mock-cards-sublabel" data-i18n="home.bezos.sublabel">From New Glenn and MacKenzie Scott to the CIA cloud and the Pentagon — a separate four-part desk investigation.</p>
+    <div class="mock-cards-row">
+      <article class="mock-card mock-card--live">
+        <span class="mock-card-badge" data-i18n="home.bz1.badge">Investigation</span>
+        <div class="story-cat" data-i18n="home.bz1.cat">1 · Explosion & $38B</div>
+        <h3><a href="/bezos-garage-explosion-38-billion" data-i18n="home.bz1.title">The Garage, the Explosion, and $38 Billion</a></h3>
+        <p class="story-summary" data-i18n="home.bz1.sum">Cape Canaveral, Amazon Leo, insurance unknowns — and the D.E. Shaw origin story behind the garage myth.</p>
+        <div class="story-meta" data-i18n="home.bz1.meta">Furrow Investigation · 18 min · May 2026 · part 1 of 4</div>
+      </article>
+      <article class="mock-card mock-card--live">
+        <span class="mock-card-badge" data-i18n="home.bz2.badge">Investigation</span>
+        <div class="story-cat" data-i18n="home.bz2.cat">2 · Garage myth</div>
+        <h3><a href="/bezos-garage-myth-amazon" data-i18n="home.bz2.title">The Garage Is a Myth</a></h3>
+        <p class="story-summary" data-i18n="home.bz2.sum">D.E. Shaw, the bookstore idea that was a job assignment, and who really took the financial risk.</p>
+        <div class="story-meta" data-i18n="home.bz2.meta">Furrow Investigation · 12 min · May 2026 · part 2 of 4</div>
+      </article>
+      <article class="mock-card mock-card--live">
+        <span class="mock-card-badge" data-i18n="home.bz3.badge">Investigation</span>
+        <div class="story-cat" data-i18n="home.bz3.cat">3 · Amazon & CIA</div>
+        <h3><a href="/bezos-amazon-cia-cloud" data-i18n="home.bz3.title">Amazon and the CIA</a></h3>
+        <p class="story-summary" data-i18n="home.bz3.sum">The 2013 cloud contract, first annual profit, and The Washington Post — one year, one structure.</p>
+        <div class="story-meta" data-i18n="home.bz3.meta">Furrow Investigation · 14 min · May 2026 · part 3 of 4</div>
+      </article>
+      <article class="mock-card mock-card--live">
+        <span class="mock-card-badge" data-i18n="home.bz4.badge">Investigation</span>
+        <div class="story-cat" data-i18n="home.bz4.cat">4 · Pentagon</div>
+        <h3><a href="/bezos-pentagon-defense" data-i18n="home.bz4.title">Bezos and the Pentagon</a></h3>
+        <p class="story-summary" data-i18n="home.bz4.sum">JEDI, Rekognition, Project Nimbus — how the bookstore became defense infrastructure.</p>
+        <div class="story-meta" data-i18n="home.bz4.meta">Furrow Investigation · 16 min · May 2026 · part 4 of 4</div>
       </article>
     </div>
   </section>
@@ -1490,7 +1542,7 @@ body {
 </div>
 
 <script src="scripts/i18n-strings.js?v=3"></script>
-<script src="scripts/i18n-home-strings.js?v=11"></script>
+<script src="scripts/i18n-home-strings.js?v=14"></script>
 <script src="scripts/i18n.js?v=3"></script>
 <script src="scripts/waitlist.js"></script>
 <script src="scripts/sponsor-ui.js"></script>
