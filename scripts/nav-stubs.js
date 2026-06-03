@@ -36,4 +36,20 @@
 			}
 		});
 	});
+
+	// Update utility bar date/time to NY time
+	function updateNyTime() {
+		const utilEls = document.querySelectorAll('.utility-date');
+		if (utilEls.length >= 2) {
+			const now = new Date();
+			const dateOpts = { timeZone: 'America/New_York', weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+			const timeOpts = { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
+			
+			const lang = document.documentElement.lang || 'en-US';
+			utilEls[0].textContent = now.toLocaleDateString(lang, dateOpts).toUpperCase();
+			utilEls[1].textContent = `New York ${now.toLocaleTimeString('en-US', timeOpts)}`;
+		}
+	}
+	updateNyTime();
+	setInterval(updateNyTime, 60000);
 })();
