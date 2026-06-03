@@ -79,6 +79,22 @@
 		{
 			"source": "/blackrock-government-without-elections",
 			"destination": "/blackrock-government-without-elections.html"
+		},
+		{
+			"source": "/facebook-part-1",
+			"destination": "/facebook-part-1.html"
+		},
+		{
+			"source": "/facebook-part-2",
+			"destination": "/facebook-part-2.html"
+		},
+		{
+			"source": "/facebook-part-3",
+			"destination": "/facebook-part-3.html"
+		},
+		{
+			"source": "/facebook-part-4",
+			"destination": "/facebook-part-4.html"
 		}
 	],
 	"functions": {
