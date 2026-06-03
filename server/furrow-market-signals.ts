@@ -24,7 +24,9 @@ const MARKET_TICKERS = [
 	{ id: 'cbot_corn', label: 'CBOT corn (ZC=F)', symbol: 'ZC=F', unit: 'USD/bu' },
 	{ id: 'cbot_wheat', label: 'CBOT wheat (ZW=F)', symbol: 'ZW=F', unit: 'USD/bu' },
 	{ id: 'cbot_soy', label: 'CBOT soy (ZS=F)', symbol: 'ZS=F', unit: 'USD/bu' },
-	{ id: 'baltic_dry', label: 'Baltic Dry (BDIY)', symbol: 'BDIY', unit: 'index' },
+	{ id: 'cbot_oats', label: 'CBOT oats (ZO=F)', symbol: 'ZO=F', unit: 'USD/bu' },
+	{ id: 'cbot_soy_oil', label: 'Soybean Oil (ZL=F)', symbol: 'ZL=F', unit: 'USD/lb' },
+	{ id: 'ice_coffee', label: 'Coffee (KC=F)', symbol: 'KC=F', unit: 'USD/lb' },
 ] as const;
 
 let memoryCache: { payload: FurrowMarketSignals; at: number } | null = null;

@@ -9,7 +9,9 @@
 		cbot_wheat: 'WHEAT',
 		cbot_corn: 'CORN',
 		cbot_soy: 'SOYBEANS',
-		baltic_dry: 'BDI',
+		cbot_oats: 'OATS',
+		cbot_soy_oil: 'SOY OIL',
+		ice_coffee: 'COFFEE',
 	};
 
 	function formatPrice(f) {
