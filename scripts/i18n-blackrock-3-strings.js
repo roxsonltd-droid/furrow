@@ -36,6 +36,7 @@ const blackrock3Strings = {
     "br3.sources": "Note: Synthesis of widely cited sources.",
     "br3.footer.line1": "© 2026 Furrow Markets — Agricultural market intelligence",
     "br3.footer.langs": "English · Русский"
+  },
   ru: {
     "br3.page.title": "2008 — Кто знал и кто заработал | Furrow Markets",
     "br3.kicker": "FURROW · РАССЛЕДОВАНИЕ · BLACKROCK · ЧАСТЬ 3 ИЗ 4",

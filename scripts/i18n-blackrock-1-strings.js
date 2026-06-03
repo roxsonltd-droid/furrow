@@ -40,6 +40,7 @@ const blackrock1Strings = {
     "br1.sources": "Note: Synthesis of widely cited sources.",
     "br1.footer.line1": "© 2026 Furrow Markets — Agricultural market intelligence",
     "br1.footer.langs": "English · Русский"
+  },
   ru: {
     "br1.page.title": "Тот, кого уволили — и кто покорил мир | Furrow Markets",
     "br1.kicker": "FURROW · РАССЛЕДОВАНИЕ · BLACKROCK · ЧАСТЬ 1 ИЗ 4",

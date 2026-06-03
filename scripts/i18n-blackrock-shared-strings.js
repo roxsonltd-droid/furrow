@@ -8,6 +8,7 @@ const blackrockSharedStrings = {
     "br.nav.p4": "4 · Power",
     "br.nav.sponsor": "Sponsor",
     "br.nav.register": "Register"
+  },
   ru: {
     "br.nav.home": "Главная",
     "br.nav.archive": "Архив",

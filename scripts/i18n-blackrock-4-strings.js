@@ -41,6 +41,7 @@ const blackrock4Strings = {
     "br4.sources": "Note: Synthesis of widely cited sources.",
     "br4.footer.line1": "© 2026 Furrow Markets — Agricultural market intelligence",
     "br4.footer.langs": "English · Русский"
+  },
   ru: {
     "br4.page.title": "Правительство без выборов | Furrow Markets",
     "br4.kicker": "FURROW · РАССЛЕДОВАНИЕ · BLACKROCK · ЧАСТЬ 4 ИЗ 4",

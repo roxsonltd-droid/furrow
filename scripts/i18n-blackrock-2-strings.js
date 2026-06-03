@@ -33,6 +33,7 @@ const blackrock2Strings = {
     "br2.sources": "Note: Synthesis of widely cited sources.",
     "br2.footer.line1": "© 2026 Furrow Markets — Agricultural market intelligence",
     "br2.footer.langs": "English · Русский"
+  },
   ru: {
     "br2.page.title": "Aladdin — система, которая видит всё | Furrow Markets",
     "br2.kicker": "FURROW · РАССЛЕДОВАНИЕ · BLACKROCK · ЧАСТЬ 2 ИЗ 4",
