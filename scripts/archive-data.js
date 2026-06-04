@@ -1,5 +1,20 @@
 const ARCHIVE_ARTICLES = [
   {
+    id: 'volkov-kazakhstan-wheat',
+    url: '/kazakhstan-steppe-wheat-volkov-2026',
+    category: 'analysis',
+    region: 'global',
+    date: '2026-05-18',
+    title: {
+      en: 'One Farmer, One Hundred Days, Ten Thousand Hectares',
+      ru: 'Один фермер, сто дней, десять тысяч гектаров'
+    },
+    meta: {
+      en: 'Central Asia · Grains · May 2026',
+      ru: 'Центральная Азия · Зерновые · май 2026'
+    }
+  },
+  {
     id: 'iran-war-checkout',
     url: '/iran-war-checkout-line-2026',
     category: 'retail',
